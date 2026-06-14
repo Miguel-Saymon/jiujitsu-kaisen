@@ -1,0 +1,209 @@
+/* ============================= */
+/* Perícias                      */
+/* ============================= */
+
+.jk-skills-card {
+  height: auto;
+  min-height: 0;
+  max-height: none;
+
+  overflow-y: visible;
+ 
+  padding-bottom: 6px;
+}
+
+.jk-skills-card h2 {
+  font-size: 16px;
+}
+
+.jk-skill-header,
+.jk-skill-row {
+  display: grid;
+  grid-template-columns: 1fr 56px 16px 16px 38px 34px;
+  column-gap: 5px;
+  align-items: center;
+}
+
+.jk-skill-header {
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #3A3548;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  color: #d4b8e8;
+
+  text-align: center;
+}
+
+.jk-skill-header span:first-child {
+  text-align: left;
+  padding-left: 0;
+}
+
+.jk-skill-row {
+  min-height: 32.60px;
+  padding: 3px 0;
+
+  border-bottom: 1px solid #3A3548;
+}
+
+.jk-skill-row:last-child {
+  border-bottom: none;
+}
+
+.jk-skill-name {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  color: #f0e0ff;
+
+  cursor: pointer;
+}
+
+.jk-skill-name:hover {
+  color: #9b7fd4;
+}
+
+.jk-skill-row input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 16px;
+  height: 16px;
+
+  margin: 0;
+  padding: 0;
+
+  background: #2C2838;
+
+  border: 1px solid #4A4460;
+  border-radius: 3px;
+
+  box-shadow: none;
+  outline: none;
+  filter: none;
+
+  cursor: pointer;
+  display: block;
+
+  justify-self: center;
+  align-self: center;
+}
+
+.jk-skill-row input[type="checkbox"]:checked {
+  background: #9b7fd4;
+  border-color: #9b7fd4;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%231E1B26' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.jk-skill-row input[type="checkbox"]:focus-visible {
+  outline: 2px solid #9b7fd4;
+  outline-offset: 2px;
+}
+
+.jk-skill-row input[type="number"] {
+  width: 38px;
+  height: 20px;
+
+  padding: 2px 4px;
+
+  background: transparent;
+  color: #f0e0ff;
+
+  border: none;
+  border-bottom: 1px solid #3A3548;
+  border-radius: 0;
+
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  font-weight: 700;
+
+  text-align: center;
+}
+
+.jk-skill-row input[type="number"]:focus {
+  outline: none;
+  border-bottom-color: #9b7fd4;
+  box-shadow: none;
+}
+
+.jk-skill-custom-name {
+  flex: 0 0 70px;
+
+  width: 70px;
+  max-width: 70px;
+  min-width: 70px;
+
+  height: 18px;
+
+  margin-left: 4px;
+  padding: 0 2px;
+
+  background: transparent;
+  color: #f0e0ff;
+
+  border: none;
+  border-bottom: 1px solid #3A3548;
+  border-radius: 0;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  box-shadow: none;
+}
+
+.jk-skill-custom-name:focus {
+  outline: none;
+  border-bottom-color: #9b7fd4;
+  box-shadow: none;
+}
+
+.jk-skill-attribute {
+  width: 56px;
+  height: 22px;
+
+  padding: 0 6px;
+
+  background: #2C2838;
+  color: #f0e0ff;
+
+  border: 1px solid #3A3548;
+  border-radius: 3px;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  text-align: center;
+  text-align-last: center;
+}
+
+.jk-skill-attribute:focus {
+  outline: none;
+  border-color: #9b7fd4;
+  box-shadow: none;
+}
+
+.jk-skill-total {
+  justify-self: center;
+
+  min-width: 42px;
+
+  text-align: center;
+
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #9b7fd4;
+}

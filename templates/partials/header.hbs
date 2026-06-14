@@ -1,0 +1,105 @@
+  <header class="jk-header">
+<div class="jk-profile-wrap">
+  <img
+    class="jk-profile-img"
+    src="{{actor.img}}"
+    title="{{actor.name}}"
+  >
+
+  <button
+    type="button"
+    class="jk-reset-profile-img"
+    title="Remover imagem personalizada"
+  >
+    <i class="fas fa-trash"></i>
+  </button>
+</div>
+
+    <div class="jk-header-info">
+      <h1>
+        <input name="name" type="text" value="{{actor.name}}" placeholder="Nome do personagem" />
+      </h1>
+
+      <div class="jk-header-grid">
+        <label class="jk-header-field jk-field-jogador">Jogador
+          <input name="system.info.jogador" type="text" value="{{system.info.jogador}}" />
+        </label>
+
+	<label class="jk-header-field jk-field-origem">Origem
+          <input name="system.info.origem" type="text" value="{{system.info.origem}}" />
+        </label>
+
+<label class="jk-header-field jk-field-especializacao">Especialização
+  <div class="jk-specialization-control">
+    <input
+      type="text"
+      value="{{resumoEspecializacoes}}"
+      readonly
+    />
+
+    <button
+      type="button"
+      class="jk-reset-progression"
+      title="Resetar progressão"
+    >
+      ↺
+    </button>
+  </div>
+</label>
+
+	<label class="jk-header-field jk-field-tecnica">Técnica
+          <input name="system.info.tecnica" type="text" value="{{system.info.tecnica}}" />
+        </label>
+
+<label class="jk-header-field jk-field-grau">Grau
+  <select name="system.info.grau">
+    <option value="">Selecione</option>
+    <option value="quarto" {{#if (eq system.info.grau "quarto")}}selected{{/if}}>Quarto Grau</option>
+    <option value="terceiro" {{#if (eq system.info.grau "terceiro")}}selected{{/if}}>Terceiro Grau</option>
+    <option value="segundo" {{#if (eq system.info.grau "segundo")}}selected{{/if}}>Segundo Grau</option>
+    <option value="primeiro" {{#if (eq system.info.grau "primeiro")}}selected{{/if}}>Primeiro Grau</option>
+    <option value="especial" {{#if (eq system.info.grau "especial")}}selected{{/if}}>Grau Especial</option>
+  </select>
+</label>
+
+<label class="jk-header-field jk-field-nivel">Nível
+  <div class="jk-level-control">
+    <input
+      name="system.info.nivel"
+      type="number"
+      value="{{system.info.nivel}}"
+      readonly
+    />
+
+    <button
+      type="button"
+      class="jk-remove-level"
+      title="Remover último nível"
+    >
+      -
+    </button>
+
+    <button
+      type="button"
+      class="jk-add-level"
+      title="Adicionar nível"
+    >
+      +
+    </button>
+  </div>
+</label>
+
+	<label class="jk-header-field jk-field-experiencia">Experiência
+          <input name="system.info.experiencia" type="text" value="{{system.info.experiencia}}" />
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="principal">Principal</a>
+    <a class="item" data-tab="tecnicas">Técnicas</a>
+    <a class="item" data-tab="combate">Combate</a>
+    <a class="item" data-tab="notas">Notas</a>
+  </nav>
+

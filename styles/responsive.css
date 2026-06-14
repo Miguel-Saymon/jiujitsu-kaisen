@@ -1,0 +1,48 @@
+/* ==========================
+   Responsividade
+   ========================== */
+
+@media (max-width: 980px) {
+
+  .jiujitsu-kaisen .jk-main-layout {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .jiujitsu-kaisen .jk-left-column,
+  .jiujitsu-kaisen .jk-right-column {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .jiujitsu-kaisen .jk-info-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .jiujitsu-kaisen .jk-header {
+    flex-direction: column;
+  }
+
+  .jiujitsu-kaisen .jk-header-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .jiujitsu-kaisen .jk-top-split {
+    grid-template-columns: 1fr;
+  }
+
+  .jiujitsu-kaisen .jk-info-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .jiujitsu-kaisen .jk-skill-header,
+  .jiujitsu-kaisen .jk-skill-row {
+    grid-template-columns: 1fr 22px 22px 40px 44px;
+  }
+
+}

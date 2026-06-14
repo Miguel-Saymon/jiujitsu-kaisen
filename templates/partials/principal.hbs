@@ -1,0 +1,400 @@
+<div class="tab principal" data-group="primary" data-tab="principal">
+  <div class="jk-main-layout">
+
+    <section class="jk-left-column">
+
+      <section class="jk-card">
+        <div class="jk-top-split">
+
+          <div class="jk-split-left">
+            <h2>Atributos</h2>
+
+            <div class="jk-attributes-grid">
+              <div class="jk-attribute-box">
+                <div class="jk-attribute-label">FOR</div>
+                <input name="system.atributos.forca.valor" type="number" value="{{system.atributos.forca.valor}}" />
+                <div class="jk-attribute-mod">{{system.atributos.forca.modFormatado}}</div>
+              </div>
+
+              <div class="jk-attribute-box">
+                <div class="jk-attribute-label">DES</div>
+                <input name="system.atributos.destreza.valor" type="number" value="{{system.atributos.destreza.valor}}" />
+                <div class="jk-attribute-mod">{{system.atributos.destreza.modFormatado}}</div>
+              </div>
+
+              <div class="jk-attribute-box">
+                <div class="jk-attribute-label">CON</div>
+                <input name="system.atributos.constituicao.valor" type="number" value="{{system.atributos.constituicao.valor}}" />
+                <div class="jk-attribute-mod">{{system.atributos.constituicao.modFormatado}}</div>
+              </div>
+
+              <div class="jk-attribute-box">
+                <div class="jk-attribute-label">INT</div>
+                <input name="system.atributos.inteligencia.valor" type="number" value="{{system.atributos.inteligencia.valor}}" />
+                <div class="jk-attribute-mod">{{system.atributos.inteligencia.modFormatado}}</div>
+              </div>
+
+              <div class="jk-attribute-box">
+                <div class="jk-attribute-label">SAB</div>
+                <input name="system.atributos.sabedoria.valor" type="number" value="{{system.atributos.sabedoria.valor}}" />
+                <div class="jk-attribute-mod">{{system.atributos.sabedoria.modFormatado}}</div>
+              </div>
+
+              <div class="jk-attribute-box">
+                <div class="jk-attribute-label">PRE</div>
+                <input name="system.atributos.presenca.valor" type="number" value="{{system.atributos.presenca.valor}}" />
+                <div class="jk-attribute-mod">{{system.atributos.presenca.modFormatado}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="jk-split-right">
+            <h2>Testes de Resistência</h2>
+
+            <div class="jk-resistencia-header">
+              <span></span>
+              <span>T</span>
+              <span>M</span>
+              <span>O</span>
+              <span>Total</span>
+            </div>
+
+            {{#each system.combate.testesResistencia as |teste key|}}
+              <div class="jk-resistencia-row">
+<span
+  class="jk-rollable-resistance"
+  data-resistance-key="{{key}}"
+  title="Rolar {{key}}"
+>
+  {{key}}
+</span>
+                <input name="system.combate.testesResistencia.{{key}}.treino" type="checkbox" {{checked teste.treino}} />
+                <input name="system.combate.testesResistencia.{{key}}.maestria" type="checkbox" {{checked teste.maestria}} />
+                <input name="system.combate.testesResistencia.{{key}}.outros" type="number" value="{{teste.outros}}" />
+<span class="jk-resistencia-total">
+  {{numberFormat teste.total sign=true}}
+</span>
+              </div>
+            {{/each}}
+          </div>
+
+        </div>
+
+<div class="jk-death-save-wide">
+  <details class="jk-death-drawer">
+    <summary class="jk-death-drawer-summary">
+      <span class="jk-death-drawer-line"></span>
+
+      <span class="jk-death-drawer-icon">
+        <i class="fas fa-skull"></i>
+      </span>
+
+      <span class="jk-death-drawer-arrow">⌄</span>
+
+      <span class="jk-death-drawer-line"></span>
+    </summary>
+
+    <div class="jk-death-drawer-content">
+      <div class="jk-death-side jk-death-side-success">
+        <span>Sucesso</span>
+
+        <button
+          type="button"
+          class="jk-death-box jk-death-success {{#if (gte system.combate.testesMorte.sucessos 1)}}active{{/if}}"
+          data-death-type="sucessos"
+          data-death-value="1"
+        ></button>
+
+        <button
+          type="button"
+          class="jk-death-box jk-death-success {{#if (gte system.combate.testesMorte.sucessos 2)}}active{{/if}}"
+          data-death-type="sucessos"
+          data-death-value="2"
+        ></button>
+
+        <button
+          type="button"
+          class="jk-death-box jk-death-success {{#if (gte system.combate.testesMorte.sucessos 3)}}active{{/if}}"
+          data-death-type="sucessos"
+          data-death-value="3"
+        ></button>
+      </div>
+
+      <button
+        type="button"
+        class="jk-death-center jk-rollable-death-save"
+        title="Rolar Salvaguarda de Morte"
+      >
+        <i class="fas fa-skull"></i>
+      </button>
+
+      <div class="jk-death-side jk-death-side-failure">
+        <button
+          type="button"
+          class="jk-death-box jk-death-failure {{#if (gte system.combate.testesMorte.falhas 3)}}active{{/if}}"
+          data-death-type="falhas"
+          data-death-value="3"
+        ></button>
+
+        <button
+          type="button"
+          class="jk-death-box jk-death-failure {{#if (gte system.combate.testesMorte.falhas 2)}}active{{/if}}"
+          data-death-type="falhas"
+          data-death-value="2"
+        ></button>
+
+        <button
+          type="button"
+          class="jk-death-box jk-death-failure {{#if (gte system.combate.testesMorte.falhas 1)}}active{{/if}}"
+          data-death-type="falhas"
+          data-death-value="1"
+        ></button>
+
+        <span>Fracasso</span>
+      </div>
+    </div>
+  </details>
+</div>
+
+</section>
+
+      <section class="jk-card">
+        <h2>Informações</h2>
+
+        <div class="jk-info-grid">
+
+          <div class="jk-combat-box jk-defense-box">
+            <h3 class="jk-defense-title">
+              Defesa
+		<span class="jk-defense-attribute-wrapper">
+			 <select
+			 class="jk-defense-attribute"
+			 name="system.combate.defesa.atributo"
+				 >
+		 {{selectOptions atributosPericia selected=system.combate.defesa.atributo}}
+		 </select>
+		</span>
+            </h3>
+
+            <div class="jk-combat-total">
+              {{system.combate.defesa.total}}
+            </div>
+
+            <div class="jk-combat-fields jk-defense-fields">
+              <label>Base
+                <input name="system.combate.defesa.base" type="number" value="{{system.combate.defesa.base}}" />
+              </label>
+
+              <label>Equip.
+                <input name="system.combate.defesa.equipamentos" type="number" value="{{system.combate.defesa.equipamentos}}" />
+              </label>
+
+              <label>Outros
+                <input name="system.combate.defesa.outros" type="number" value="{{system.combate.defesa.outros}}" />
+              </label>
+            </div>
+          </div>
+
+          <div class="jk-combat-box">
+            <h3>Atenção</h3>
+            <div class="jk-combat-total">{{system.combate.atencao.total}}</div>
+
+            <div class="jk-combat-fields">
+              <label>Base
+                <input name="system.combate.atencao.base" type="number" value="{{system.combate.atencao.base}}" />
+              </label>
+
+              <label>Outros
+                <input name="system.combate.atencao.outros" type="number" value="{{system.combate.atencao.outros}}" />
+              </label>
+            </div>
+          </div>
+
+          <div class="jk-combat-box">
+	    <h3 class="jk-rollable-initiative" title="Rolar Iniciativa">Iniciativa</h3>
+            <div class="jk-combat-total">{{system.combate.iniciativa.total}}</div>
+
+            <div class="jk-combat-fields">
+              <label>Outros
+                <input name="system.combate.iniciativa.outros" type="number" value="{{system.combate.iniciativa.outros}}" />
+              </label>
+            </div>
+          </div>
+
+<div class="jk-dados-vida">
+  <span class="jk-dados-vida__title">Dados de Vida</span>
+
+  <div class="jk-dados-vida__header">
+    <span>Dado</span>
+    <span>Disp.</span>
+    <span>Total</span>
+  </div>
+
+  <div class="jk-dados-vida__row">
+    <span class="jk-dados-vida__name">d8</span>
+    <input class="jk-dados-vida__input" name="system.dadosVida.d8.disponivel" type="number" value="{{system.dadosVida.d8.disponivel}}" />
+    <span class="jk-dados-vida__total">{{system.dadosVida.d8.total}}</span>
+  </div>
+
+  <div class="jk-dados-vida__row">
+    <span class="jk-dados-vida__name">d10</span>
+    <input class="jk-dados-vida__input" name="system.dadosVida.d10.disponivel" type="number" value="{{system.dadosVida.d10.disponivel}}" />
+    <span class="jk-dados-vida__total">{{system.dadosVida.d10.total}}</span>
+  </div>
+
+  <div class="jk-dados-vida__row">
+    <span class="jk-dados-vida__name">d12</span>
+    <input class="jk-dados-vida__input" name="system.dadosVida.d12.disponivel" type="number" value="{{system.dadosVida.d12.disponivel}}" />
+    <span class="jk-dados-vida__total">{{system.dadosVida.d12.total}}</span>
+  </div>
+</div>
+
+          <div class="jk-resource-box">
+            <h3>Pontos de Vida</h3>
+
+            <div class="jk-resource-main">
+              <label>Atual
+                <input name="system.recursos.pv.atual" type="number" value="{{system.recursos.pv.atual}}" />
+              </label>
+
+              <label>Máximo
+                <input name="system.recursos.pv.max" type="number" value="{{system.recursos.pv.max}}" />
+              </label>
+            </div>
+
+            <label class="jk-resource-temp">Temporário
+              <input name="system.recursos.pv.temp" type="number" value="{{system.recursos.pv.temp}}" />
+            </label>
+          </div>
+
+          <div class="jk-resource-box">
+            <h3>{{nomeRecursoEnergia}}</h3>
+
+            {{#if isRestringido}}
+              <div class="jk-resource-main">
+                <label>Atual
+                  <input name="system.recursos.estamina.atual" type="number" value="{{system.recursos.estamina.atual}}" />
+                </label>
+
+                <label>Máximo
+                  <input name="system.recursos.estamina.max" type="number" value="{{system.recursos.estamina.max}}" />
+                </label>
+              </div>
+
+              <label class="jk-resource-temp">Temporário
+                <input name="system.recursos.estamina.temp" type="number" value="{{system.recursos.estamina.temp}}" />
+              </label>
+            {{else}}
+              <div class="jk-resource-main">
+                <label>Atual
+                  <input name="system.recursos.pe.atual" type="number" value="{{system.recursos.pe.atual}}" />
+                </label>
+
+                <label>Máximo
+                  <input name="system.recursos.pe.max" type="number" value="{{system.recursos.pe.max}}" />
+                </label>
+              </div>
+
+              <label class="jk-resource-temp">Temporário
+                <input name="system.recursos.pe.temp" type="number" value="{{system.recursos.pe.temp}}" />
+              </label>
+            {{/if}}
+          </div>
+
+          <div class="jk-resource-box">
+            <h3>Sanidade</h3>
+
+            <div class="jk-resource-main">
+              <label>Atual
+                <input name="system.recursos.sanidade.atual" type="number" value="{{system.recursos.sanidade.atual}}" />
+              </label>
+
+              <label>Máximo
+                <input name="system.recursos.sanidade.max" type="number" value="{{system.recursos.sanidade.max}}" />
+              </label>
+            </div>
+
+            <label class="jk-resource-temp">Temporário
+              <input name="system.recursos.sanidade.temp" type="number" value="{{system.recursos.sanidade.temp}}" />
+            </label>
+          </div>
+
+          <div class="jk-resource-box">
+            <h3>Integridade</h3>
+
+            <div class="jk-resource-main">
+              <label>Atual
+                <input name="system.recursos.integridade.atual" type="number" value="{{system.recursos.integridade.atual}}" />
+              </label>
+
+              <label>Máxima
+                <input name="system.recursos.integridade.max" type="number" value="{{system.recursos.integridade.max}}" />
+              </label>
+            </div>
+
+            <label>Estado
+              <input
+                type="text"
+                value="{{estadoIntegridade}}"
+                readonly
+              />
+            </label>
+          </div>
+
+        </div>
+      </section>
+
+    </section>
+
+    <aside class="jk-right-column">
+      <section class="jk-card jk-skills-card">
+        <h2>Perícias</h2>
+
+        <div class="jk-skill-header">
+          <span>Perícia</span>
+          <span>Atr.</span>
+          <span>T</span>
+          <span>M</span>
+          <span>O</span>
+          <span>Total</span>
+        </div>
+
+        {{#each periciasOrdenadas as |pericia|}}
+          <div class="jk-skill-row">
+	  <span
+  class="jk-skill-name jk-rollable-skill"
+  data-skill-key="{{pericia.key}}"
+  title="Rolar {{pericia.nomeExibido}}"
+>
+  {{pericia.nomeExibido}}
+
+  {{#if pericia.customizavel}}
+    <input
+      class="jk-skill-custom-name"
+      name="system.pericias.{{pericia.key}}.customNome"
+      type="text"
+      value="{{pericia.customNome}}"
+      placeholder="..."
+    />
+  {{/if}}
+</span>
+
+            <select
+              class="jk-skill-attribute"
+              name="system.pericias.{{pericia.key}}.atributo"
+            >
+              {{selectOptions ../atributosPericia selected=pericia.atributo}}
+            </select>
+
+            <input name="system.pericias.{{pericia.key}}.treinado" type="checkbox" {{checked pericia.treinado}} />
+            <input name="system.pericias.{{pericia.key}}.maestria" type="checkbox" {{checked pericia.maestria}} />
+            <input name="system.pericias.{{pericia.key}}.outros" type="number" value="{{pericia.outros}}" />
+            <span class="jk-skill-total">{{pericia.totalFormatado}}</span>
+          </div>
+        {{/each}}
+
+      </section>
+    </aside>
+
+  </div>
+</div>

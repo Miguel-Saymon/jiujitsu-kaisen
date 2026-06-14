@@ -1,0 +1,30 @@
+{
+  "id": "jiujitsu-kaisen",
+  "title": "Jiujitsu Kaisen",
+  "description": "Sistema privado para uso entre amigos.",
+  "version": "0.1.2",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "esmodules": [
+    "scripts/main.js"
+  ],
+"styles": [
+  "styles/base.css",
+  "styles/actor-header.css",
+  "styles/principal.css",
+  "styles/pericias.css",
+  "styles/tecnicas.css",
+  "styles/combate.css",
+  "styles/notas.css",
+  "styles/responsive.css",
+  "styles/components/chat-rolls.css"
+],
+  "template": "template.json",
+  "documentTypes": {
+    "Actor": {
+      "character": {}
+    }
+  }
+}

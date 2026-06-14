@@ -1,0 +1,262 @@
+/* ============================= */
+/* Principal - Informações       */
+/* ============================= */
+
+.jk-combat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 136px;
+
+  background: #252231;
+
+  border: 1px solid #3A3548;
+  border-radius: 4px;
+
+  padding: 10px 8px 8px;
+
+  text-align: center;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+
+.jk-combat-box h3 {
+  margin: 0 0 6px;
+  padding: 0 0 6px;
+
+  background: transparent;
+
+  border: none;
+  border-bottom: 1px solid #3A3548;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+
+  color: #6b6080;
+
+  text-transform: uppercase;
+}
+
+.jk-combat-total {
+  display: block;
+
+  margin-top: auto;
+  margin-bottom: auto;
+
+  font-family: "Courier New", monospace;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+
+  color: #f0e0ff;
+}
+
+.jk-unit {
+  margin-left: 4px;
+
+  font-size: 10px;
+  letter-spacing: 0.05em;
+
+  color: #6b6080;
+
+  text-transform: uppercase;
+}
+
+.jk-combat-fields {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  margin-top: 6px;
+  padding-top: 6px;
+
+  border-top: 1px solid #3A3548;
+}
+
+.jk-combat-fields label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  color: #6b6080;
+}
+
+.jk-combat-fields input {
+  width: 42px;
+  height: 22px;
+
+  padding: 2px 4px;
+
+  background: transparent;
+  color: #9b7fd4;
+
+  border: none;
+  border-bottom: 1px solid #3A3548;
+  border-radius: 0;
+
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  font-weight: 700;
+
+  text-align: center;
+  transition: none;
+}
+
+.jk-combat-fields input:focus
+.jk-combat-fields input:focus-visible {
+  outline: none;
+  border-bottom-color: #9b7fd4;
+  box-shadow: none;
+}
+
+/* Defesa */
+
+.jk-defense-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  margin-bottom: 6px;
+}
+
+.jk-combat-box:has(.jk-defense-attribute-wrapper) {
+  padding-top: 6px;
+}
+
+.jk-defense-attribute-wrapper {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  margin-bottom: 2px;
+}
+
+.jk-defense-attribute {
+  height: 18px;
+
+  padding: 1px 4px;
+
+  background: #2C2838;
+  color: #9b7fd4;
+
+  border: 1px solid #3A3548;
+  border-radius: 3px;
+
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+
+  text-align: center;
+  text-align-last: center;
+}
+
+.jk-defense-fields {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+
+  margin-top: 4px;
+}
+
+.jk-defense-fields input {
+  width: 36px;
+}
+
+.jk-dados-vida {
+  background: #252231;
+  border: 1px solid #3A3548;
+  border-radius: 6px;
+  padding: 10px 8px 8px;
+  text-align: center;
+}
+
+.jk-dados-vida__title {
+  display: block;
+
+  margin: 0 0 6px;
+  padding: 0 0 6px;
+
+  border-bottom: 1px solid #3A3548;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+
+  color: #6b6080;
+
+  text-transform: uppercase;
+}
+
+.jk-dados-vida__header,
+.jk-dados-vida__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+}
+
+.jk-dados-vida__header {
+  margin-bottom: 4px;
+}
+
+.jk-dados-vida__header span {
+  font-size: 9px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #6b6080;
+  text-align: center;
+}
+
+.jk-dados-vida__row {
+  margin-bottom: 3px;
+  align-items: center;
+}
+
+.jk-dados-vida__row:last-child {
+  margin-bottom: 0;
+}
+
+.jk-dados-vida__name {
+  font-size: 11px;
+  color: #d4b8e8;
+  text-align: center;
+}
+
+.jk-dados-vida__input {
+  width: 28px;
+  margin: 0 auto;
+  display: block;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #3A3548;
+  color: #f0e0ff;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  text-align: center;
+}
+
+.jk-dados-vida__avail {
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  color: #f0e0ff;
+  text-align: center;
+}
+
+.jk-dados-vida__avail.is-empty {
+  color: #3A3548;
+}
+
+.jk-dados-vida__total {
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  color: #9b7fd4;
+  text-align: center;
+}

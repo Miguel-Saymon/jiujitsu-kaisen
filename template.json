@@ -1,0 +1,407 @@
+{
+  "Actor": {
+    "types": [
+      "character"
+    ],
+    "character": {
+      "info": {
+        "jogador": "",
+        "origem": "",
+        "especializacao": "",
+        "tecnica": "",
+        "campanha": "",
+        "grau": "",
+        "nivel": 0,
+        "experiencia": ""
+      },
+      "progressao": {
+        "atributoInicial": "",
+        "bonusAtributoInicial": 0,
+        "pvInicialAplicado": false,
+        "niveis": []
+      },
+      "atributos": {
+        "forca": {
+          "valor": 10
+        },
+        "destreza": {
+          "valor": 10
+        },
+        "constituicao": {
+          "valor": 10
+        },
+        "inteligencia": {
+          "valor": 10
+        },
+        "sabedoria": {
+          "valor": 10
+        },
+        "presenca": {
+          "valor": 10
+        }
+      },
+      "recursos": {
+        "pv": {
+          "atual": 0,
+          "max": 0,
+          "temp": 0,
+          "bonus": 0
+        },
+        "pe": {
+          "atual": 0,
+          "max": 0,
+          "temp": 0,
+          "bonus": 0
+        },
+        "estamina": {
+          "atual": 0,
+          "max": 0,
+          "temp": 0,
+          "bonus": 0
+        },
+        "sanidade": {
+          "atual": 0,
+          "max": 0,
+          "temp": 0
+        },
+        "integridade": {
+          "atual": 0,
+          "max": 0,
+          "estado": "Estável",
+          "rd": 0
+        }
+      },
+      "combate": {
+        "defesa": {
+          "total": 10,
+          "base": 10,
+          "equipamentos": 0,
+          "atributo": "destreza",
+          "outros": 0
+        },
+        "atencao": {
+          "total": 10,
+          "base": 10,
+          "outros": 0
+        },
+        "iniciativa": {
+          "total": 0,
+          "outros": 0
+        },
+        "deslocamento": 9,
+        "testesResistencia": {
+          "astucia": {
+            "total": 0,
+            "treino": false,
+            "maestria": false,
+            "outros": 0
+          },
+          "fortitude": {
+            "total": 0,
+            "treino": false,
+            "maestria": false,
+            "outros": 0
+          },
+          "integridade": {
+            "total": 0,
+            "treino": false,
+            "maestria": false,
+            "outros": 0
+          },
+          "reflexos": {
+            "total": 0,
+            "treino": false,
+            "maestria": false,
+            "outros": 0
+          },
+          "vontade": {
+            "total": 0,
+            "treino": false,
+            "maestria": false,
+            "outros": 0
+          }
+        },
+        "testesMorte": {
+          "sucessos": 0,
+          "falhas": 0
+        },
+        "resistencias": "",
+        "rd": {
+          "cor": 0,
+          "imp": 0,
+          "per": 0,
+          "con": 0,
+          "que": 0,
+          "cho": 0,
+          "son": 0,
+          "ene": 0,
+          "psi": 0,
+          "rad": 0,
+          "nec": 0,
+          "ven": 0
+        },
+        "jogadas": {
+          "corpo": 0,
+          "distancia": 0,
+          "amaldicoado": 0
+        },
+        "cd": {
+          "total": 10,
+          "base": 10,
+          "atributo": 0,
+          "treino": 0,
+          "nivel": 0,
+          "outros": 0
+        },
+        "rdTexto": "",
+        "treinamentos": "",
+        "caracteristicas": "",
+        "acoes": ""
+      },
+      "pericias": {
+        "atletismo": {
+          "nome": "Atletismo",
+          "atributo": "forca",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "acrobacia": {
+          "nome": "Acrobacia",
+          "atributo": "destreza",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "furtividade": {
+          "nome": "Furtividade",
+          "atributo": "destreza",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "prestidigitacao": {
+          "nome": "Prestidigitação",
+          "atributo": "destreza",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "feiticaria": {
+          "nome": "Feitiçaria",
+          "atributo": "inteligencia",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "historia": {
+          "nome": "História",
+          "atributo": "inteligencia",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "investigacao": {
+          "nome": "Investigação",
+          "atributo": "inteligencia",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "oficio1": {
+          "nome": "Ofício",
+          "atributo": "inteligencia",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "customizavel": true,
+          "customNome": "",
+          "total": 0
+        },
+        "oficio2": {
+          "nome": "Ofício",
+          "atributo": "inteligencia",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "customizavel": true,
+          "customNome": "",
+          "total": 0
+        },
+        "tecnologia": {
+          "nome": "Tecnologia",
+          "atributo": "inteligencia",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "teologia": {
+          "nome": "Teologia",
+          "atributo": "inteligencia",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "direcao": {
+          "nome": "Direção",
+          "atributo": "sabedoria",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "intuicao": {
+          "nome": "Intuição",
+          "atributo": "sabedoria",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "medicina": {
+          "nome": "Medicina",
+          "atributo": "sabedoria",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "ocultismo": {
+          "nome": "Ocultismo",
+          "atributo": "sabedoria",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "percepcao": {
+          "nome": "Percepção",
+          "atributo": "sabedoria",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "sobrevivencia": {
+          "nome": "Sobrevivência",
+          "atributo": "sabedoria",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "enganacao": {
+          "nome": "Enganação",
+          "atributo": "presenca",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "intimidacao": {
+          "nome": "Intimidação",
+          "atributo": "presenca",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "performance": {
+          "nome": "Performance",
+          "atributo": "presenca",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        },
+        "persuasao": {
+          "nome": "Persuasão",
+          "atributo": "presenca",
+          "outros": 0,
+          "treinado": false,
+          "maestria": false,
+          "total": 0
+        }
+      },
+      "ataques": [],
+      "habilidadesTalentos": [],
+      "tecnicas": {
+        "tecnicaAmaldicoada": "",
+        "descricaoTecnica": "",
+        "aptidoes": "",
+        "feiticos": "",
+        "expansaoDominio": "",
+        "tecnicaMaxima": "",
+        "perfil": {
+          "atributoPrincipal": "",
+          "feiticosConhecidos": 0,
+          "cdTecnica": 10,
+          "cdAmaldicoada": 10
+        },
+        "aptidoesEstruturadas": {
+          "aura": 0,
+          "controle": 0,
+          "barreira": 0,
+          "dominio": 0,
+          "reversa": 0
+        },
+        "feiticosPorNivel": {
+          "nivel0": "",
+          "nivel1": "",
+          "nivel2": "",
+          "nivel3": "",
+          "nivel4": "",
+          "nivel5": ""
+        },
+        "especiais": {
+          "tecnicaAmaldicoada": {
+            "nome": "",
+            "descricao": ""
+          },
+          "expansao": {
+            "nome": "",
+            "tipo": "",
+            "descricao": ""
+          },
+          "tecnicaMaxima": {
+            "nome": "",
+            "descricao": ""
+          }
+        }
+      },
+      "inventario": {
+        "armas": "",
+        "equipamentos": "",
+        "caracteristicas": "",
+        "itens": ""
+      },
+      "notas": {
+        "aparencia": "",
+        "idade": "",
+        "altura": "",
+        "peso": "",
+        "genero": "",
+        "cabelos": "",
+        "olhos": "",
+        "pele": "",
+        "roupas": "",
+        "marca": "",
+        "personalidade": "",
+        "ideais": "",
+        "ligacoes": "",
+        "complicacoes": "",
+        "anotacoes": ""
+      }
+    }
+  }
+}
+

@@ -1,0 +1,336 @@
+/* ============================= */
+/* Jiujitsu Kaisen - Base        */
+/* ============================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap");
+
+/* ============================= */
+/* Design Tokens                 */
+/* ============================= */
+
+.jiujitsu-kaisen.sheet.actor {
+  /* Tipografia */
+  --jk-font-title: "Cinzel", Georgia, serif;
+  --jk-font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --jk-font-number: "Roboto Mono", "Consolas", "Liberation Mono", monospace;
+
+  /* Espaçamentos */
+  --jk-space-1: 4px;
+  --jk-space-2: 6px;
+  --jk-space-3: 8px;
+  --jk-space-4: 10px;
+  --jk-space-5: 12px;
+
+  /* Raios */
+  --jk-radius-sm: 4px;
+  --jk-radius-md: 6px;
+  --jk-radius-lg: 8px;
+
+  /* Cores - base clara por padrão */
+  --jk-bg-page: #e8e2f0;
+  --jk-bg-sheet: #d9d4e8;
+  --jk-bg-section: #f0edf5;
+  --jk-bg-section-soft: #e1dbe9;
+  --jk-bg-header: #2b1730;
+  --jk-bg-input: #ece7f2;
+  --jk-bg-input-hover: #f4f0f7;
+
+  --jk-text-primary: #18141d;
+  --jk-text-secondary: #393141;
+  --jk-text-muted: #62596c;
+  --jk-text-on-dark: #f3edf7;
+  --jk-text-value: #3f2c68;
+
+  --jk-accent-primary: #2b1730;
+  --jk-accent-secondary: #5c1f2e;
+  --jk-accent-crimson: #8b1a2e;
+  --jk-accent-ice: #3f7f9e;
+  --jk-accent-purple: #6c4bb0;
+
+  --jk-border-section: #5c1f2e;
+  --jk-border-soft: #b8aec4;
+  --jk-border-input: #7b6f86;
+  --jk-separator: #b8aec4;
+
+  --jk-focus: #6c4bb0;
+  --jk-critical: #8b1a2e;
+  --jk-success: #3f7f9e;
+  --jk-failure: #8b1a2e;
+
+  font-family: var(--jk-font-body);
+  line-height: 1.55;
+  color: var(--jk-text-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .jiujitsu-kaisen.sheet.actor {
+    --jk-bg-page: #0f0e14;
+    --jk-bg-sheet: #13111a;
+    --jk-bg-section: #1e1b26;
+    --jk-bg-section-soft: #252230;
+    --jk-bg-header: #211126;
+    --jk-bg-input: #252230;
+    --jk-bg-input-hover: #2d2938;
+
+    --jk-text-primary: #e8e2f0;
+    --jk-text-secondary: #d9d4e8;
+    --jk-text-muted: #aaa1ba;
+    --jk-text-on-dark: #f4eff8;
+    --jk-text-value: #9b7fd4;
+
+    --jk-accent-primary: #211126;
+    --jk-accent-secondary: #5c1f2e;
+    --jk-accent-crimson: #e8758a;
+    --jk-accent-ice: #7eb8d4;
+    --jk-accent-purple: #9b7fd4;
+
+    --jk-border-section: #5c1f2e;
+    --jk-border-soft: #2e2a3a;
+    --jk-border-input: #5c5369;
+    --jk-separator: #2e2a3a;
+
+    --jk-focus: #9b7fd4;
+    --jk-critical: #e8758a;
+    --jk-success: #7eb8d4;
+    --jk-failure: #e8758a;
+  }
+}
+
+/* Classe manual futura, caso você queira alternar pelo Foundry */
+.jiujitsu-kaisen.sheet.actor.fmc-theme-dark,
+body.fmc-theme-dark .jiujitsu-kaisen.sheet.actor {
+  --jk-bg-page: #0f0e14;
+  --jk-bg-sheet: #13111a;
+  --jk-bg-section: #1e1b26;
+  --jk-bg-section-soft: #252230;
+  --jk-bg-header: #211126;
+  --jk-bg-input: #252230;
+  --jk-bg-input-hover: #2d2938;
+
+  --jk-text-primary: #e8e2f0;
+  --jk-text-secondary: #d9d4e8;
+  --jk-text-muted: #aaa1ba;
+  --jk-text-on-dark: #f4eff8;
+  --jk-text-value: #9b7fd4;
+
+  --jk-accent-primary: #211126;
+  --jk-accent-secondary: #5c1f2e;
+  --jk-accent-crimson: #e8758a;
+  --jk-accent-ice: #7eb8d4;
+  --jk-accent-purple: #9b7fd4;
+
+  --jk-border-section: #5c1f2e;
+  --jk-border-soft: #2e2a3a;
+  --jk-border-input: #5c5369;
+  --jk-separator: #2e2a3a;
+
+  --jk-focus: #9b7fd4;
+  --jk-critical: #e8758a;
+  --jk-success: #7eb8d4;
+  --jk-failure: #e8758a;
+}
+
+.jiujitsu-kaisen.sheet.actor.fmc-theme-light,
+body.fmc-theme-light .jiujitsu-kaisen.sheet.actor {
+  --jk-bg-page: #e8e2f0;
+  --jk-bg-sheet: #d9d4e8;
+  --jk-bg-section: #f0edf5;
+  --jk-bg-section-soft: #e1dbe9;
+  --jk-bg-header: #2b1730;
+  --jk-bg-input: #ece7f2;
+  --jk-bg-input-hover: #f4f0f7;
+
+  --jk-text-primary: #18141d;
+  --jk-text-secondary: #393141;
+  --jk-text-muted: #62596c;
+  --jk-text-on-dark: #f3edf7;
+  --jk-text-value: #3f2c68;
+
+  --jk-accent-primary: #2b1730;
+  --jk-accent-secondary: #5c1f2e;
+  --jk-accent-crimson: #8b1a2e;
+  --jk-accent-ice: #3f7f9e;
+  --jk-accent-purple: #6c4bb0;
+
+  --jk-border-section: #5c1f2e;
+  --jk-border-soft: #b8aec4;
+  --jk-border-input: #7b6f86;
+  --jk-separator: #b8aec4;
+
+  --jk-focus: #6c4bb0;
+  --jk-critical: #8b1a2e;
+  --jk-success: #3f7f9e;
+  --jk-failure: #8b1a2e;
+}
+
+/* ============================= */
+/* Base da sheet                 */
+/* ============================= */
+
+.jiujitsu-kaisen.sheet.actor {
+  background: var(--jk-bg-page);
+}
+
+.jiujitsu-kaisen .window-content {
+  background: var(--jk-bg-sheet);
+  color: var(--jk-text-primary);
+}
+
+/* Abas */
+
+.jiujitsu-kaisen .sheet-tabs {
+  margin: 10px 0;
+  border-top: 1px solid var(--jk-border-section);
+  border-bottom: 1px solid var(--jk-border-section);
+}
+
+.jiujitsu-kaisen .sheet-tabs .item {
+  padding: 6px 12px;
+  color: var(--jk-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.jiujitsu-kaisen .sheet-tabs .item:hover {
+  color: var(--jk-text-primary);
+  text-shadow: 0 0 5px color-mix(in srgb, var(--jk-accent-purple) 55%, transparent);
+}
+
+.jiujitsu-kaisen .sheet-tabs .item.active {
+  color: var(--jk-text-on-dark);
+  background: var(--jk-bg-header);
+  text-shadow: none;
+}
+
+/* Layout principal - preservado do ZIP */
+
+.jiujitsu-kaisen .jk-main-layout {
+  display: grid;
+  grid-template-columns: 620px 340px;
+  gap: 10px;
+  align-items: start;
+}
+
+.jiujitsu-kaisen .jk-left-column {
+  width: 620px;
+  max-width: 620px;
+}
+
+.jiujitsu-kaisen .jk-right-column {
+  width: 340px;
+  max-width: 340px;
+  align-self: start;
+}
+
+/* Cards */
+
+.jiujitsu-kaisen .jk-card {
+  background: var(--jk-bg-section);
+
+  border: 1px solid #3A3548;
+  border-radius: var(--jk-radius-md);
+
+  padding: 8px;
+  margin-bottom: 8px;
+
+  color: var(--jk-text-primary);
+}
+
+.jiujitsu-kaisen .jk-card h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+  color: #d4b8e8;
+
+  text-align: center;
+  font-family: var(--jk-font-title);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Formulários */
+
+.jiujitsu-kaisen label {
+  font-weight: 600;
+  color: var(--jk-text-muted);
+}
+
+.jiujitsu-kaisen input,
+.jiujitsu-kaisen textarea,
+.jiujitsu-kaisen select {
+  width: 100%;
+  box-sizing: border-box;
+
+  background: var(--jk-bg-input);
+  color: var(--jk-text-primary);
+
+  border: none;
+  border-bottom: 1px solid var(--jk-border-input);
+  border-radius: 0;
+
+  line-height: 1.5;
+  transition: none;
+}
+
+.jiujitsu-kaisen input:hover,
+.jiujitsu-kaisen textarea:hover,
+.jiujitsu-kaisen select:hover {
+  background: var(--jk-bg-input-hover);
+}
+
+.jiujitsu-kaisen input:focus,
+.jiujitsu-kaisen textarea:focus,
+.jiujitsu-kaisen select:focus {
+  outline: none;
+  border-bottom-color: var(--jk-focus);
+  box-shadow: 0 1px 0 var(--jk-focus);
+}
+
+.jiujitsu-kaisen input[type="number"] {
+  text-align: center;
+  font-family: var(--jk-font-number);
+  font-weight: 600;
+}
+
+.jiujitsu-kaisen input[type="checkbox"] {
+  width: auto;
+  accent-color: var(--jk-accent-purple);
+}
+
+.jiujitsu-kaisen input[readonly] {
+  color: var(--jk-text-muted);
+  background: var(--jk-bg-section-soft);
+}
+
+.jiujitsu-kaisen textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.jiujitsu-kaisen option {
+  background: var(--jk-bg-input);
+  color: var(--jk-text-primary);
+}
+
+/* Numerais e destaques */
+
+.jiujitsu-kaisen .jk-skill-total,
+.jiujitsu-kaisen .jk-resistencia-total,
+.jiujitsu-kaisen .jk-attribute-mod {
+  font-family: var(--jk-font-number);
+  color: var(--jk-text-value);
+}
+
+.jiujitsu-kaisen .jk-combat-total {
+  font-family: var(--jk-font-number);
+}
+
+.jk-dialog-summary p {
+  margin: 4px 0;
+}
+

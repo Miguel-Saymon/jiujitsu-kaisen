@@ -1,0 +1,475 @@
+/* ==========================================================
+   COMBATE — LAYOUT V2
+   Paleta harmonizada com a aba Principal
+   ========================================================== */
+
+.jk-combate-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: #1E1B26;
+}
+
+.jk-combate-top-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+}
+
+.jk-combate-mid-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+}
+
+.jk-combate-mid-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.jk-combate-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+    align-items: start;
+}
+
+.jk-combate-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+/* ==========================================================
+   CARDS
+   ========================================================== */
+
+.jk-combate-card {
+    background: #252231;
+    border: 1px solid #3A3548;
+    border-radius: 6px;
+    padding: 12px;
+    overflow: hidden;
+}
+
+.jk-combate-card h2 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    font-family: "Cinzel", serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .03em;
+    color: #d4b8e8;
+    white-space: nowrap;
+    text-shadow: none;
+}
+
+.jk-combate-card h2::before,
+.jk-combate-card h2::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #3A3548;
+}
+
+/* ==========================================================
+   INPUTS
+   ========================================================== */
+
+.jk-combate-card input,
+.jk-combate-card textarea,
+.jk-combate-card select {
+    width: 100%;
+    background: #252231;
+    border: none;
+    border-bottom: 1px solid #3A3548;
+    color: #f0e0ff;
+    box-shadow: none;
+}
+
+.jk-combate-card input::placeholder,
+.jk-combate-card textarea::placeholder {
+    color: #6b6080;
+    opacity: .75;
+}
+
+.jk-combate-card input:focus,
+.jk-combate-card textarea:focus,
+.jk-combate-card select:focus {
+    outline: none;
+    box-shadow: none;
+    border-bottom-color: #4A4460;
+    background: #2C2838;
+}
+
+/* ==========================================================
+   CAMPOS LIVRES
+   ========================================================== */
+
+.jk-free-field {
+    min-height: 44px;
+    width: 100%;
+    resize: none;
+    padding: 8px;
+    background: #252231;
+    border: 1px solid #3A3548 !important;
+    border-radius: 4px;
+    color: #d4b8e8;
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.jk-free-field:focus {
+    outline: none;
+    border-color: #4A4460 !important;
+    background: #2C2838;
+}
+
+/* ==========================================================
+   HABILIDADES & TALENTOS
+   ========================================================== */
+
+.jk-talent-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: transparent;
+    border-bottom: none;
+}
+
+.jk-talent-table th {
+    padding: 5px 6px;
+    border-bottom: 1px solid #3A3548;
+    color: #9b7fd4;
+    font-size: 9px;
+    letter-spacing: .06em;
+    text-align: left;
+    text-transform: uppercase;
+    background: #1E1B26;
+}
+
+.jk-talent-table th:not(:first-child) {
+    min-width: 36px;
+    text-align: center;
+}
+
+.jk-talent-table td {
+    padding: 5px 6px;
+    border-bottom: none;
+    color: #d4b8e8;
+    font-size: 12px;
+    background: #252231;
+}
+
+.jk-talent-table tr:nth-child(even) td,
+.jk-talent-table tr:nth-child(odd) td {
+    background: #252231;
+}
+
+.jk-talent-table td:not(:first-child) {
+    text-align: center;
+}
+
+.jk-talent-table tr:hover td {
+    background: #2C2838;
+}
+
+.jk-talent-table input {
+    height: 24px;
+    padding: 2px 4px;
+    background: transparent !important;
+    color: #d4b8e8;
+    border-bottom: 1px solid rgba(58, 53, 72, .75);
+}
+
+.jk-talent-table input:focus {
+    background: #2C2838 !important;
+    border-bottom-color: #4A4460;
+}
+
+.jk-talent-table td.is-val input {
+    font-family: "Courier New", monospace;
+    color: #f0e0ff;
+    text-align: center;
+}
+
+.jk-talent-table td.is-cost input {
+    color: #9b7fd4;
+    font-size: 10px;
+    text-align: center;
+}
+
+/* ==========================================================
+   CD ESPECIALIZAÇÃO + DESLOCAMENTO
+   ========================================================== */
+
+.jk-combate-cd-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.jk-combate-cd-box,
+.jk-combate-desloc-box {
+    min-height: 136px;
+}
+
+.jk-combate-cd-box .jk-combat-fields,
+.jk-combate-desloc-box .jk-combat-fields {
+    gap: 10px;
+}
+
+.jk-combate-cd-box select {
+    width: 48px;
+    height: 22px;
+
+    background: #2C2838;
+    color: #9b7fd4;
+
+    border: 1px solid #3A3548;
+    border-radius: 3px;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    text-align: center;
+    text-align-last: center;
+}
+
+.jk-combate-cd-box select:focus {
+    outline: none;
+    border-color: #9b7fd4;
+    box-shadow: none;
+}
+
+/* compatibilidade caso ainda exista markup antigo */
+.jk-cd-wrap {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.jk-cd-total {
+    padding-right: 10px;
+    border-right: 1px solid #3A3548 !important;
+    border-bottom: none !important;
+    background: transparent !important;
+    color: #f0e0ff;
+    font-family: "Courier New", monospace;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+}
+
+.jk-cd-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+}
+
+.jk-cd-field {
+    display: block;
+    margin: 0 !important;
+    padding: 4px 6px;
+    background: #2C2838;
+    border: 1px solid #3A3548;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.jk-cd-field__label {
+    display: block;
+    margin-bottom: 2px;
+    color: #9b7fd4;
+    font-size: 8px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    opacity: .75;
+}
+
+.jk-cd-field input,
+.jk-cd-field__value {
+    border-bottom: none !important;
+    background: transparent !important;
+    color: #d4b8e8;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* ==========================================================
+   RDs
+   ========================================================== */
+
+.jk-rd-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+
+.jk-rd-box {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 72px;
+
+    align-self: start;
+    height: auto;
+
+    background: #252231;
+    border: 1px solid #3A3548;
+    border-radius: 4px;
+    padding: 8px 6px;
+}
+
+.jk-rd-box__label {
+    margin: 0 0 6px;
+    padding: 0 0 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-bottom: 1px solid #3A3548;
+
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+
+    color: #6b6080;
+
+    text-transform: uppercase;
+}
+
+.jk-rd-box input,
+.jk-rd-box__input {
+    width: 100%;
+
+    padding: 2px 4px;
+
+    background: transparent;
+    color: #f0e0ff;
+
+    border: none;
+    border-bottom: 1px solid #3A3548;
+    border-radius: 0;
+
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    font-weight: 700;
+
+    text-align: center;
+}
+
+.jk-rd-box input:focus,
+.jk-rd-box__input:focus {
+    outline: none;
+    border-bottom-color: #9b7fd4;
+    box-shadow: none;
+}
+
+/* ==========================================================
+   INVENTÁRIO & ATAQUES
+   ========================================================== */
+
+.jk-inv-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    background: #2C2838;
+    border: 1px solid #3A3548;
+    border-radius: 4px;
+}
+
+.jk-inv-search input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #d4b8e8;
+    font-size: 12px;
+}
+
+.jk-inv-search input::placeholder {
+    color: #6b6080;
+    opacity: .65;
+}
+
+.jk-inventario-field {
+    min-height: 180px;
+}
+
+/* ==========================================================
+   TÉCNICAS
+   ========================================================== */
+
+.jk-combate-card label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+    color: #d4b8e8;
+    font-weight: 600;
+}
+
+.jk-combate-card label:last-child {
+    margin-bottom: 0;
+}
+
+.jk-combate-card details {
+    overflow: hidden;
+    margin-bottom: 8px;
+    background: #252231;
+    border: 1px solid #3A3548;
+    border-radius: 4px;
+}
+
+.jk-combate-card details:last-child {
+    margin-bottom: 0;
+}
+
+.jk-combate-card summary {
+    padding: 8px;
+    background: #2C2838;
+    color: #d4b8e8;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.jk-combate-card details textarea,
+.jk-tecnicas-layout textarea {
+    min-height: 96px;
+    padding: 8px;
+    border: none;
+}
+
+/* ==========================================================
+   RESPONSIVO
+   ========================================================== */
+
+@media (max-width: 1100px) {
+    .jk-combate-top-row,
+    .jk-combate-mid-row,
+    .jk-combate-main-grid,
+    .jk-cd-movement-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .jk-rd-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+

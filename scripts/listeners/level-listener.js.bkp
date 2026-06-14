@@ -1,0 +1,310 @@
+import { obterEspecializacao, obterOpcoesEspecializacaoValidas } from "../helpers/especializacoes.js";
+import { calcularRecursosAoSubirNivel } from "../calculations/progressao.js";
+
+export function registerLevelListener(sheet, html) {
+  html.find(".jk-add-level").on("click", async () => {
+    abrirDialogoAdicionarNivel(sheet);
+  });
+  html.find(".jk-reset-progression").on("click", async () => {
+  confirmarResetProgressao(sheet);
+  });
+}
+
+async function abrirDialogoAdicionarNivel(sheet) {
+  const actor = sheet.actor;
+  const system = actor.system;
+
+  const nivelAtual = Number(system.info?.nivel) || 0;
+  const proximoNivel = nivelAtual + 1;
+
+  const especializacoes = obterOpcoesEspecializacaoValidas(system);
+
+  if (Object.keys(especializacoes).length === 0) {
+    ui.notifications.warn("Nenhuma especialização válida disponível.");
+    return;
+  }
+
+  const opcoesHtml = Object.entries(especializacoes)
+    .map(([chave, nome]) => `<option value="${chave}">${nome}</option>`)
+    .join("");
+
+  new Dialog({
+    title: `Adicionar Nível ${proximoNivel}`,
+    content: `
+      <form>
+        <div class="form-group">
+          <label>Especialização</label>
+          <select name="especializacao">
+            ${opcoesHtml}
+          </select>
+        </div>
+      </form>
+    `,
+    buttons: {
+      cancelar: {
+        label: "Cancelar"
+      },
+
+      confirmar: {
+        label: "Confirmar",
+        callback: async (html) => {
+          const especializacao =
+            html.find("[name='especializacao']").val();
+
+          if (proximoNivel === 1) {
+            await verificarAtributoInicial(actor, {
+              nivel: proximoNivel,
+              especializacao
+            });
+
+            return;
+          }
+
+          await adicionarNivel(actor, {
+            nivel: proximoNivel,
+            especializacao
+          });
+        }
+      }
+    },
+    default: "confirmar"
+  }).render(true);
+}
+
+async function verificarAtributoInicial(actor, novoNivel) {
+  const especializacao = obterEspecializacao(
+    novoNivel.especializacao
+  );
+
+  const atributosDisponiveis =
+    especializacao?.atributoRecurso ?? [];
+
+  if (atributosDisponiveis.length === 0) {
+    await adicionarNivel(actor, novoNivel);
+    return;
+  }
+
+  const nomesAtributos = {
+    inteligencia: "Inteligência",
+    sabedoria: "Sabedoria",
+    presenca: "Presença"
+  };
+
+  const opcoesAtributos = atributosDisponiveis
+    .map((atributo) => {
+      return `
+        <option value="${atributo}">
+          ${nomesAtributos[atributo] ?? atributo}
+        </option>
+      `;
+    })
+    .join("");
+
+  new Dialog({
+    title: "Atributo do Recurso Inicial",
+    content: `
+      <form>
+        <p>
+          Esta especialização adiciona um modificador de atributo
+          aos Pontos de Energia iniciais.
+        </p>
+
+        <div class="form-group">
+          <label>Atributo</label>
+          <select name="atributoInicial">
+            ${opcoesAtributos}
+          </select>
+        </div>
+      </form>
+    `,
+    buttons: {
+      cancelar: {
+        label: "Cancelar"
+      },
+
+      confirmar: {
+        label: "Confirmar",
+        callback: async (html) => {
+          const atributoInicial =
+            html.find("[name='atributoInicial']").val();
+
+          await adicionarNivel(actor, {
+            ...novoNivel,
+            atributoInicial
+          });
+        }
+      }
+    },
+    default: "confirmar"
+  }).render(true);
+}
+
+async function adicionarNivel(actor, novoNivel) {
+  const system = actor.system;
+
+  const especializacao = obterEspecializacao(
+    novoNivel.especializacao
+  );
+
+  if (!especializacao) {
+    ui.notifications.error("Especialização inválida.");
+    return;
+  }
+
+  const niveisAtuais = foundry.utils.deepClone(
+    system.progressao?.niveis ?? []
+  );
+
+  const updateData = {};
+
+  const recursosAtualizados = calcularRecursosAoSubirNivel(
+    system,
+    novoNivel,
+    especializacao
+  );
+
+  niveisAtuais.push(novoNivel);
+
+  updateData["system.info.nivel"] = novoNivel.nivel;
+  updateData["system.progressao.niveis"] = niveisAtuais;
+
+if (novoNivel.nivel === 1) {
+  updateData["system.progressao.pvInicialAplicado"] = true;
+
+  if (novoNivel.atributoInicial) {
+    updateData["system.progressao.atributoInicial"] =
+      novoNivel.atributoInicial;
+  }
+}
+
+  Object.assign(updateData, recursosAtualizados);
+
+  await actor.update(updateData);
+
+  ui.notifications.info(`Nível ${novoNivel.nivel} adicionado.`);
+}
+
+async function confirmarResetProgressao(sheet) {
+  const actor = sheet.actor;
+
+  new Dialog({
+    title: "Resetar Progressão",
+    content: `
+      <p>
+        Tem certeza que deseja remover toda a progressão deste personagem?
+      </p>
+      <p>
+        Isso retornará o nível para 0 e limpará especializações registradas.
+      </p>
+    `,
+    buttons: {
+      cancelar: {
+        label: "Cancelar"
+      },
+
+      confirmar: {
+        label: "Confirmar",
+        callback: async () => {
+          await actor.update({
+            "system.info.nivel": 0,
+
+            "system.progressao.atributoInicial": "",
+            "system.progressao.pvInicialAplicado": false,
+            "system.progressao.niveis": [],
+
+            "system.recursos.pv.atual": 0,
+            "system.recursos.pv.max": 0,
+            "system.recursos.pe.atual": 0,
+            "system.recursos.pe.max": 0,
+            "system.recursos.estamina.atual": 0,
+            "system.recursos.estamina.max": 0,
+            "system.recursos.integridade.atual": 0,
+            "system.recursos.integridade.max": 0
+          });
+
+          ui.notifications.info("Progressão resetada.");
+        }
+      }
+    },
+    default: "cancelar"
+  }).render(true);
+}
+
+function calcularRecursosAoSubirNivel(system, novoNivel, especializacao) {
+  const updateData = {};
+
+  const isNivel1 = novoNivel.nivel === 1;
+
+  if (isNivel1 && !system.progressao?.pvInicialAplicado) {
+    const modConstituicao = obterModificadorAtributo(
+      system,
+      "constituicao"
+    );
+
+    const pvMaximo = Math.max(
+      1,
+      especializacao.pvInicial + modConstituicao
+    );
+
+    updateData["system.recursos.pv.max"] = pvMaximo;
+    updateData["system.recursos.pv.atual"] = pvMaximo;
+
+    updateData["system.recursos.integridade.max"] = pvMaximo;
+    updateData["system.recursos.integridade.atual"] = pvMaximo;
+  }
+
+  const recurso = especializacao.recurso;
+
+let ganhoBase = isNivel1
+  ? especializacao.recursoInicial
+  : especializacao.recursoPorNivel;
+
+if (
+  isNivel1 &&
+  especializacao.recurso === "pe" &&
+  novoNivel.atributoInicial
+) {
+  ganhoBase += obterModificadorAtributo(
+    system,
+    novoNivel.atributoInicial
+  );
+}
+
+ganhoBase = Math.max(0, ganhoBase);
+
+  if (recurso === "estamina") {
+    const estaminaAtual =
+      Number(system.recursos?.estamina?.atual) || 0;
+
+    const estaminaMax =
+      Number(system.recursos?.estamina?.max) || 0;
+
+    updateData["system.recursos.estamina.max"] =
+      estaminaMax + ganhoBase;
+
+    updateData["system.recursos.estamina.atual"] =
+      estaminaAtual + ganhoBase;
+
+    return updateData;
+  }
+
+  const peAtual =
+    Number(system.recursos?.pe?.atual) || 0;
+
+  const peMax =
+    Number(system.recursos?.pe?.max) || 0;
+
+  updateData["system.recursos.pe.max"] =
+    peMax + ganhoBase;
+
+  updateData["system.recursos.pe.atual"] =
+    peAtual + ganhoBase;
+
+  return updateData;
+}
+
+function obterModificadorAtributo(system, atributo) {
+  const valor = Number(system.atributos?.[atributo]?.valor) || 10;
+
+  return Math.floor((valor - 10) / 2);
+}

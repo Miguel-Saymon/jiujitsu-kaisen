@@ -1,0 +1,149 @@
+/* ============================= */
+/* Principal - Recursos          */
+/* ============================= */
+
+.jk-resource-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 136px;
+
+  background: #252231;
+
+  border: 1px solid #3A3548;
+  border-radius: 4px;
+
+  padding: 10px 12px;
+
+  text-align: center;
+}
+
+.jk-resource-box h3 {
+  margin: 0 0 8px;
+  padding: 0 0 5px;
+
+  min-height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
+
+  font-size: 9px;
+  letter-spacing: 0.05em;
+
+  background: transparent;
+
+  border: none;
+  border-bottom: 1px solid #3A3548;
+
+  font-weight: 700;
+  color: #6b6080;
+  text-transform: uppercase;
+}
+
+.jk-resource-main {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+}
+
+.jk-resource-main label,
+.jk-resource-temp,
+.jk-resource-box label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  color: #6b6080;
+}
+
+.jk-resource-main input,
+.jk-resource-main .value {
+  width: 52px;
+
+  background: transparent;
+  color: #f0e0ff;
+
+  border: none;
+  border-bottom: 1px solid #3A3548;
+  border-radius: 0;
+
+  font-family: "Courier New", monospace;
+  font-size: 22px;
+  font-weight: 700;
+
+  text-align: center;
+}
+
+.jk-resource-main input:focus {
+  outline: none;
+  border-bottom-color: #9b7fd4;
+  box-shadow: none;
+}
+
+.jk-resource-temp,
+.jk-resource-box > label {
+  margin-top: 6px;
+  padding-top: 6px;
+
+  border-top: 1px solid #3A3548;
+
+  font-size: 11px;
+  color: #6b6080;
+
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  min-height: 32px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.jk-resource-temp input,
+.jk-resource-box input,
+.jk-resource-box select {
+  width: 100%;
+
+  padding: 2px 4px;
+
+  background: transparent;
+  color: #f0e0ff;
+
+  border: none;
+  border-bottom: 1px solid #3A3548;
+  border-radius: 0;
+
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  font-weight: 700;
+
+  text-align: center;
+}
+
+.jk-resource-temp input:focus,
+.jk-resource-box input:focus,
+.jk-resource-box select:focus {
+  outline: none;
+  border-bottom-color: #9b7fd4;
+  box-shadow: none;
+}
+
+.jk-resource-box input[readonly] {
+  color: #9b7fd4;
+
+  background: transparent;
+
+  border-bottom-color: #3A3548;
+}

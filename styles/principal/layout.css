@@ -1,0 +1,81 @@
+/* ============================= */
+/* Principal - Layout            */
+/* ============================= */
+
+.jk-top-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 12px;
+
+  padding: 12px;
+
+  background: #1E1B26;
+}
+
+.jk-split-left,
+.jk-split-right {
+  background: #252231;
+
+  border: 1px solid #3A3548;
+  border-radius: 6px;
+
+  padding: 14px;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+
+.jk-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+
+  padding: 12px;
+
+  background: #1E1B26;
+}
+
+/* Cabeçalhos editoriais da aba principal */
+
+.jk-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0 0 12px;
+
+  padding: 0 0 8px;
+
+  background: transparent;
+  border: none;
+
+  border-bottom: 1px solid #3A3548;
+
+  font-family: "Cinzel", serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+
+  color: #d4b8e8;
+
+  text-align: center;
+  text-transform: none;
+}
+
+.jk-card h2::before,
+.jk-card h2::after {
+  content: "";
+
+  flex: 1;
+
+  height: 1px;
+
+  background: #3A3548;
+}
+
+/* Ajuste: blocos superiores sem borda inferior carmesim */
+
+.jk-split-left,
+.jk-split-right {
+  border: 1px solid #3A3548;
+  border-bottom: 1px solid #3A3548;
+}

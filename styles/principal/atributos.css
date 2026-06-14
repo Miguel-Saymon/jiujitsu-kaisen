@@ -1,0 +1,79 @@
+/* ============================= */
+/* Principal - Atributos         */
+/* ============================= */
+
+.jk-attributes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 8px;
+  padding: 8px;
+}
+
+.jk-attribute-box {
+  background: #252231;
+
+  border: 1px solid #3A3548;
+  border-radius: 4px;
+
+  padding: 9px 8px;
+
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 98px;
+}
+
+.jk-attribute-label {
+  margin: 0;
+  padding-bottom: 5px;
+
+  border-bottom: 1px solid #3A3548;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+
+  color: #6b6080;
+
+  text-transform: uppercase;
+}
+
+.jk-attribute-box input[type="number"] {
+  width: 100%;
+
+  margin: 6px 0 4px;
+  padding: 0;
+
+  background: transparent;
+  color: #f0e0ff;
+
+  border: none;
+
+  font-family: "Courier New", monospace;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+
+  text-align: center;
+}
+
+.jk-attribute-box input[type="number"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.jk-attribute-mod {
+  margin: 0;
+  padding-top: 5px;
+
+  border-top: 1px solid #3A3548;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #9b7fd4;
+}

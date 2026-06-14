@@ -1,0 +1,213 @@
+<div class="tab" data-group="primary" data-tab="tecnicas">
+
+    <div class="jk-combate-layout jk-tecnicas-layout">
+
+        <div class="jk-combate-main-grid">
+
+            {{!-- COLUNA 1 --}}
+            <div class="jk-combate-col">
+
+                <section class="jk-card jk-combate-card">
+                    <h2>Perfil Amaldiçoado</h2>
+
+                    <label>
+                        Atributo Principal
+                        <input
+                            name="system.tecnicas.perfil.atributoPrincipal"
+                            type="text"
+                            value="{{system.tecnicas.perfil.atributoPrincipal}}"
+                        />
+                    </label>
+
+                    <label>
+                        Feitiços Conhecidos
+                        <input
+                            name="system.tecnicas.perfil.feiticosConhecidos"
+                            type="number"
+                            value="{{system.tecnicas.perfil.feiticosConhecidos}}"
+                        />
+                    </label>
+
+                    <label>
+                        CD Técnica
+                        <input
+                            name="system.tecnicas.perfil.cdTecnica"
+                            type="number"
+                            value="{{system.tecnicas.perfil.cdTecnica}}"
+                        />
+                    </label>
+
+                    <label>
+                        CD Amaldiçoada
+                        <input
+                            name="system.tecnicas.perfil.cdAmaldicoada"
+                            type="number"
+                            value="{{system.tecnicas.perfil.cdAmaldicoada}}"
+                        />
+                    </label>
+                </section>
+
+                <section class="jk-card jk-combate-card">
+                    <h2>Aptidões</h2>
+
+                    <label>
+                        Aura
+                        <input
+                            name="system.tecnicas.aptidoesEstruturadas.aura"
+                            type="number"
+                            value="{{system.tecnicas.aptidoesEstruturadas.aura}}"
+                        />
+                    </label>
+
+                    <label>
+                        Controle
+                        <input
+                            name="system.tecnicas.aptidoesEstruturadas.controle"
+                            type="number"
+                            value="{{system.tecnicas.aptidoesEstruturadas.controle}}"
+                        />
+                    </label>
+
+                    <label>
+                        Barreira
+                        <input
+                            name="system.tecnicas.aptidoesEstruturadas.barreira"
+                            type="number"
+                            value="{{system.tecnicas.aptidoesEstruturadas.barreira}}"
+                        />
+                    </label>
+
+                    <label>
+                        Domínio
+                        <input
+                            name="system.tecnicas.aptidoesEstruturadas.dominio"
+                            type="number"
+                            value="{{system.tecnicas.aptidoesEstruturadas.dominio}}"
+                        />
+                    </label>
+
+                    <label>
+                        Energia Reversa
+                        <input
+                            name="system.tecnicas.aptidoesEstruturadas.reversa"
+                            type="number"
+                            value="{{system.tecnicas.aptidoesEstruturadas.reversa}}"
+                        />
+                    </label>
+                </section>
+
+            </div>
+
+            {{!-- COLUNA 2 --}}
+            <div class="jk-combate-col">
+
+                <section class="jk-card jk-combate-card">
+                    <h2>Feitiços</h2>
+
+                    <details open>
+                        <summary>Nível 0</summary>
+                        <textarea name="system.tecnicas.feiticos.nivel0">{{system.tecnicas.feiticos.nivel0}}</textarea>
+                    </details>
+
+                    <details>
+                        <summary>Nível 1</summary>
+                        <textarea name="system.tecnicas.feiticos.nivel1">{{system.tecnicas.feiticos.nivel1}}</textarea>
+                    </details>
+
+                    <details>
+                        <summary>Nível 2</summary>
+                        <textarea name="system.tecnicas.feiticos.nivel2">{{system.tecnicas.feiticos.nivel2}}</textarea>
+                    </details>
+
+                    <details>
+                        <summary>Nível 3</summary>
+                        <textarea name="system.tecnicas.feiticos.nivel3">{{system.tecnicas.feiticos.nivel3}}</textarea>
+                    </details>
+
+                    <details>
+                        <summary>Nível 4</summary>
+                        <textarea name="system.tecnicas.feiticos.nivel4">{{system.tecnicas.feiticos.nivel4}}</textarea>
+                    </details>
+
+                    <details>
+                        <summary>Nível 5</summary>
+                        <textarea name="system.tecnicas.feiticos.nivel5">{{system.tecnicas.feiticos.nivel5}}</textarea>
+                    </details>
+                </section>
+
+            </div>
+
+            {{!-- COLUNA 3 --}}
+            <div class="jk-combate-col">
+
+                <section class="jk-card jk-combate-card">
+                    <h2>Técnica Amaldiçoada</h2>
+
+                    <label>
+                        Nome
+                        <input
+                            name="system.tecnicas.tecnicaAmaldicoada.nome"
+                            type="text"
+                            value="{{system.tecnicas.tecnicaAmaldicoada.nome}}"
+                        />
+                    </label>
+
+                    <label>
+                        Descrição
+                        <textarea name="system.tecnicas.tecnicaAmaldicoada.descricao">{{system.tecnicas.tecnicaAmaldicoada.descricao}}</textarea>
+                    </label>
+                </section>
+
+                <section class="jk-card jk-combate-card">
+                    <h2>Expansão de Domínio</h2>
+
+                    <label>
+                        Nome
+                        <input
+                            name="system.tecnicas.expansao.nome"
+                            type="text"
+                            value="{{system.tecnicas.expansao.nome}}"
+                        />
+                    </label>
+
+                    <label>
+                        Tipo
+                        <input
+                            name="system.tecnicas.expansao.tipo"
+                            type="text"
+                            value="{{system.tecnicas.expansao.tipo}}"
+                        />
+                    </label>
+
+                    <label>
+                        Descrição
+                        <textarea name="system.tecnicas.expansao.descricao">{{system.tecnicas.expansao.descricao}}</textarea>
+                    </label>
+                </section>
+
+                <section class="jk-card jk-combate-card">
+                    <h2>Técnica Máxima</h2>
+
+                    <label>
+                        Nome
+                        <input
+                            name="system.tecnicas.tecnicaMaxima.nome"
+                            type="text"
+                            value="{{system.tecnicas.tecnicaMaxima.nome}}"
+                        />
+                    </label>
+
+                    <label>
+                        Descrição
+                        <textarea name="system.tecnicas.tecnicaMaxima.descricao">{{system.tecnicas.tecnicaMaxima.descricao}}</textarea>
+                    </label>
+                </section>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
