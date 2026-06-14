@@ -3,6 +3,10 @@
   "title": "Jiujitsu Kaisen",
   "description": "Sistema privado para uso entre amigos.",
   "version": "0.1.2",
+
+  "manifest": "https://raw.githubusercontent.com/Miguel-Saymon/jiujitsu-kaisen/main/system.json",
+  "download": "https://github.com/Miguel-Saymon/jiujitsu-kaisen/releases/download/v0.1.2/jiujitsu-kaisen-v0.1.2.zip"
+
   "compatibility": {
     "minimum": "13",
     "verified": "13"
