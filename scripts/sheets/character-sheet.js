@@ -44,7 +44,7 @@ getData() {
   .map(([key, pericia]) => ({
     key,
     ...pericia,
-    nomeExibido: pericia.customNome || pericia.nome
+    nomeExibido: pericia.nome
   }))
   .sort((a, b) =>
     a.nomeExibido.localeCompare(b.nomeExibido, "pt-BR")
