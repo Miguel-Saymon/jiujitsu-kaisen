@@ -12,6 +12,7 @@ import { registerInitiativeRolls } from "../rolls/initiative-rolls.js";
 import { registerDeathSaveRolls } from "../rolls/death-save-rolls.js";
 import { registerDeathSaveListener } from "../listeners/death-save-listener.js";
 import { calcularDadosVida } from "../calculations/recursos.js";
+import { obterBonusTreino } from "../helpers/proficiencia.js";
 
 export class JKCharacterSheet extends ActorSheet {
   static get defaultOptions() {
@@ -70,6 +71,8 @@ context.nomeRecursoEnergia = context.isRestringido
 context.estadoIntegridade = calcularEstadoIntegridade(
   context.system
 );
+
+context.bonusTreino = obterBonusTreino(context.system);
 
   return context;
 }

@@ -330,7 +330,55 @@
     border: 1px solid #3A3548;
     border-radius: 4px;
     padding: 8px 6px;
+
+    position: relative;
+    cursor: help;
+    overflow: visible;
 }
+
+.jk-rd-box::after {
+    content: "";
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+
+    padding: 4px 8px;
+
+    background: #1E1B26;
+    border: 1px solid #3A3548;
+    border-radius: 3px;
+
+    color: #d4b8e8;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: none;
+    white-space: nowrap;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+
+    z-index: 50;
+}
+
+.jk-rd-box:hover::after {
+    opacity: 1;
+}
+
+.rd-cor::after { content: "Cortante"; }
+.rd-imp::after { content: "Impacto"; }
+.rd-per::after { content: "Perfurante"; }
+.rd-con::after { content: "Congelante"; }
+.rd-que::after { content: "Queimante"; }
+.rd-cho::after { content: "Chocante"; }
+.rd-son::after { content: "Sônico"; }
+.rd-ene::after { content: "Energético"; }
+.rd-psi::after { content: "Psíquico"; }
+.rd-rad::after { content: "Radiante"; }
+.rd-nec::after { content: "Necrótico"; }
+.rd-ven::after { content: "Venenoso"; }
 
 .jk-rd-box__label {
     margin: 0 0 6px;
@@ -376,6 +424,33 @@
     outline: none;
     border-bottom-color: #9b7fd4;
     box-shadow: none;
+}
+
+.jk-rd-box::after {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 4px 8px;
+
+  background: #1e1b26;
+  border: 1px solid #3a3548;
+  border-radius: 3px;
+
+  color: #d4b8e8;
+  font-size: 10px;
+  white-space: nowrap;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s ease;
+
+  z-index: 50;
+}
+
+.jk-rd-box:hover::after {
+  opacity: 1;
 }
 
 /* ==========================================================

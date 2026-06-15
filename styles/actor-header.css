@@ -66,14 +66,33 @@
   box-shadow: none;
 }
 
+/* ============================= */
+/* Grid dos campos do header     */
+/* ============================= */
+
 .jk-header-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jk-header-row1 {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: 2fr 2fr 1.5fr 1.5fr;
   gap: 8px;
   align-items: end;
 }
 
-.jk-header-grid label {
+.jk-header-row2 {
+  display: grid;
+  grid-template-columns: 2fr 1.8fr 0.8fr 2fr;
+  gap: 8px;
+  align-items: end;
+}
+
+.jk-header-grid label,
+.jk-header-row1 label,
+.jk-header-row2 label {
   display: block;
   margin-bottom: 3px;
   font-size: 10px;
@@ -89,7 +108,8 @@
 .jiujitsu-kaisen.sheet.actor .jk-header .jk-specialization-control input {
   width: 100%;
   min-height: 26px;
-  padding: 4px 8px;
+  height: 30px;
+  padding: 5px 8px;
 
   background: #332A3E;
   color: #f0e0ff;
@@ -126,26 +146,14 @@
   color: #f0e0ff;
 }
 
-.jk-header-field {
-  grid-column: span 3;
-}
-
-.jk-field-grau {
-  grid-column: 2 / span 3;
-}
-
-.jk-field-nivel {
-  grid-column: 5 / span 3;
-}
-
-.jk-field-experiencia {
-  grid-column: 8 / span 3;
-}
-
 .jk-field-grau select {
   text-align: center;
   text-align-last: center;
 }
+
+/* ============================= */
+/* Nível / Especialização        */
+/* ============================= */
 
 .jk-level-control,
 .jk-specialization-control {
@@ -153,9 +161,19 @@
   width: 100%;
 }
 
+.jk-header-nivel {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.jk-header-nivel input,
 .jk-level-control input {
   padding-left: 22px;
   padding-right: 22px;
+  text-align: center;
 }
 
 .jk-specialization-control input {
@@ -238,6 +256,36 @@
   box-shadow: none;
 }
 
+/* ============================= */
+/* Treinamento                   */
+/* ============================= */
+
+.jk-header-treinamento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 30px;
+  min-height: 30px;
+  padding: 5px 8px;
+
+  background: #332A3E;
+  color: #f0e0ff;
+
+  border: 1px solid #3A3548;
+  border-radius: 3px;
+
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* ============================= */
+/* Imagem do Personagem          */
+/* ============================= */
+
 .jk-profile-wrap {
   position: relative;
   width: 130px;
@@ -300,3 +348,26 @@
 .jk-reset-profile-img:hover i {
   color: #f0e0ff;
 }
+
+/* ============================= */
+/* Responsivo                    */
+/* ============================= */
+
+@media (max-width: 900px) {
+  .jk-header-row1,
+  .jk-header-row2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .jk-header {
+    flex-direction: column;
+  }
+
+  .jk-header-row1,
+  .jk-header-row2 {
+    grid-template-columns: 1fr;
+  }
+}
+
