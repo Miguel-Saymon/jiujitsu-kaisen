@@ -80,14 +80,24 @@ context.combateHabilidades = prepararListaCombate(
   "habilidade"
 );
 
-context.combateInventario = prepararListaCombate(
-  context.system.combate?.inventario,
-  "item"
-);
-
 context.combateAtaques = prepararListaCombate(
   context.system.combate?.ataques,
   "ataque"
+);
+
+context.combateEquipamentos = prepararListaCombate(
+  context.system.combate?.equipamentos ?? context.system.combate?.inventario,
+  "equipamento"
+);
+
+context.combateConsumiveis = prepararListaCombate(
+  context.system.combate?.consumiveis,
+  "consumivel"
+);
+
+context.combateTesouros = prepararListaCombate(
+  context.system.combate?.tesouros,
+  "tesouro"
 );
 
   return context;
@@ -223,7 +233,8 @@ function criarLinhaVaziaCombate(prefixo) {
       nome: "",
       atual: 0,
       max: 0,
-      custo: ""
+      custo: "",
+      descricao: ""
     };
   }
 
@@ -238,10 +249,11 @@ function criarLinhaVaziaCombate(prefixo) {
   }
 
   return {
-    key: "item1",
+    key: `${prefixo}1`,
     nome: "",
     quantidade: 1,
     peso: "",
+    cargas: "",
     notas: ""
   };
 }

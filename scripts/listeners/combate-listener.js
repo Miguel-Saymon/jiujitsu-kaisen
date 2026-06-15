@@ -29,6 +29,15 @@ export function registerCombatListener(sheet, html) {
     });
   });
 
+  html.find(".jk-toggle-description-row").on("click", event => {
+    event.preventDefault();
+
+    const target = event.currentTarget.dataset.target;
+    if (!target) return;
+
+    html.find(`.jk-description-row[data-row="${target}"]`).toggleClass("is-open");
+  });
+
   html.find(".jk-remove-combat-row").on("click", async event => {
     event.preventDefault();
 
@@ -50,7 +59,8 @@ function criarItemPadrao(prefixo) {
       nome: "",
       atual: 0,
       max: 0,
-      custo: ""
+      custo: "",
+      descricao: ""
     };
   }
 
@@ -67,6 +77,7 @@ function criarItemPadrao(prefixo) {
     nome: "",
     quantidade: 1,
     peso: "",
+    cargas: "",
     notas: ""
   };
 }

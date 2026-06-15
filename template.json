@@ -163,7 +163,8 @@
             "nome": "",
             "atual": 0,
             "max": 0,
-            "custo": ""
+            "custo": "",
+            "descricao": ""
           }
         },
         "inventario": {
@@ -180,6 +181,33 @@
             "bonus": 0,
             "dano": "",
             "tipo": ""
+          }
+        },
+        "equipamentos": {
+          "equipamento1": {
+            "nome": "",
+            "quantidade": 1,
+            "peso": "",
+            "cargas": "",
+            "notas": ""
+          }
+        },
+        "consumiveis": {
+          "consumivel1": {
+            "nome": "",
+            "quantidade": 1,
+            "peso": "",
+            "cargas": "",
+            "notas": ""
+          }
+        },
+        "tesouros": {
+          "tesouro1": {
+            "nome": "",
+            "quantidade": 1,
+            "peso": "",
+            "cargas": "",
+            "notas": ""
           }
         }
       },

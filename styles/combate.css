@@ -692,3 +692,116 @@
 }
 
 
+/* ==========================================================
+   AJUSTES PONTUAIS — HABILIDADES E LISTAS DE COMBATE
+   ========================================================== */
+
+.jk-description-button {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+}
+
+.jk-description-button::after {
+    content: attr(data-description);
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 6px);
+    display: none;
+    min-width: 180px;
+    max-width: 280px;
+    padding: 6px 8px;
+    background: #1E1B26;
+    border: 1px solid #3A3548;
+    border-radius: 4px;
+    color: #d4b8e8;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: left;
+    white-space: normal;
+    z-index: 60;
+}
+
+.jk-description-button:hover::after {
+    display: block;
+}
+
+.jk-description-button[data-description=""]::after {
+    content: "Sem descrição.";
+}
+
+.jk-description-row {
+    display: none;
+}
+
+.jk-description-row.is-open {
+    display: table-row;
+}
+
+.jk-description-field {
+    min-height: 72px;
+    padding: 8px;
+    resize: vertical;
+    border: 1px solid #3A3548 !important;
+    border-radius: 4px;
+    background: #1E1B26 !important;
+    color: #d4b8e8;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.jk-inventory-attack-card h2 {
+    margin-bottom: 10px;
+}
+
+.jk-combat-list-block {
+    overflow: hidden;
+    border: 1px solid #3A3548;
+    border-radius: 4px;
+    background: #252231;
+}
+
+.jk-combat-subheader {
+    margin-bottom: 0;
+    padding: 7px 8px;
+    background: #4a1f2a;
+    border-bottom: 1px solid #3A3548;
+}
+
+.jk-combat-subheader h3 {
+    color: #f0e0ff;
+    font-size: 13px;
+}
+
+.jk-combat-list-table th {
+    padding: 6px 8px;
+    background: #1E1B26;
+    color: #f0e0ff;
+    font-size: 8px;
+    text-align: center;
+}
+
+.jk-combat-list-table th:first-child {
+    text-align: left;
+}
+
+.jk-combat-list-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid rgba(58, 53, 72, .55);
+}
+
+.jk-combat-list-table tr:last-child td {
+    border-bottom: none;
+}
+
+.jk-combat-list-table td:first-child input {
+    font-weight: 700;
+}
+
+.jk-combat-list-table .is-small {
+    width: 58px;
+    text-align: center;
+}
+

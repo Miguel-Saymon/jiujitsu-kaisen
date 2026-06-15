@@ -34,6 +34,7 @@
                             <th>Atual</th>
                             <th>Máx.</th>
                             <th>Custo</th>
+                            <th>Desc.</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -72,12 +73,30 @@
                             </td>
                             <td class="is-action">
                                 <button
+                                    class="jk-toggle-description-row jk-description-button"
+                                    type="button"
+                                    data-target="habilidade-desc-{{habilidade.key}}"
+                                    data-description="{{habilidade.descricao}}"
+                                    title="Editar descrição"
+                                >≡</button>
+                            </td>
+                            <td class="is-action">
+                                <button
                                     class="jk-remove-combat-row"
                                     type="button"
                                     data-path="combate.habilidades"
                                     data-key="{{habilidade.key}}"
                                     title="Remover habilidade ou talento"
                                 >×</button>
+                            </td>
+                        </tr>
+                        <tr class="jk-description-row" data-row="habilidade-desc-{{habilidade.key}}">
+                            <td colspan="6">
+                                <textarea
+                                    class="jk-description-field"
+                                    name="system.combate.habilidades.{{habilidade.key}}.descricao"
+                                    placeholder="Descrição da habilidade ou talento..."
+                                >{{habilidade.descricao}}</textarea>
                             </td>
                         </tr>
                         {{/each}}
@@ -101,12 +120,6 @@
                             {{system.combate.cd.total}}
                         </div>
 
-                        <div class="jk-cd-breakdown">
-                            <span>Base {{system.combate.cd.base}}</span>
-                            <span>Atr. {{system.combate.cd.atributoBonus}}</span>
-                            <span>Treino {{system.combate.cd.treino}}</span>
-                            <span>Nível {{system.combate.cd.nivel}}</span>
-                        </div>
 
                         <div class="jk-combat-fields">
                             <label>
@@ -187,54 +200,12 @@
             </div>
 
             <section class="jk-card jk-combate-card jk-inventory-attack-card">
-                <h2>Inventário &amp; Ataques</h2>
+                <h2>Ataques &amp; Inventário</h2>
 
-                <div class="jk-combat-list-block">
-                    <header class="jk-combat-subheader">
-                        <h3>Inventário</h3>
-                        <button
-                            class="jk-add-combat-row"
-                            type="button"
-                            data-path="combate.inventario"
-                            data-prefix="item"
-                            title="Adicionar item"
-                        >+</button>
-                    </header>
-
-                    <table class="jk-combat-list-table jk-inventory-table">
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Qtd.</th>
-                                <th>Peso</th>
-                                <th>Notas</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each combateInventario as |item|}}
-                            <tr>
-                                <td><input name="system.combate.inventario.{{item.key}}.nome" type="text" value="{{item.nome}}" placeholder="item" /></td>
-                                <td class="is-small"><input name="system.combate.inventario.{{item.key}}.quantidade" type="number" value="{{item.quantidade}}" /></td>
-                                <td class="is-small"><input name="system.combate.inventario.{{item.key}}.peso" type="text" value="{{item.peso}}" /></td>
-                                <td><input name="system.combate.inventario.{{item.key}}.notas" type="text" value="{{item.notas}}" /></td>
-                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.inventario" data-key="{{item.key}}" title="Remover item">×</button></td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="jk-combat-list-block">
+                <div class="jk-combat-list-block jk-attack-block">
                     <header class="jk-combat-subheader">
                         <h3>Ataques</h3>
-                        <button
-                            class="jk-add-combat-row"
-                            type="button"
-                            data-path="combate.ataques"
-                            data-prefix="ataque"
-                            title="Adicionar ataque"
-                        >+</button>
+                        <button class="jk-add-combat-row" type="button" data-path="combate.ataques" data-prefix="ataque" title="Adicionar ataque">+</button>
                     </header>
 
                     <table class="jk-combat-list-table jk-attack-table">
@@ -255,6 +226,96 @@
                                 <td><input name="system.combate.ataques.{{ataque.key}}.dano" type="text" value="{{ataque.dano}}" placeholder="1d8" /></td>
                                 <td class="is-small"><input name="system.combate.ataques.{{ataque.key}}.tipo" type="text" value="{{ataque.tipo}}" placeholder="COR" /></td>
                                 <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.ataques" data-key="{{ataque.key}}" title="Remover ataque">×</button></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="jk-combat-list-block">
+                    <header class="jk-combat-subheader">
+                        <h3>Equipamentos</h3>
+                        <button class="jk-add-combat-row" type="button" data-path="combate.equipamentos" data-prefix="equipamento" title="Adicionar equipamento">+</button>
+                    </header>
+
+                    <table class="jk-combat-list-table jk-inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Peso</th>
+                                <th>Qtd.</th>
+                                <th>Cargas</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each combateEquipamentos as |item|}}
+                            <tr>
+                                <td><input name="system.combate.equipamentos.{{item.key}}.nome" type="text" value="{{item.nome}}" placeholder="equipamento" /></td>
+                                <td class="is-small"><input name="system.combate.equipamentos.{{item.key}}.peso" type="text" value="{{item.peso}}" /></td>
+                                <td class="is-small"><input name="system.combate.equipamentos.{{item.key}}.quantidade" type="number" value="{{item.quantidade}}" /></td>
+                                <td class="is-small"><input name="system.combate.equipamentos.{{item.key}}.cargas" type="text" value="{{item.cargas}}" placeholder="-" /></td>
+                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.equipamentos" data-key="{{item.key}}" title="Remover equipamento">×</button></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="jk-combat-list-block">
+                    <header class="jk-combat-subheader">
+                        <h3>Consumíveis</h3>
+                        <button class="jk-add-combat-row" type="button" data-path="combate.consumiveis" data-prefix="consumivel" title="Adicionar consumível">+</button>
+                    </header>
+
+                    <table class="jk-combat-list-table jk-inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Peso</th>
+                                <th>Qtd.</th>
+                                <th>Cargas</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each combateConsumiveis as |item|}}
+                            <tr>
+                                <td><input name="system.combate.consumiveis.{{item.key}}.nome" type="text" value="{{item.nome}}" placeholder="consumível" /></td>
+                                <td class="is-small"><input name="system.combate.consumiveis.{{item.key}}.peso" type="text" value="{{item.peso}}" /></td>
+                                <td class="is-small"><input name="system.combate.consumiveis.{{item.key}}.quantidade" type="number" value="{{item.quantidade}}" /></td>
+                                <td class="is-small"><input name="system.combate.consumiveis.{{item.key}}.cargas" type="text" value="{{item.cargas}}" placeholder="-" /></td>
+                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.consumiveis" data-key="{{item.key}}" title="Remover consumível">×</button></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="jk-combat-list-block">
+                    <header class="jk-combat-subheader">
+                        <h3>Tesouros</h3>
+                        <button class="jk-add-combat-row" type="button" data-path="combate.tesouros" data-prefix="tesouro" title="Adicionar tesouro">+</button>
+                    </header>
+
+                    <table class="jk-combat-list-table jk-inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Peso</th>
+                                <th>Qtd.</th>
+                                <th>Notas</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each combateTesouros as |item|}}
+                            <tr>
+                                <td><input name="system.combate.tesouros.{{item.key}}.nome" type="text" value="{{item.nome}}" placeholder="tesouro" /></td>
+                                <td class="is-small"><input name="system.combate.tesouros.{{item.key}}.peso" type="text" value="{{item.peso}}" /></td>
+                                <td class="is-small"><input name="system.combate.tesouros.{{item.key}}.quantidade" type="number" value="{{item.quantidade}}" /></td>
+                                <td><input name="system.combate.tesouros.{{item.key}}.notas" type="text" value="{{item.notas}}" /></td>
+                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.tesouros" data-key="{{item.key}}" title="Remover tesouro">×</button></td>
                             </tr>
                             {{/each}}
                         </tbody>
