@@ -16,7 +16,16 @@
             </section>
 
             <section class="jk-card jk-combate-card">
-                <h2>Habilidades &amp; Talentos</h2>
+                <header class="jk-combat-section-header">
+                    <h2>Habilidades &amp; Talentos</h2>
+                    <button
+                        class="jk-add-combat-row"
+                        type="button"
+                        data-path="combate.habilidades"
+                        data-prefix="habilidade"
+                        title="Adicionar habilidade ou talento"
+                    >+</button>
+                </header>
 
                 <table class="jk-talent-table">
                     <thead>
@@ -25,169 +34,53 @@
                             <th>Atual</th>
                             <th>Máx.</th>
                             <th>Custo</th>
+                            <th></th>
                         </tr>
                     </thead>
 
                     <tbody>
+                        {{#each combateHabilidades as |habilidade|}}
                         <tr>
                             <td>
                                 <input
-                                    name="system.combate.habilidades.habilidade1.nome"
+                                    name="system.combate.habilidades.{{habilidade.key}}.nome"
                                     type="text"
-                                    value="{{system.combate.habilidades.habilidade1.nome}}"
+                                    value="{{habilidade.nome}}"
                                     placeholder="+ nova habilidade"
                                 />
                             </td>
                             <td class="is-val">
                                 <input
-                                    name="system.combate.habilidades.habilidade1.atual"
+                                    name="system.combate.habilidades.{{habilidade.key}}.atual"
                                     type="number"
-                                    value="{{system.combate.habilidades.habilidade1.atual}}"
+                                    value="{{habilidade.atual}}"
                                 />
                             </td>
                             <td class="is-val">
                                 <input
-                                    name="system.combate.habilidades.habilidade1.max"
+                                    name="system.combate.habilidades.{{habilidade.key}}.max"
                                     type="number"
-                                    value="{{system.combate.habilidades.habilidade1.max}}"
+                                    value="{{habilidade.max}}"
                                 />
                             </td>
                             <td class="is-cost">
                                 <input
-                                    name="system.combate.habilidades.habilidade1.custo"
+                                    name="system.combate.habilidades.{{habilidade.key}}.custo"
                                     type="text"
-                                    value="{{system.combate.habilidades.habilidade1.custo}}"
+                                    value="{{habilidade.custo}}"
                                 />
+                            </td>
+                            <td class="is-action">
+                                <button
+                                    class="jk-remove-combat-row"
+                                    type="button"
+                                    data-path="combate.habilidades"
+                                    data-key="{{habilidade.key}}"
+                                    title="Remover habilidade ou talento"
+                                >×</button>
                             </td>
                         </tr>
-
-                        <tr>
-                            <td>
-                                <input
-                                    name="system.combate.habilidades.habilidade2.nome"
-                                    type="text"
-                                    value="{{system.combate.habilidades.habilidade2.nome}}"
-                                    placeholder="+ nova habilidade"
-                                />
-                            </td>
-                            <td class="is-val">
-                                <input
-                                    name="system.combate.habilidades.habilidade2.atual"
-                                    type="number"
-                                    value="{{system.combate.habilidades.habilidade2.atual}}"
-                                />
-                            </td>
-                            <td class="is-val">
-                                <input
-                                    name="system.combate.habilidades.habilidade2.max"
-                                    type="number"
-                                    value="{{system.combate.habilidades.habilidade2.max}}"
-                                />
-                            </td>
-                            <td class="is-cost">
-                                <input
-                                    name="system.combate.habilidades.habilidade2.custo"
-                                    type="text"
-                                    value="{{system.combate.habilidades.habilidade2.custo}}"
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <input
-                                    name="system.combate.habilidades.habilidade3.nome"
-                                    type="text"
-                                    value="{{system.combate.habilidades.habilidade3.nome}}"
-                                    placeholder="+ nova habilidade"
-                                />
-                            </td>
-                            <td class="is-val">
-                                <input
-                                    name="system.combate.habilidades.habilidade3.atual"
-                                    type="number"
-                                    value="{{system.combate.habilidades.habilidade3.atual}}"
-                                />
-                            </td>
-                            <td class="is-val">
-                                <input
-                                    name="system.combate.habilidades.habilidade3.max"
-                                    type="number"
-                                    value="{{system.combate.habilidades.habilidade3.max}}"
-                                />
-                            </td>
-                            <td class="is-cost">
-                                <input
-                                    name="system.combate.habilidades.habilidade3.custo"
-                                    type="text"
-                                    value="{{system.combate.habilidades.habilidade3.custo}}"
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <input
-                                    name="system.combate.habilidades.habilidade4.nome"
-                                    type="text"
-                                    value="{{system.combate.habilidades.habilidade4.nome}}"
-                                    placeholder="+ nova habilidade"
-                                />
-                            </td>
-                            <td class="is-val">
-                                <input
-                                    name="system.combate.habilidades.habilidade4.atual"
-                                    type="number"
-                                    value="{{system.combate.habilidades.habilidade4.atual}}"
-                                />
-                            </td>
-                            <td class="is-val">
-                                <input
-                                    name="system.combate.habilidades.habilidade4.max"
-                                    type="number"
-                                    value="{{system.combate.habilidades.habilidade4.max}}"
-                                />
-                            </td>
-                            <td class="is-cost">
-                                <input
-                                    name="system.combate.habilidades.habilidade4.custo"
-                                    type="text"
-                                    value="{{system.combate.habilidades.habilidade4.custo}}"
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <input
-                                    name="system.combate.habilidades.habilidade5.nome"
-                                    type="text"
-                                    value="{{system.combate.habilidades.habilidade5.nome}}"
-                                    placeholder="+ nova habilidade"
-                                />
-                            </td>
-                            <td class="is-val">
-                                <input
-                                    name="system.combate.habilidades.habilidade5.atual"
-                                    type="number"
-                                    value="{{system.combate.habilidades.habilidade5.atual}}"
-                                />
-                            </td>
-                            <td class="is-val">
-                                <input
-                                    name="system.combate.habilidades.habilidade5.max"
-                                    type="number"
-                                    value="{{system.combate.habilidades.habilidade5.max}}"
-                                />
-                            </td>
-                            <td class="is-cost">
-                                <input
-                                    name="system.combate.habilidades.habilidade5.custo"
-                                    type="text"
-                                    value="{{system.combate.habilidades.habilidade5.custo}}"
-                                />
-                            </td>
-                        </tr>
+                        {{/each}}
                     </tbody>
                 </table>
             </section>
@@ -198,61 +91,68 @@
         <div class="jk-combate-mid-row">
 
             <div class="jk-combate-mid-left">
- 
-<section class="jk-combate-cd-row">
 
-    <div class="jk-combat-box jk-combate-cd-box">
-        <h3>CD Especialização</h3>
+                <section class="jk-combate-cd-row">
 
-        <div class="jk-combat-total">
-            {{system.combate.cd.total}}
-        </div>
+                    <div class="jk-combat-box jk-combate-cd-box">
+                        <h3>CD Especialização</h3>
 
-        <div class="jk-combat-fields">
-            <label>
-                Atr.
-                <select name="system.combate.cd.atributo">
-                    <option value="for" {{#if (eq system.combate.cd.atributo "for")}}selected{{/if}}>FOR</option>
-                    <option value="des" {{#if (eq system.combate.cd.atributo "des")}}selected{{/if}}>DES</option>
-                    <option value="con" {{#if (eq system.combate.cd.atributo "con")}}selected{{/if}}>CON</option>
-                    <option value="int" {{#if (eq system.combate.cd.atributo "int")}}selected{{/if}}>INT</option>
-                    <option value="sab" {{#if (eq system.combate.cd.atributo "sab")}}selected{{/if}}>SAB</option>
-                    <option value="pre" {{#if (eq system.combate.cd.atributo "pre")}}selected{{/if}}>PRE</option>
-                </select>
-            </label>
+                        <div class="jk-combat-total">
+                            {{system.combate.cd.total}}
+                        </div>
 
-            <label>
-                Outros
-                <input
-                    name="system.combate.cd.outros"
-                    type="number"
-                    value="{{system.combate.cd.outros}}"
-                />
-            </label>
-        </div>
-    </div>
+                        <div class="jk-cd-breakdown">
+                            <span>Base {{system.combate.cd.base}}</span>
+                            <span>Atr. {{system.combate.cd.atributoBonus}}</span>
+                            <span>Treino {{system.combate.cd.treino}}</span>
+                            <span>Nível {{system.combate.cd.nivel}}</span>
+                        </div>
 
-    <div class="jk-combat-box jk-combate-desloc-box">
-        <h3>Deslocamento</h3>
+                        <div class="jk-combat-fields">
+                            <label>
+                                Atr.
+                                <select name="system.combate.cd.atributo">
+                                    <option value="forca" {{#if (eq system.combate.cd.atributo "forca")}}selected{{/if}}>FOR</option>
+                                    <option value="destreza" {{#if (eq system.combate.cd.atributo "destreza")}}selected{{/if}}>DES</option>
+                                    <option value="constituicao" {{#if (eq system.combate.cd.atributo "constituicao")}}selected{{/if}}>CON</option>
+                                    <option value="inteligencia" {{#if (eq system.combate.cd.atributo "inteligencia")}}selected{{/if}}>INT</option>
+                                    <option value="sabedoria" {{#if (eq system.combate.cd.atributo "sabedoria")}}selected{{/if}}>SAB</option>
+                                    <option value="presenca" {{#if (eq system.combate.cd.atributo "presenca")}}selected{{/if}}>PRE</option>
+                                </select>
+                            </label>
 
-        <div class="jk-combat-total">
-            {{system.combate.deslocamento}}
-            <span class="jk-unit">m</span>
-        </div>
+                            <label>
+                                Outros
+                                <input
+                                    name="system.combate.cd.outros"
+                                    type="number"
+                                    value="{{system.combate.cd.outros}}"
+                                />
+                            </label>
+                        </div>
+                    </div>
 
-        <div class="jk-combat-fields">
-            <label>
-                Metros
-                <input
-                    name="system.combate.deslocamento"
-                    type="number"
-                    value="{{system.combate.deslocamento}}"
-                />
-            </label>
-        </div>
-    </div>
+                    <div class="jk-combat-box jk-combate-desloc-box">
+                        <h3>Deslocamento</h3>
 
-</section>
+                        <div class="jk-combat-total">
+                            {{system.combate.deslocamento}}
+                            <span class="jk-unit">m</span>
+                        </div>
+
+                        <div class="jk-combat-fields">
+                            <label>
+                                Metros
+                                <input
+                                    name="system.combate.deslocamento"
+                                    type="number"
+                                    value="{{system.combate.deslocamento}}"
+                                />
+                            </label>
+                        </div>
+                    </div>
+
+                </section>
 
                 <section class="jk-card jk-combate-card">
                     <h2>RDs</h2>
@@ -286,14 +186,80 @@
 
             </div>
 
-            <section class="jk-card jk-combate-card">
+            <section class="jk-card jk-combate-card jk-inventory-attack-card">
                 <h2>Inventário &amp; Ataques</h2>
 
-                <textarea
-                    class="jk-free-field jk-inventario-field"
-                    name="system.combate.inventario"
-                    placeholder="inventário temporário..."
-                >{{system.combate.inventario}}</textarea>
+                <div class="jk-combat-list-block">
+                    <header class="jk-combat-subheader">
+                        <h3>Inventário</h3>
+                        <button
+                            class="jk-add-combat-row"
+                            type="button"
+                            data-path="combate.inventario"
+                            data-prefix="item"
+                            title="Adicionar item"
+                        >+</button>
+                    </header>
+
+                    <table class="jk-combat-list-table jk-inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Qtd.</th>
+                                <th>Peso</th>
+                                <th>Notas</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each combateInventario as |item|}}
+                            <tr>
+                                <td><input name="system.combate.inventario.{{item.key}}.nome" type="text" value="{{item.nome}}" placeholder="item" /></td>
+                                <td class="is-small"><input name="system.combate.inventario.{{item.key}}.quantidade" type="number" value="{{item.quantidade}}" /></td>
+                                <td class="is-small"><input name="system.combate.inventario.{{item.key}}.peso" type="text" value="{{item.peso}}" /></td>
+                                <td><input name="system.combate.inventario.{{item.key}}.notas" type="text" value="{{item.notas}}" /></td>
+                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.inventario" data-key="{{item.key}}" title="Remover item">×</button></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="jk-combat-list-block">
+                    <header class="jk-combat-subheader">
+                        <h3>Ataques</h3>
+                        <button
+                            class="jk-add-combat-row"
+                            type="button"
+                            data-path="combate.ataques"
+                            data-prefix="ataque"
+                            title="Adicionar ataque"
+                        >+</button>
+                    </header>
+
+                    <table class="jk-combat-list-table jk-attack-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Bônus</th>
+                                <th>Dano</th>
+                                <th>Tipo</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each combateAtaques as |ataque|}}
+                            <tr>
+                                <td><input name="system.combate.ataques.{{ataque.key}}.nome" type="text" value="{{ataque.nome}}" placeholder="ataque" /></td>
+                                <td class="is-small"><input name="system.combate.ataques.{{ataque.key}}.bonus" type="number" value="{{ataque.bonus}}" /></td>
+                                <td><input name="system.combate.ataques.{{ataque.key}}.dano" type="text" value="{{ataque.dano}}" placeholder="1d8" /></td>
+                                <td class="is-small"><input name="system.combate.ataques.{{ataque.key}}.tipo" type="text" value="{{ataque.tipo}}" placeholder="COR" /></td>
+                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.ataques" data-key="{{ataque.key}}" title="Remover ataque">×</button></td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
         </div>

@@ -132,6 +132,55 @@
     background: #2C2838;
 }
 
+
+.jk-combat-section-header,
+.jk-combat-subheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.jk-combat-section-header h2 {
+    flex: 1;
+    margin-bottom: 12px;
+}
+
+.jk-add-combat-row,
+.jk-remove-combat-row {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+
+    background: #2C2838;
+    border: 1px solid #3A3548;
+    border-radius: 4px;
+
+    color: #d4b8e8;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.jk-add-combat-row:hover,
+.jk-remove-combat-row:hover {
+    background: #3A3548;
+    color: #f0e0ff;
+}
+
+.jk-remove-combat-row {
+    width: 20px;
+    height: 20px;
+    color: #9b7fd4;
+    font-size: 13px;
+}
+
 /* ==========================================================
    HABILIDADES & TALENTOS
    ========================================================== */
@@ -223,6 +272,25 @@
 .jk-combate-cd-box .jk-combat-fields,
 .jk-combate-desloc-box .jk-combat-fields {
     gap: 10px;
+}
+
+
+.jk-cd-breakdown {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    margin: 6px 0 10px;
+}
+
+.jk-cd-breakdown span {
+    padding: 3px 5px;
+    background: #2C2838;
+    border: 1px solid #3A3548;
+    border-radius: 3px;
+    color: #9b7fd4;
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    text-align: center;
 }
 
 .jk-combate-cd-box select {
@@ -482,8 +550,83 @@
     opacity: .65;
 }
 
-.jk-inventario-field {
-    min-height: 180px;
+.jk-inventory-attack-card {
+    min-height: 100%;
+}
+
+.jk-combat-list-block {
+    margin-bottom: 14px;
+}
+
+.jk-combat-list-block:last-child {
+    margin-bottom: 0;
+}
+
+.jk-combat-subheader {
+    margin-bottom: 6px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #3A3548;
+}
+
+.jk-combat-subheader h3 {
+    margin: 0;
+    color: #9b7fd4;
+    font-family: "Cinzel", serif;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.jk-combat-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.jk-combat-list-table th {
+    padding: 5px 6px;
+    background: #1E1B26;
+    border-bottom: 1px solid #3A3548;
+    color: #9b7fd4;
+    font-size: 9px;
+    letter-spacing: .06em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.jk-combat-list-table td {
+    padding: 5px 6px;
+    background: #252231;
+}
+
+.jk-combat-list-table tr:hover td {
+    background: #2C2838;
+}
+
+.jk-combat-list-table input {
+    height: 24px;
+    padding: 2px 4px;
+    background: transparent !important;
+    color: #d4b8e8;
+    border-bottom: 1px solid rgba(58, 53, 72, .75);
+}
+
+.jk-combat-list-table input:focus {
+    background: #2C2838 !important;
+    border-bottom-color: #4A4460;
+}
+
+.jk-combat-list-table .is-small {
+    width: 54px;
+}
+
+.jk-combat-list-table .is-small input {
+    font-family: "Courier New", monospace;
+    text-align: center;
+}
+
+.jk-combat-list-table .is-action,
+.jk-talent-table .is-action {
+    width: 24px;
+    text-align: center;
 }
 
 /* ==========================================================
@@ -547,4 +690,5 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
 

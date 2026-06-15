@@ -11,6 +11,7 @@ import { registerResistanceRolls } from "../rolls/resistance-rolls.js";
 import { registerInitiativeRolls } from "../rolls/initiative-rolls.js";
 import { registerDeathSaveRolls } from "../rolls/death-save-rolls.js";
 import { registerDeathSaveListener } from "../listeners/death-save-listener.js";
+import { registerCombatListener } from "../listeners/combate-listener.js";
 import { calcularDadosVida } from "../calculations/recursos.js";
 import { obterBonusTreino } from "../helpers/proficiencia.js";
 
@@ -73,6 +74,21 @@ context.estadoIntegridade = calcularEstadoIntegridade(
 );
 
 context.bonusTreino = obterBonusTreino(context.system);
+
+context.combateHabilidades = prepararListaCombate(
+  context.system.combate?.habilidades,
+  "habilidade"
+);
+
+context.combateInventario = prepararListaCombate(
+  context.system.combate?.inventario,
+  "item"
+);
+
+context.combateAtaques = prepararListaCombate(
+  context.system.combate?.ataques,
+  "ataque"
+);
 
   return context;
 }
@@ -146,6 +162,7 @@ activateListeners(html) {
   registerLevelListener(this, html);
   registerAttributeListener(this, html);
   registerDeathSaveListener(this, html);
+  registerCombatListener(this, html);
 }
 
 }
@@ -176,3 +193,56 @@ function gerarResumoEspecializacoes(system, especializacoes) {
     })
     .join(" / ");
 }
+
+
+function prepararListaCombate(colecao, prefixo) {
+  if (!colecao || typeof colecao !== "object" || Array.isArray(colecao)) {
+    return [criarLinhaVaziaCombate(prefixo)];
+  }
+
+  const lista = Object.entries(colecao)
+    .map(([key, item]) => ({
+      key,
+      ...item
+    }))
+    .sort((a, b) => obterIndiceLista(a.key, prefixo) - obterIndiceLista(b.key, prefixo));
+
+  return lista.length ? lista : [criarLinhaVaziaCombate(prefixo)];
+}
+
+function obterIndiceLista(key, prefixo) {
+  const indice = Number(String(key).replace(prefixo, ""));
+  return Number.isInteger(indice) ? indice : 0;
+}
+
+
+function criarLinhaVaziaCombate(prefixo) {
+  if (prefixo === "habilidade") {
+    return {
+      key: "habilidade1",
+      nome: "",
+      atual: 0,
+      max: 0,
+      custo: ""
+    };
+  }
+
+  if (prefixo === "ataque") {
+    return {
+      key: "ataque1",
+      nome: "",
+      bonus: 0,
+      dano: "",
+      tipo: ""
+    };
+  }
+
+  return {
+    key: "item1",
+    nome: "",
+    quantidade: 1,
+    peso: "",
+    notas: ""
+  };
+}
+

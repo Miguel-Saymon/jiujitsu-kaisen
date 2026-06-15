@@ -17,6 +17,7 @@ export function calcularCombate(system) {
   calcularAtencao(system);
   calcularIniciativa(system, modDestreza);
   calcularTestesResistencia(system, nivel);
+  calcularCdEspecializacao(system, nivel);
 
   return system.combate;
 }
@@ -104,3 +105,37 @@ teste.total =
   outros;
   }
 }
+
+
+function calcularCdEspecializacao(system, nivel) {
+  const cd = system.combate?.cd;
+
+  if (!cd) return;
+
+  const atributoSelecionado = normalizarAtributoCd(cd.atributo);
+  const modificadorAtributo = Number(system.atributos?.[atributoSelecionado]?.mod) || 0;
+  const bonusTreino = obterBonusTreino(system);
+  const metadeNivel = Math.floor(nivel / 2);
+  const outros = Number(cd.outros) || 0;
+
+  cd.base = 10;
+  cd.atributo = atributoSelecionado;
+  cd.atributoBonus = modificadorAtributo;
+  cd.treino = bonusTreino;
+  cd.nivel = metadeNivel;
+  cd.total = cd.base + modificadorAtributo + bonusTreino + metadeNivel + outros;
+}
+
+function normalizarAtributoCd(atributo) {
+  const mapaLegado = {
+    for: ATRIBUTOS.FORCA,
+    des: ATRIBUTOS.DESTREZA,
+    con: ATRIBUTOS.CONSTITUICAO,
+    int: ATRIBUTOS.INTELIGENCIA,
+    sab: ATRIBUTOS.SABEDORIA,
+    pre: ATRIBUTOS.PRESENCA
+  };
+
+  return mapaLegado[atributo] ?? atributo ?? ATRIBUTOS.PRESENCA;
+}
+

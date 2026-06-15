@@ -148,15 +148,40 @@
         "cd": {
           "total": 10,
           "base": 10,
-          "atributo": 0,
+          "atributo": "presenca",
           "treino": 0,
           "nivel": 0,
-          "outros": 0
+          "outros": 0,
+          "atributoBonus": 0
         },
         "rdTexto": "",
         "treinamentos": "",
         "caracteristicas": "",
-        "acoes": ""
+        "acoes": "",
+        "habilidades": {
+          "habilidade1": {
+            "nome": "",
+            "atual": 0,
+            "max": 0,
+            "custo": ""
+          }
+        },
+        "inventario": {
+          "item1": {
+            "nome": "",
+            "quantidade": 1,
+            "peso": "",
+            "notas": ""
+          }
+        },
+        "ataques": {
+          "ataque1": {
+            "nome": "",
+            "bonus": 0,
+            "dano": "",
+            "tipo": ""
+          }
+        }
       },
       "pericias": {
         "atletismo": {
@@ -404,4 +429,3 @@
     }
   }
 }
-

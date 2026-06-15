@@ -15,6 +15,10 @@ Hooks.once("init", async function () {
   return Number(a) >= Number(b);
 });
 
+  Handlebars.registerHelper("eq", function (a, b) {
+    return a === b;
+  });
+
   Actors.unregisterSheet("core", ActorSheet);
 
   Actors.registerSheet("jiujitsu-kaisen", JKCharacterSheet, {
@@ -22,3 +26,4 @@ Hooks.once("init", async function () {
     makeDefault: true
   });
 });
+
