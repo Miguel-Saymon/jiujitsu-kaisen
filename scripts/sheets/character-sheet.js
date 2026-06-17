@@ -87,7 +87,8 @@ context.combateAtaques = prepararListaCombate(
 
 context.combateEquipamentos = prepararListaCombate(
   context.system.combate?.equipamentos ?? context.system.combate?.inventario,
-  "equipamento"
+  "equipamento",
+  ["equipamentos"] // chaves extras para ignorar além de _empty
 );
 
 context.combateConsumiveis = prepararListaCombate(
@@ -204,20 +205,27 @@ function gerarResumoEspecializacoes(system, especializacoes) {
     .join(" / ");
 }
 
-
-function prepararListaCombate(colecao, prefixo) {
+function prepararListaCombate(colecao, prefixo, chavesIgnoradas = []) {
   if (!colecao || typeof colecao !== "object" || Array.isArray(colecao)) {
-    return [criarLinhaVaziaCombate(prefixo)];
+    return [];
   }
 
-  const lista = Object.entries(colecao)
+  const ignorar = new Set(["_empty", ...chavesIgnoradas]);
+
+  return Object.entries(colecao)
+    .filter(([key]) => {
+      // Ignora chaves reservadas
+      if (ignorar.has(key)) return false;
+      // Ignora chaves que não seguem o padrão prefixo+número
+      // Ex: "equipamentos" dentro de combate.equipamentos é lixo de schema
+      const n = parseInt(String(key).replace(prefixo, ""), 10);
+      return Number.isFinite(n) && n > 0;
+    })
     .map(([key, item]) => ({
       key,
       ...item
     }))
     .sort((a, b) => obterIndiceLista(a.key, prefixo) - obterIndiceLista(b.key, prefixo));
-
-  return lista.length ? lista : [criarLinhaVaziaCombate(prefixo)];
 }
 
 function obterIndiceLista(key, prefixo) {

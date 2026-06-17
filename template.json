@@ -157,59 +157,7 @@
         "rdTexto": "",
         "treinamentos": "",
         "caracteristicas": "",
-        "acoes": "",
-        "habilidades": {
-          "habilidade1": {
-            "nome": "",
-            "atual": 0,
-            "max": 0,
-            "custo": "",
-            "descricao": ""
-          }
-        },
-        "inventario": {
-          "item1": {
-            "nome": "",
-            "quantidade": 1,
-            "peso": "",
-            "notas": ""
-          }
-        },
-        "ataques": {
-          "ataque1": {
-            "nome": "",
-            "bonus": 0,
-            "dano": "",
-            "tipo": ""
-          }
-        },
-        "equipamentos": {
-          "equipamento1": {
-            "nome": "",
-            "quantidade": 1,
-            "peso": "",
-            "cargas": "",
-            "notas": ""
-          }
-        },
-        "consumiveis": {
-          "consumivel1": {
-            "nome": "",
-            "quantidade": 1,
-            "peso": "",
-            "cargas": "",
-            "notas": ""
-          }
-        },
-        "tesouros": {
-          "tesouro1": {
-            "nome": "",
-            "quantidade": 1,
-            "peso": "",
-            "cargas": "",
-            "notas": ""
-          }
-        }
+        "acoes": ""
       },
       "pericias": {
         "atletismo": {

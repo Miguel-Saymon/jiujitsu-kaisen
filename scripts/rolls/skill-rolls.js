@@ -3,6 +3,9 @@ import { executeRoll } from "./roll-service.js";
 
 export function registerSkillRolls(sheet, html) {
   html.find(".jk-rollable-skill").on("click", async event => {
+    const interactiveElement = event.target.closest("input, select, textarea, button, option");
+    if (interactiveElement) return;
+
     event.preventDefault();
 
     const skillKey = event.currentTarget.dataset.skillKey;
@@ -27,3 +30,4 @@ async function rollSkill(actor, skillKey) {
     formula
   });
 }
+

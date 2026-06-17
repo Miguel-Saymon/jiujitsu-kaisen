@@ -24,7 +24,7 @@
                         data-path="combate.habilidades"
                         data-prefix="habilidade"
                         title="Adicionar habilidade ou talento"
-                    >+</button>
+                    ><i class="fa-solid fa-plus"></i></button>
                 </header>
 
                 <table class="jk-talent-table">
@@ -32,10 +32,10 @@
                         <tr>
                             <th>Nome</th>
                             <th>Atual</th>
-                            <th>Máx.</th>
+                            <th>Max.</th>
                             <th>Custo</th>
                             <th>Desc.</th>
-                            <th></th>
+                            <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
                         </tr>
                     </thead>
 
@@ -78,7 +78,7 @@
                                     data-target="habilidade-desc-{{habilidade.key}}"
                                     data-description="{{habilidade.descricao}}"
                                     title="Editar descrição"
-                                >≡</button>
+                                ><i class="fas fa-note-sticky jk-desc-note-icon"></i></button>
                             </td>
                             <td class="is-action">
                                 <button
@@ -86,8 +86,9 @@
                                     type="button"
                                     data-path="combate.habilidades"
                                     data-key="{{habilidade.key}}"
+				    data-prefix="habilidade"
                                     title="Remover habilidade ou talento"
-                                >×</button>
+                                ><i class="fas fa-xmark jk-delete-x-icon"></i></button>
                             </td>
                         </tr>
                         <tr class="jk-description-row" data-row="habilidade-desc-{{habilidade.key}}">
@@ -205,17 +206,17 @@
                 <div class="jk-combat-list-block jk-attack-block">
                     <header class="jk-combat-subheader">
                         <h3>Ataques</h3>
-                        <button class="jk-add-combat-row" type="button" data-path="combate.ataques" data-prefix="ataque" title="Adicionar ataque">+</button>
+                        <button class="jk-add-combat-row" type="button" data-path="combate.ataques" data-prefix="ataque" title="Adicionar ataque"><i class="fa-solid fa-plus"></i></button>
                     </header>
 
                     <table class="jk-combat-list-table jk-attack-table">
                         <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>Bônus</th>
+                                <th>Bonus</th>
                                 <th>Dano</th>
                                 <th>Tipo</th>
-                                <th></th>
+                                <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -225,7 +226,7 @@
                                 <td class="is-small"><input name="system.combate.ataques.{{ataque.key}}.bonus" type="number" value="{{ataque.bonus}}" /></td>
                                 <td><input name="system.combate.ataques.{{ataque.key}}.dano" type="text" value="{{ataque.dano}}" placeholder="1d8" /></td>
                                 <td class="is-small"><input name="system.combate.ataques.{{ataque.key}}.tipo" type="text" value="{{ataque.tipo}}" placeholder="COR" /></td>
-                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.ataques" data-key="{{ataque.key}}" title="Remover ataque">×</button></td>
+                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.ataques" data-key="{{ataque.key}}" data-prefix="ataque" title="Remover ataque"><i class="fas fa-xmark jk-delete-x-icon"></i></button></td>
                             </tr>
                             {{/each}}
                         </tbody>
@@ -235,7 +236,7 @@
                 <div class="jk-combat-list-block">
                     <header class="jk-combat-subheader">
                         <h3>Equipamentos</h3>
-                        <button class="jk-add-combat-row" type="button" data-path="combate.equipamentos" data-prefix="equipamento" title="Adicionar equipamento">+</button>
+                        <button class="jk-add-combat-row" type="button" data-path="combate.equipamentos" data-prefix="equipamento" title="Adicionar equipamento"><i class="fa-solid fa-plus"></i></button>
                     </header>
 
                     <table class="jk-combat-list-table jk-inventory-table">
@@ -245,7 +246,7 @@
                                 <th>Peso</th>
                                 <th>Qtd.</th>
                                 <th>Cargas</th>
-                                <th></th>
+                                <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -255,7 +256,7 @@
                                 <td class="is-small"><input name="system.combate.equipamentos.{{item.key}}.peso" type="text" value="{{item.peso}}" /></td>
                                 <td class="is-small"><input name="system.combate.equipamentos.{{item.key}}.quantidade" type="number" value="{{item.quantidade}}" /></td>
                                 <td class="is-small"><input name="system.combate.equipamentos.{{item.key}}.cargas" type="text" value="{{item.cargas}}" placeholder="-" /></td>
-                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.equipamentos" data-key="{{item.key}}" title="Remover equipamento">×</button></td>
+                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.equipamentos" data-key="{{item.key}}" data-prefix="equipamento" title="Remover equipamento"><i class="fas fa-xmark jk-delete-x-icon"></i></button></td>
                             </tr>
                             {{/each}}
                         </tbody>
@@ -264,8 +265,8 @@
 
                 <div class="jk-combat-list-block">
                     <header class="jk-combat-subheader">
-                        <h3>Consumíveis</h3>
-                        <button class="jk-add-combat-row" type="button" data-path="combate.consumiveis" data-prefix="consumivel" title="Adicionar consumível">+</button>
+                        <h3>Consumiveis</h3>
+                        <button class="jk-add-combat-row" type="button" data-path="combate.consumiveis" data-prefix="consumivel" title="Adicionar consumivel"><i class="fa-solid fa-plus"></i></button>
                     </header>
 
                     <table class="jk-combat-list-table jk-inventory-table">
@@ -275,17 +276,17 @@
                                 <th>Peso</th>
                                 <th>Qtd.</th>
                                 <th>Cargas</th>
-                                <th></th>
+                                <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each combateConsumiveis as |item|}}
                             <tr>
-                                <td><input name="system.combate.consumiveis.{{item.key}}.nome" type="text" value="{{item.nome}}" placeholder="consumível" /></td>
+                                <td><input name="system.combate.consumiveis.{{item.key}}.nome" type="text" value="{{item.nome}}" placeholder="consumivel" /></td>
                                 <td class="is-small"><input name="system.combate.consumiveis.{{item.key}}.peso" type="text" value="{{item.peso}}" /></td>
                                 <td class="is-small"><input name="system.combate.consumiveis.{{item.key}}.quantidade" type="number" value="{{item.quantidade}}" /></td>
                                 <td class="is-small"><input name="system.combate.consumiveis.{{item.key}}.cargas" type="text" value="{{item.cargas}}" placeholder="-" /></td>
-                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.consumiveis" data-key="{{item.key}}" title="Remover consumível">×</button></td>
+                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.consumiveis" data-key="{{item.key}}" data-prefix="consumivel" title="Remover consumivel"><i class="fas fa-xmark jk-delete-x-icon"></i></button></td>
                             </tr>
                             {{/each}}
                         </tbody>
@@ -295,7 +296,7 @@
                 <div class="jk-combat-list-block">
                     <header class="jk-combat-subheader">
                         <h3>Tesouros</h3>
-                        <button class="jk-add-combat-row" type="button" data-path="combate.tesouros" data-prefix="tesouro" title="Adicionar tesouro">+</button>
+                        <button class="jk-add-combat-row" type="button" data-path="combate.tesouros" data-prefix="tesouro" title="Adicionar tesouro"><i class="fa-solid fa-plus"></i></button>
                     </header>
 
                     <table class="jk-combat-list-table jk-inventory-table">
@@ -305,7 +306,7 @@
                                 <th>Peso</th>
                                 <th>Qtd.</th>
                                 <th>Notas</th>
-                                <th></th>
+                                <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -315,7 +316,7 @@
                                 <td class="is-small"><input name="system.combate.tesouros.{{item.key}}.peso" type="text" value="{{item.peso}}" /></td>
                                 <td class="is-small"><input name="system.combate.tesouros.{{item.key}}.quantidade" type="number" value="{{item.quantidade}}" /></td>
                                 <td><input name="system.combate.tesouros.{{item.key}}.notas" type="text" value="{{item.notas}}" /></td>
-                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.tesouros" data-key="{{item.key}}" title="Remover tesouro">×</button></td>
+                                <td class="is-action"><button class="jk-remove-combat-row" type="button" data-path="combate.tesouros" data-key="{{item.key}}" data-prefix="tesouro" title="Remover tesouro"><i class="fas fa-xmark jk-delete-x-icon"></i></button></td>
                             </tr>
                             {{/each}}
                         </tbody>
@@ -328,4 +329,7 @@
     </div>
 
 </div>
+
+
+
 
