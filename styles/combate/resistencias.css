@@ -1,0 +1,119 @@
+/* ==========================================================
+   RDs
+   ========================================================== */
+
+.jk-rd-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+
+.jk-rd-box {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 72px;
+
+    align-self: start;
+    height: auto;
+
+    background: var(--jk-bg-section-soft);
+    border: 1px solid var(--jk-border-soft);
+    border-radius: 4px;
+    padding: 8px 6px;
+
+    position: relative;
+    cursor: help;
+    overflow: visible;
+}
+
+.jk-rd-box::after {
+    content: "";
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+
+    padding: 4px 8px;
+
+    background: var(--jk-bg-section);
+    border: 1px solid var(--jk-border-soft);
+    border-radius: 3px;
+
+    color: var(--jk-text-secondary);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: none;
+    white-space: nowrap;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+
+    z-index: 50;
+}
+
+.jk-rd-box:hover::after {
+    opacity: 1;
+}
+
+.rd-cor::after { content: "Cortante"; }
+.rd-imp::after { content: "Impacto"; }
+.rd-per::after { content: "Perfurante"; }
+.rd-con::after { content: "Congelante"; }
+.rd-que::after { content: "Queimante"; }
+.rd-cho::after { content: "Chocante"; }
+.rd-son::after { content: "Sônico"; }
+.rd-ene::after { content: "Energético"; }
+.rd-psi::after { content: "Psíquico"; }
+.rd-rad::after { content: "Radiante"; }
+.rd-nec::after { content: "Necrótico"; }
+.rd-ven::after { content: "Venenoso"; }
+
+.jk-rd-box__label {
+    margin: 0 0 6px;
+    padding: 0 0 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-bottom: 1px solid var(--jk-border-soft);
+
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+
+    color: var(--jk-text-muted);
+
+    text-transform: uppercase;
+}
+
+.jk-rd-box input,
+.jk-rd-box__input {
+    width: 100%;
+
+    padding: 2px 4px;
+
+    background: transparent;
+    color: var(--jk-text-on-dark);
+
+    border: none;
+    border-bottom: 1px solid var(--jk-border-soft);
+    border-radius: 0;
+
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    font-weight: 700;
+
+    text-align: center;
+}
+
+.jk-rd-box input:focus,
+.jk-rd-box__input:focus {
+    outline: none;
+    border-bottom-color: var(--jk-text-value);
+    box-shadow: none;
+}
+

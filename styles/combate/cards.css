@@ -1,0 +1,35 @@
+/* ==========================================================
+   CARDS
+   ========================================================== */
+
+.jk-combate-card {
+    background: var(--jk-bg-section-soft);
+    border: 1px solid var(--jk-border-soft);
+    border-radius: 6px;
+    padding: 12px;
+    overflow: visible;
+}
+
+.jk-combate-card h2 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    font-family: "Cinzel", serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .03em;
+    color: var(--jk-text-secondary);
+    white-space: nowrap;
+    text-shadow: none;
+}
+
+.jk-combate-card h2::before,
+.jk-combate-card h2::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: var(--jk-border-soft);
+}
+

@@ -1,0 +1,61 @@
+/* ==========================================================
+   INVENTÁRIO & ATAQUES
+   ========================================================== */
+
+.jk-inventory-attack-card {
+    min-height: 100%;
+}
+
+.jk-combat-list-block {
+    margin-bottom: 14px;
+    background: transparent;
+}
+
+.jk-combat-list-block:last-child {
+    margin-bottom: 0;
+}
+
+.jk-combat-subheader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 6px;
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+.jk-combat-subheader::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--jk-border-soft);
+}
+
+.jk-combat-subheader h3 {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--jk-text-secondary);
+    font-family: var(--jk-font-title);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.jk-combat-subheader h3::before,
+.jk-combat-subheader h3::after {
+    display: none !important;
+    content: none !important;
+}
+
+.jk-combat-subheader .jk-add-combat-row {
+    order: 2;
+    margin-left: 0;
+}
+

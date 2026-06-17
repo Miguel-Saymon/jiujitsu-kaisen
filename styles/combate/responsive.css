@@ -1,0 +1,13 @@
+@media (max-width: 1100px) {
+    .jk-combate-top-row,
+    .jk-combate-mid-row,
+    .jk-combate-main-grid,
+    .jk-cd-movement-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .jk-rd-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+

@@ -1,0 +1,41 @@
+.jk-combate-card label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+    color: var(--jk-text-secondary);
+    font-weight: 600;
+}
+
+.jk-combate-card label:last-child {
+    margin-bottom: 0;
+}
+
+.jk-combate-card details {
+    overflow: hidden;
+    margin-bottom: 8px;
+    background: var(--jk-bg-section-soft);
+    border: 1px solid var(--jk-border-soft);
+    border-radius: 4px;
+}
+
+.jk-combate-card details:last-child {
+    margin-bottom: 0;
+}
+
+.jk-combate-card summary {
+    padding: 8px;
+    background: var(--jk-bg-input-hover);
+    color: var(--jk-text-secondary);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.jk-combate-card details textarea,
+.jk-tecnicas-layout textarea {
+    min-height: 96px;
+    padding: 8px;
+    border: none;
+}
+

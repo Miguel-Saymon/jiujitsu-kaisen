@@ -1,0 +1,134 @@
+.jk-talent-table,
+.jk-combat-list-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: visible;
+    background: var(--jk-bg-section-soft);
+    border: 1px solid var(--jk-border-soft);
+    border-radius: var(--jk-radius-md);
+}
+
+.jk-talent-table thead,
+.jk-combat-list-table thead {
+    background: var(--jk-bg-section);
+}
+
+.jk-talent-table th,
+.jk-combat-list-table th {
+    height: 26px;
+    padding: 5px 8px;
+    background: var(--jk-bg-section);
+    border-bottom: 1px solid var(--jk-border-soft);
+    color: var(--jk-text-muted);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .055em;
+    line-height: 1;
+    text-align: left;
+    text-transform: uppercase;
+    text-shadow: none;
+}
+
+.jk-talent-table th:not(:first-child),
+.jk-combat-list-table th:not(:first-child) {
+    text-align: center;
+}
+
+.jk-talent-table tbody tr,
+.jk-combat-list-table tbody tr {
+    background: var(--jk-bg-section-soft);
+}
+
+.jk-talent-table td,
+.jk-combat-list-table td {
+    height: 35px;
+    padding: 5px 8px;
+    background: var(--jk-bg-section-soft);
+    border-bottom: 1px solid var(--jk-border-soft);
+    color: var(--jk-text-secondary);
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+.jk-talent-table tr:last-child td,
+.jk-combat-list-table tr:last-child td {
+    border-bottom: none;
+}
+
+.jk-talent-table tbody tr:hover td,
+.jk-combat-list-table tbody tr:hover td {
+    background: var(--jk-bg-input-hover);
+}
+
+.jk-talent-table td:not(:first-child),
+.jk-combat-list-table td:not(:first-child) {
+    text-align: center;
+}
+
+.jk-talent-table input,
+.jk-combat-list-table input {
+    height: 23px;
+    padding: 2px 4px;
+    background: transparent !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--jk-border-soft) 75%, transparent 25%);
+    color: var(--jk-text-secondary);
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.jk-talent-table input::placeholder,
+.jk-combat-list-table input::placeholder {
+    color: var(--jk-text-muted);
+    opacity: .65;
+}
+
+.jk-talent-table input:focus,
+.jk-combat-list-table input:focus {
+    background: var(--jk-bg-input-hover) !important;
+    border-bottom-color: var(--jk-border-input);
+}
+
+.jk-talent-table td:first-child input,
+.jk-combat-list-table td:first-child input {
+    color: var(--jk-text-muted);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.jk-talent-table td.is-val input,
+.jk-talent-table td.is-cost input,
+.jk-combat-list-table .is-small input {
+    color: #F0E0FF;
+    font-family: var(--jk-font-number);
+    font-weight: 700;
+    text-align: center;
+}
+
+.jk-talent-table td.is-cost input {
+    font-size: 10px;
+}
+
+.jk-combat-list-table .is-small {
+    width: 54px;
+}
+
+.jk-combat-list-table td:nth-child(3) input,
+.jk-combat-list-table td:nth-child(4) input {
+    color: #F0E0FF;
+    font-family: var(--jk-font-number);
+    font-weight: 700;
+    text-align: center;
+}
+
+.jk-combat-list-table .is-action,
+.jk-talent-table .is-action {
+    width: 28px;
+    text-align: center;
+}
+
+.jk-action-heading {
+    width: 28px;
+    text-align: center;
+}
+

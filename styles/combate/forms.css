@@ -1,0 +1,103 @@
+/* ==========================================================
+   INPUTS
+   ========================================================== */
+
+.jk-combate-card input,
+.jk-combate-card textarea,
+.jk-combate-card select {
+    width: 100%;
+    background: var(--jk-bg-section-soft);
+    border: none;
+    border-bottom: 1px solid var(--jk-border-soft);
+    color: var(--jk-text-on-dark);
+    box-shadow: none;
+}
+
+.jk-combate-card input::placeholder,
+.jk-combate-card textarea::placeholder {
+    color: var(--jk-text-muted);
+    opacity: .75;
+}
+
+.jk-combate-card input:focus,
+.jk-combate-card textarea:focus,
+.jk-combate-card select:focus {
+    outline: none;
+    box-shadow: none;
+    border-bottom-color: var(--jk-border-input);
+    background: var(--jk-bg-input-hover);
+}
+
+/* ==========================================================
+   CAMPOS LIVRES
+   ========================================================== */
+
+.jk-free-field {
+    min-height: 44px;
+    width: 100%;
+    resize: none;
+    padding: 8px;
+    background: var(--jk-bg-section-soft);
+    border: 1px solid var(--jk-border-soft) !important;
+    border-radius: 4px;
+    color: var(--jk-text-secondary);
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.jk-free-field:focus {
+    outline: none;
+    border-color: var(--jk-border-input) !important;
+    background: var(--jk-bg-input-hover);
+}
+
+
+.jk-combat-section-header,
+.jk-combat-subheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.jk-combat-section-header h2 {
+    flex: 1;
+    margin-bottom: 12px;
+}
+
+.jk-add-combat-row,
+.jk-remove-combat-row {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+
+    background: var(--jk-bg-input-hover);
+    border: 1px solid var(--jk-border-soft);
+    border-radius: 4px;
+
+    color: var(--jk-text-secondary);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.jk-add-combat-row:hover,
+.jk-remove-combat-row:hover {
+    background: var(--jk-border-soft);
+    color: var(--jk-text-on-dark);
+}
+
+.jk-remove-combat-row {
+    width: 20px;
+    height: 20px;
+    color: var(--jk-text-value);
+    font-size: 13px;
+}
+

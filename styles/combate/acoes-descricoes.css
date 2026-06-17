@@ -1,0 +1,266 @@
+/* ==========================================================
+   BOTÕES E ÍCONES DE TABELA
+   ========================================================== */
+
+.jk-description-button,
+.jk-combat-list-table .is-action button,
+.jk-talent-table .is-action button,
+.jk-combat-subheader .jk-add-combat-row,
+.jk-combat-section-header .jk-add-combat-row {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 20px;
+    width: 20px;
+    height: 20px;
+
+    padding: 0;
+    margin: 0;
+
+    background: var(--jk-bg-section);
+    border: 1px solid var(--jk-border-soft);
+    border-radius: var(--jk-radius-sm);
+
+    color: var(--jk-text-muted);
+
+    font-size: 0;
+    line-height: 1;
+
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.jk-description-button:hover,
+.jk-description-button:focus,
+.jk-combat-list-table .is-action button:hover,
+.jk-combat-list-table .is-action button:focus,
+.jk-talent-table .is-action button:hover,
+.jk-talent-table .is-action button:focus,
+.jk-combat-subheader .jk-add-combat-row:hover,
+.jk-combat-subheader .jk-add-combat-row:focus,
+.jk-combat-section-header .jk-add-combat-row:hover,
+.jk-combat-section-header .jk-add-combat-row:focus {
+    background: var(--jk-bg-input-hover);
+    border-color: var(--jk-border-input);
+    color: var(--jk-text-secondary);
+    box-shadow: none;
+}
+
+.jk-desc-note-icon,
+.jk-delete-x-icon,
+.jk-add-combat-row i,
+.jk-add-combat-row .fa-plus,
+.jk-action-heading .jk-delete-x-icon {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    line-height: 1;
+
+    color: inherit;
+
+    pointer-events: none;
+}
+
+.jk-desc-note-icon {
+    display: block;
+
+    margin: 0;
+    padding: 0;
+
+    font-size: 11px;
+    line-height: 1;
+
+    transform: translateX(2px);
+}
+
+.jk-delete-x-icon {
+    font-size: 12px;
+
+    transform: none;
+}
+
+.jk-add-combat-row i,
+.jk-add-combat-row .fa-plus {
+    font-size: 10px;
+
+    transform: translateY(-1px);
+}
+
+.jk-combat-list-table .is-action,
+.jk-talent-table .is-action,
+.jk-action-heading {
+    width: 28px;
+    text-align: center;
+}
+
+.jk-action-heading .jk-delete-x-icon {
+    display: inline-block;
+
+    color: var(--jk-text-muted);
+    opacity: .8;
+}
+
+.jk-description-button::after {
+    content: attr(data-description);
+
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 8px);
+
+    display: none;
+
+    min-width: 260px;
+    max-width: 420px;
+    max-height: none;
+
+    padding: 10px 12px;
+
+    background: var(--jk-bg-section);
+
+    border: 1px solid var(--jk-border-soft);
+    border-radius: var(--jk-radius-md);
+
+    color: var(--jk-text-secondary);
+
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.45;
+
+    text-align: left;
+    white-space: pre-wrap;
+    overflow: visible;
+
+    z-index: 999;
+}
+
+.jk-description-button:hover::after,
+.jk-description-button:focus::after {
+    display: block;
+}
+
+.jk-description-button[data-description=""]::after {
+    content: "Sem descrição.";
+    color: var(--jk-text-muted);
+}
+
+.jk-description-row {
+    display: none;
+}
+
+.jk-description-row.is-open {
+    display: table-row;
+}
+
+.jk-description-row td {
+    padding: 8px 10px 10px;
+
+    background: var(--jk-bg-section) !important;
+
+    border-top: 1px solid var(--jk-border-soft);
+}
+
+.jk-description-field {
+    width: 100%;
+    min-height: 78px;
+
+    padding: 9px 10px;
+
+    resize: vertical;
+
+    border: 1px solid var(--jk-border-soft) !important;
+    border-radius: var(--jk-radius-md);
+
+    background: var(--jk-bg-section) !important;
+
+    color: var(--jk-text-secondary);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.jk-description-field::placeholder {
+    color: var(--jk-text-muted);
+    opacity: .65;
+}
+
+.jk-description-field:focus {
+    background: var(--jk-bg-input-hover) !important;
+    border-color: var(--jk-border-input) !important;
+}
+
+.jk-combat-list-table .is-action button,
+.jk-talent-table .is-action button {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.jk-combat-list-table .is-action button:hover,
+.jk-talent-table .is-action button:hover {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.jk-combat-list-table .is-action .jk-delete-x-icon,
+.jk-talent-table .is-action .jk-delete-x-icon {
+    font-size: 13px;
+    color: var(--jk-text-muted);
+
+    transition: color .15s ease;
+}
+
+.jk-combat-list-table .is-action button:hover .jk-delete-x-icon,
+.jk-talent-table .is-action button:hover .jk-delete-x-icon {
+    color: var(--jk-text-secondary);
+}
+
+.jk-combat-section-header .jk-add-combat-row {
+    position: relative;
+    transform: translateY(-6px);
+}
+
+
+/* ==========================================================
+   ADIÇÃO SEM QUADRADO
+   ========================================================== */
+
+.jk-combat-section-header .jk-add-combat-row,
+.jk-combat-subheader .jk-add-combat-row {
+    width: auto;
+    height: auto;
+    min-width: auto;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: var(--jk-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.jk-combat-section-header .jk-add-combat-row:hover,
+.jk-combat-subheader .jk-add-combat-row:hover {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: var(--jk-text-secondary);
+}
+
+.jk-combat-section-header .jk-add-combat-row i,
+.jk-combat-subheader .jk-add-combat-row i {
+    font-size: 11px;
+    line-height: 1;
+    transform: translateY(-1px);
+}
+

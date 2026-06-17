@@ -1,0 +1,40 @@
+.jk-combate-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    background: var(--jk-bg-section);
+}
+
+.jk-combate-top-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+}
+
+.jk-combate-mid-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+}
+
+.jk-combate-mid-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.jk-combate-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+    align-items: start;
+}
+
+.jk-combate-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
