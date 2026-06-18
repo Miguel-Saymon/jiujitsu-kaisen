@@ -1,0 +1,102 @@
+<div class="form-group">
+  <label>Proficiência</label>
+  <select name="system.arma.proficiencia">
+    {{#each proficienciasArma}}
+      <option value="{{value}}" {{#if (eq ../system.arma.proficiencia value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+</div>
+
+<div class="form-group">
+  <label>Propósito</label>
+  <select name="system.arma.proposito">
+    {{#each propositosArma}}
+      <option value="{{value}}" {{#if (eq ../system.arma.proposito value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+</div>
+
+<div class="form-group">
+  <label>Empunhadura</label>
+  <select name="system.arma.empunhadura">
+    {{#each empunhadurasArma}}
+      <option value="{{value}}" {{#if (eq ../system.arma.empunhadura value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+</div>
+
+<div class="form-group">
+  <label>Consumível</label>
+  <select name="system.arma.consumivel">
+    {{#each consumiveisArma}}
+      <option value="{{value}}" {{#if (eq ../system.arma.consumivel value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+</div>
+
+<h3>Propriedades</h3>
+<div class="form-group">
+  <label><input type="checkbox" name="system.arma.propriedades.adaptavel" {{checked system.arma.propriedades.adaptavel}} /> Adaptável</label>
+  <label><input type="checkbox" name="system.arma.propriedades.agil" {{checked system.arma.propriedades.agil}} /> Ágil</label>
+  <label><input type="checkbox" name="system.arma.propriedades.alongada" {{checked system.arma.propriedades.alongada}} /> Alongada</label>
+  <label><input type="checkbox" name="system.arma.propriedades.desbalanceada" {{checked system.arma.propriedades.desbalanceada}} /> Desbalanceada</label>
+</div>
+
+<div class="form-group">
+  <label><input type="checkbox" name="system.arma.propriedades.dupla" {{checked system.arma.propriedades.dupla}} /> Dupla</label>
+  <label><input type="checkbox" name="system.arma.propriedades.versatil" {{checked system.arma.propriedades.versatil}} /> Versátil</label>
+  <label><input type="checkbox" name="system.arma.propriedades.hibrida" {{checked system.arma.propriedades.hibrida}} /> Híbrida</label>
+</div>
+
+<h3>Rolagens</h3>
+
+<div class="form-group">
+  <label>Ataque</label>
+  <select name="system.arma.ataque.atributo">
+    {{#each atributos}}
+      <option value="{{value}}" {{#if (eq ../system.arma.ataque.atributo value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+
+  <select name="system.arma.ataque.tipo">
+    {{#each tiposAtaque}}
+      <option value="{{value}}" {{#if (eq ../system.arma.ataque.tipo value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+
+  <input type="number" name="system.arma.ataque.bonus" value="{{system.arma.ataque.bonus}}" placeholder="Bônus" />
+</div>
+
+<div class="form-group">
+  <label>Dano</label>
+  <input type="text" name="system.arma.dano.formula" value="{{system.arma.dano.formula}}" placeholder="ex. 1d8" />
+
+  <select name="system.arma.dano.atributo">
+    {{#each atributos}}
+      <option value="{{value}}" {{#if (eq ../system.arma.dano.atributo value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+
+  <select name="system.arma.dano.tipo">
+    {{#each tiposDano}}
+      <option value="{{value}}" {{#if (eq ../system.arma.dano.tipo value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+</div>
+
+<div class="form-group">
+  <label>Crítico</label>
+  <input type="number" name="system.arma.critico.margem" value="{{system.arma.critico.margem}}" placeholder="Margem" />
+  <input type="number" name="system.arma.critico.multiplicador" value="{{system.arma.critico.multiplicador}}" placeholder="Multiplicador" />
+</div>
+
+<div class="form-group">
+  <label>Alcance</label>
+  <select name="system.arma.alcance">
+    {{#each alcances}}
+      <option value="{{value}}" {{#if (eq ../system.arma.alcance value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+</div>
+	
+

@@ -1,27 +1,26 @@
-import { buildRollCard } from "./chat-cards.js";
-
 export async function executeRoll({
   actor,
   title,
   flavor,
-  formula
+  formula,
+  rollMode
 }) {
-  const roll = await new Roll(formula).evaluate();
+  const rollData = typeof actor?.getRollData === "function"
+    ? actor.getRollData()
+    : actor?.system ?? {};
 
-  const dieResult = roll.dice?.[0]?.total ?? roll.total;
-  const bonus = roll.total - dieResult;
+  const roll = await new Roll(formula, rollData).evaluate();
 
-  await ChatMessage.create({
-    speaker: ChatMessage.getSpeaker({ actor }),
-    flavor,
-    content: buildRollCard({
-      title,
-      formula,
-      total: roll.total,
-      diceTotal: dieResult,
-      bonus
-    })
-  });
+  await roll.toMessage(
+    {
+      speaker: ChatMessage.getSpeaker({ actor }),
+      flavor: flavor || title
+    },
+    {
+      rollMode: rollMode || game.settings.get("core", "rollMode")
+    }
+  );
 
   return roll;
 }
+

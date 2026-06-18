@@ -1,0 +1,15 @@
+<h3>Encantos</h3>
+
+{{#each encantosArmaSlots}}
+  <div class="form-group">
+    <label>{{label}}</label>
+    <select name="system.arma.aprimoramentos.encantos.{{key}}">
+      {{#each options}}
+        <option value="{{value}}" {{#if (eq ../value value)}}selected{{/if}} {{#if disabled}}disabled{{/if}}>
+          {{label}}
+        </option>
+      {{/each}}
+    </select>
+  </div>
+{{/each}}
+

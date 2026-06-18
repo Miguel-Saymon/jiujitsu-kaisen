@@ -80,26 +80,12 @@ context.combateHabilidades = prepararListaCombate(
   "habilidade"
 );
 
-context.combateAtaques = prepararListaCombate(
-  context.system.combate?.ataques,
-  "ataque"
-);
+const itensCombate = prepararItensCombate(this.actor.items);
 
-context.combateEquipamentos = prepararListaCombate(
-  context.system.combate?.equipamentos ?? context.system.combate?.inventario,
-  "equipamento",
-  ["equipamentos"] // chaves extras para ignorar além de _empty
-);
-
-context.combateConsumiveis = prepararListaCombate(
-  context.system.combate?.consumiveis,
-  "consumivel"
-);
-
-context.combateTesouros = prepararListaCombate(
-  context.system.combate?.tesouros,
-  "tesouro"
-);
+context.combateAtaques = itensCombate.ataques;
+context.combateEquipamentos = itensCombate.equipamentos;
+context.combateConsumiveis = itensCombate.consumiveis;
+context.combateTesouros = itensCombate.tesouros;
 
   return context;
 }
@@ -205,6 +191,78 @@ function gerarResumoEspecializacoes(system, especializacoes) {
     .join(" / ");
 }
 
+
+function prepararItensCombate(items) {
+  const listas = {
+    ataques: [],
+    equipamentos: [],
+    consumiveis: [],
+    tesouros: []
+  };
+
+  for (const item of items ?? []) {
+    const system = item.system ?? {};
+    const categoria = system.categoria ?? "";
+
+    const base = {
+      id: item.id,
+      nome: item.name ?? "Item",
+      img: item.img,
+      categoria,
+      quantidade: system.quantidade ?? "",
+      espacos: system.espacos ?? "",
+      preco: system.preco ?? "",
+      rd: system.rd ?? "",
+      pvAtual: system.pv?.atual ?? "",
+      pvMax: system.pv?.max ?? ""
+    };
+
+    if (categoria === "arma") {
+      listas.ataques.push({
+        ...base,
+        bonus: system.arma?.ataque?.bonus ?? "",
+        dano: system.arma?.dano?.formula ?? "",
+        tipo: system.arma?.dano?.tipo ?? "",
+        alcance: system.arma?.alcance ?? ""
+      });
+      continue;
+    }
+
+    if (categoria === "equipamento") {
+      listas.equipamentos.push({
+        ...base,
+        tipo: system.equipamento?.tipo ?? "",
+        defesa: system.equipamento?.defesa ?? "",
+        penalidadeArmadura: system.equipamento?.penalidadeArmadura ?? ""
+      });
+      continue;
+    }
+
+    if (categoria === "consumivel") {
+      listas.consumiveis.push({
+        ...base,
+        tipo: system.consumivel?.tipo ?? "",
+        execucao: system.consumivel?.ativacao?.execucao ?? "",
+        duracao: system.consumivel?.ativacao?.duracao ?? ""
+      });
+      continue;
+    }
+
+    if (categoria === "tesouro") {
+      listas.tesouros.push({
+        ...base,
+        recipiente: system.tesouro?.recipiente ?? false
+      });
+    }
+  }
+
+  for (const lista of Object.values(listas)) {
+    lista.sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+  }
+
+  return listas;
+}
+
 function prepararListaCombate(colecao, prefixo, chavesIgnoradas = []) {
   if (!colecao || typeof colecao !== "object" || Array.isArray(colecao)) {
     return [];
@@ -223,9 +281,41 @@ function prepararListaCombate(colecao, prefixo, chavesIgnoradas = []) {
     })
     .map(([key, item]) => ({
       key,
+      ...obterPadroesListaCombate(prefixo),
       ...item
     }))
     .sort((a, b) => obterIndiceLista(a.key, prefixo) - obterIndiceLista(b.key, prefixo));
+}
+
+function obterPadroesListaCombate(prefixo) {
+  if (prefixo === "habilidade") {
+    return {
+      nome: "",
+      atributo: "presenca",
+      bonus: 0,
+      atual: 0,
+      max: 0,
+      custo: "",
+      descricao: ""
+    };
+  }
+
+  if (prefixo === "ataque") {
+    return {
+      nome: "",
+      bonus: 0,
+      dano: "",
+      tipo: ""
+    };
+  }
+
+  return {
+    nome: "",
+    quantidade: 1,
+    peso: "",
+    cargas: "",
+    notas: ""
+  };
 }
 
 function obterIndiceLista(key, prefixo) {
@@ -239,6 +329,8 @@ function criarLinhaVaziaCombate(prefixo) {
     return {
       key: "habilidade1",
       nome: "",
+      atributo: "presenca",
+      bonus: 0,
       atual: 0,
       max: 0,
       custo: "",
@@ -265,4 +357,6 @@ function criarLinhaVaziaCombate(prefixo) {
     notas: ""
   };
 }
+
+
 

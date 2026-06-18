@@ -50,6 +50,7 @@
 }
 
 .jk-desc-note-icon,
+.jk-roll-icon,
 .jk-delete-x-icon,
 .jk-add-combat-row i,
 .jk-add-combat-row .fa-plus,
@@ -69,6 +70,11 @@
     pointer-events: none;
 }
 
+.jk-roll-icon {
+    font-size: 12px;
+    transform: translateY(-1px);
+}
+
 .jk-desc-note-icon {
     display: block;
 
@@ -83,14 +89,12 @@
 
 .jk-delete-x-icon {
     font-size: 12px;
-
     transform: none;
 }
 
 .jk-add-combat-row i,
 .jk-add-combat-row .fa-plus {
     font-size: 10px;
-
     transform: translateY(-1px);
 }
 
@@ -108,93 +112,10 @@
     opacity: .8;
 }
 
-.jk-description-button::after {
-    content: attr(data-description);
 
-    position: absolute;
-    right: 0;
-    bottom: calc(100% + 8px);
-
-    display: none;
-
-    min-width: 260px;
-    max-width: 420px;
-    max-height: none;
-
-    padding: 10px 12px;
-
-    background: var(--jk-bg-section);
-
-    border: 1px solid var(--jk-border-soft);
-    border-radius: var(--jk-radius-md);
-
-    color: var(--jk-text-secondary);
-
-    font-size: 11px;
-    font-weight: 400;
-    line-height: 1.45;
-
-    text-align: left;
-    white-space: pre-wrap;
-    overflow: visible;
-
-    z-index: 999;
-}
-
-.jk-description-button:hover::after,
-.jk-description-button:focus::after {
-    display: block;
-}
-
-.jk-description-button[data-description=""]::after {
-    content: "Sem descrição.";
-    color: var(--jk-text-muted);
-}
-
-.jk-description-row {
-    display: none;
-}
-
-.jk-description-row.is-open {
-    display: table-row;
-}
-
-.jk-description-row td {
-    padding: 8px 10px 10px;
-
-    background: var(--jk-bg-section) !important;
-
-    border-top: 1px solid var(--jk-border-soft);
-}
-
-.jk-description-field {
-    width: 100%;
-    min-height: 78px;
-
-    padding: 9px 10px;
-
-    resize: vertical;
-
-    border: 1px solid var(--jk-border-soft) !important;
-    border-radius: var(--jk-radius-md);
-
-    background: var(--jk-bg-section) !important;
-
-    color: var(--jk-text-secondary);
-
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-.jk-description-field::placeholder {
-    color: var(--jk-text-muted);
-    opacity: .65;
-}
-
-.jk-description-field:focus {
-    background: var(--jk-bg-input-hover) !important;
-    border-color: var(--jk-border-input) !important;
-}
+/* ==========================================================
+   BOTÕES DE AÇÃO — SEM QUADRADO
+   ========================================================== */
 
 .jk-combat-list-table .is-action button,
 .jk-talent-table .is-action button {
@@ -223,15 +144,15 @@
     color: var(--jk-text-secondary);
 }
 
+
+/* ==========================================================
+   BOTÃO DE ADIÇÃO — SEM QUADRADO
+   ========================================================== */
+
 .jk-combat-section-header .jk-add-combat-row {
     position: relative;
     transform: translateY(-6px);
 }
-
-
-/* ==========================================================
-   ADIÇÃO SEM QUADRADO
-   ========================================================== */
 
 .jk-combat-section-header .jk-add-combat-row,
 .jk-combat-subheader .jk-add-combat-row {
@@ -264,3 +185,203 @@
     transform: translateY(-1px);
 }
 
+
+/* ==========================================================
+   LINHA DE DESCRIÇÃO (GAVETA)
+   ========================================================== */
+
+.jk-description-row {
+    display: none;
+}
+
+.jk-description-row.is-open {
+    display: table-row;
+}
+
+.jk-description-row td {
+    padding: 8px 10px 10px;
+
+    background: var(--jk-bg-section) !important;
+
+    border-top: 1px solid var(--jk-border-soft);
+
+    /* Garante que o tooltip do textarea não seja cortado */
+    overflow: visible;
+}
+
+
+/* ==========================================================
+   CAMPO DE DESCRIÇÃO (TEXTAREA)
+   ========================================================== */
+
+.jk-description-field {
+    width: 100%;
+    min-height: 78px;
+
+    padding: 9px 10px;
+
+    resize: vertical;
+
+    border: 1px solid var(--jk-border-soft) !important;
+    border-radius: var(--jk-radius-md);
+
+    background: var(--jk-bg-section) !important;
+
+    color: var(--jk-text-secondary);
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    transition: background .15s ease, border-color .15s ease;
+}
+
+.jk-description-field::placeholder {
+    color: var(--jk-text-muted);
+    opacity: .65;
+}
+
+.jk-description-field:hover {
+    background: var(--jk-bg-input-hover) !important;
+    border-color: var(--jk-border-input) !important;
+}
+
+.jk-description-field:focus {
+    background: var(--jk-bg-input-hover) !important;
+    border-color: var(--jk-border-input) !important;
+    outline: none;
+}
+
+
+/* ==========================================================
+   NOME — sem hover de tooltip
+   (classe mantida no HBS mas sem efeito visual)
+   ========================================================== */
+
+.jk-name-description-hover {
+    position: relative;
+    display: block;
+}
+
+
+/* ==========================================================
+   TOOLTIP DO ÍCONE DE NOTA — hover mostra a descrição
+   ========================================================== */
+
+/* Garante que o td não corte o tooltip */
+.jk-combat-list-table td,
+.jk-talent-table td {
+    overflow: visible;
+}
+
+.jk-description-button {
+    overflow: visible; /* necessário para o ::after sair dos limites do botão */
+}
+
+.jk-description-button::after {
+    content: attr(data-description);
+
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 8px);
+
+    display: none;
+
+    min-width: 260px;
+    max-width: 420px;
+
+    padding: 10px 12px;
+
+    background: var(--jk-bg-section);
+    border: 1px solid var(--jk-border-soft);
+    border-radius: var(--jk-radius-md);
+
+    color: var(--jk-text-secondary);
+
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.45;
+
+    text-align: left;
+    white-space: pre-wrap;
+
+    pointer-events: none;
+
+    z-index: 9999; /* alto o suficiente para sobrepor o Foundry */
+}
+
+.jk-description-button:hover::after {
+    display: block;
+}
+
+.jk-description-button[data-description=""]::after {
+    content: "Sem descrição.";
+    color: var(--jk-text-muted);
+}
+
+
+/* ==========================================================
+   CHAT CARD DE HABILIDADES
+   ========================================================== */
+
+.jk-ability-chat-card {
+    padding: 12px 14px;
+
+    background: linear-gradient(180deg, #1e0f2e 0%, #130a1e 100%);
+    border: 1px solid #5c1f2e;
+    border-radius: var(--jk-radius-md, 6px);
+
+    color: #d4b8e8;
+    box-shadow: 0 0 0 1px rgba(139, 26, 46, .18), 0 6px 18px rgba(0, 0, 0, .28);
+}
+
+.jk-ability-chat-title {
+    margin: 0 0 9px;
+    padding-bottom: 7px;
+
+    border-bottom: 1px solid rgba(92, 31, 46, .75);
+
+    color: #f0e0ff;
+
+    font-family: var(--jk-font-title, serif);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-align: center;
+}
+
+.jk-ability-chat-description {
+    color: #d4b8e8;
+
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.jk-inline-roll-result {
+    display: inline-block;
+    min-width: 1.4em;
+
+    padding: 0 5px;
+
+    background: rgba(139, 26, 46, .28);
+    border: 1px solid rgba(139, 26, 46, .72);
+    border-radius: var(--jk-radius-sm, 4px);
+
+    color: #f0e0ff;
+
+    font-family: var(--jk-font-number, monospace);
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+
+    cursor: help;
+}
+
+.jk-inline-roll-result:hover {
+    background: rgba(139, 26, 46, .42);
+    border-color: #8b1a2e;
+}
+
+.jk-inline-roll-error {
+    color: #9b70c0;
+    font-family: var(--jk-font-number, monospace);
+}

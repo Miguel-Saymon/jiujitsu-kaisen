@@ -132,3 +132,45 @@
     text-align: center;
 }
 
+
+/* ==========================================================
+   HABILIDADES & TALENTOS — CAMPOS DE ROLAGEM
+   ========================================================== */
+
+.jk-talent-table td.is-attr {
+    width: 52px;
+}
+
+.jk-talent-table td.is-bonus {
+    width: 48px;
+}
+
+.jk-talent-table select {
+    height: 23px;
+    padding: 2px 4px;
+
+    background: transparent !important;
+    border: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--jk-border-soft) 75%, transparent 25%);
+
+    color: var(--jk-text-secondary);
+
+    font-size: 10px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.jk-talent-table select:focus {
+    outline: none;
+    background: var(--jk-bg-input-hover) !important;
+    border-bottom-color: var(--jk-border-input);
+    box-shadow: none;
+}
+
+.jk-talent-table td.is-bonus input {
+    color: #F0E0FF;
+    font-family: var(--jk-font-number);
+    font-weight: 700;
+    text-align: center;
+}
+

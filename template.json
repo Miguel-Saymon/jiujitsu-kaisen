@@ -403,5 +403,91 @@
         "anotacoes": ""
       }
     }
+  },
+  "Item": {
+    "types": [
+      "item"
+    ],
+    "item": {
+      "categoria": null,
+      "descricao": null,
+      "arma": {
+        "proficiencia": null,
+        "proposito": null,
+        "empunhadura": null,
+        "consumivel": null,
+        "propriedades": {
+          "adaptavel": false,
+          "agil": false,
+          "alongada": false,
+          "desbalanceada": false,
+          "dupla": false,
+          "versatil": false,
+          "hibrida": false
+        },
+        "ataque": {
+          "atributo": null,
+          "tipo": null,
+          "bonus": null
+        },
+        "dano": {
+          "formula": null,
+          "atributo": null,
+          "tipo": null
+        },
+        "critico": {
+          "margem": null,
+          "multiplicador": null
+        },
+        "alcance": null,
+        "aprimoramentos": {
+          "encantos": {
+            "slot1": null,
+            "slot2": null,
+            "slot3": null,
+            "slot4": null
+          }
+        }
+      },
+      "consumivel": {
+        "tipo": null,
+        "ativacao": {
+          "consumivel": null,
+          "execucao": null,
+          "condicao": null,
+          "alcance": null,
+          "alvo": null,
+          "area": null,
+          "efeito": null,
+          "duracao": null,
+          "testeResistencia": null
+        }
+      },
+      "equipamento": {
+        "tipo": null,
+        "tipoUso": null,
+        "defesa": null,
+        "penalidadeArmadura": null,
+        "aprimoramentos": {
+          "encantos": {
+            "slot1": null,
+            "slot2": null,
+            "slot3": null,
+            "slot4": null
+          }
+        }
+      },
+      "tesouro": {
+        "recipiente": false
+      },
+      "pv": {
+        "atual": null,
+        "max": null
+      },
+      "rd": null,
+      "quantidade": null,
+      "espacos": null,
+      "preco": null
+    }
   }
 }

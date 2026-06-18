@@ -1,0 +1,67 @@
+<form class="{{cssClass}} jk-item-form" autocomplete="off">
+  <header class="sheet-header">
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Nome do item" />
+      </h1>
+
+      <div class="form-group">
+        <label>Categoria</label>
+        <select name="system.categoria">
+          {{#each categorias}}
+            <option value="{{value}}" {{#if (eq ../system.categoria value)}}selected{{/if}}>
+              {{label}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs item-tabs tabs" data-group="primary">
+    <a class="item" data-tab="descricao">Descrição</a>
+
+    {{#if showDetalhes}}
+      <a class="item" data-tab="detalhes">Detalhes</a>
+    {{/if}}
+
+    {{#if showAprimoramentos}}
+      <a class="item" data-tab="aprimoramentos">Aprimoramentos</a>
+    {{/if}}
+  </nav>
+
+  <section class="sheet-body item-body">
+    <div class="tab" data-group="primary" data-tab="descricao">
+      {{> "systems/jiujitsu-kaisen/templates/items/partials/description.hbs"}}
+    </div>
+
+    {{#if showDetalhes}}
+      <div class="tab" data-group="primary" data-tab="detalhes">
+        {{#if isArma}}
+          {{> "systems/jiujitsu-kaisen/templates/items/partials/weapon-details.hbs"}}
+        {{/if}}
+
+        {{#if isConsumivel}}
+          {{> "systems/jiujitsu-kaisen/templates/items/partials/consumable-details.hbs"}}
+        {{/if}}
+
+        {{#if isEquipamento}}
+          {{> "systems/jiujitsu-kaisen/templates/items/partials/equipment-details.hbs"}}
+        {{/if}}
+      </div>
+    {{/if}}
+
+    {{#if showAprimoramentos}}
+      <div class="tab" data-group="primary" data-tab="aprimoramentos">
+        {{#if isArma}}
+          {{> "systems/jiujitsu-kaisen/templates/items/partials/weapon-enchantments.hbs"}}
+        {{/if}}
+
+        {{#if isEquipamento}}
+          {{> "systems/jiujitsu-kaisen/templates/items/partials/equipment-enchantments.hbs"}}
+        {{/if}}
+      </div>
+    {{/if}}
+  </section>
+</form>
+

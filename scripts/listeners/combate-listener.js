@@ -86,7 +86,40 @@ export function registerCombatListener(sheet, html) {
 
     html.find(`.jk-description-row[data-row="${target}"]`).toggleClass("is-open");
   });
+
+  html.find(".jk-roll-habilidade").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const key = event.currentTarget.dataset.key;
+    if (!key) return;
+
+    await enviarHabilidadeParaChat(sheet.actor, key);
+  });
+  html.find(".jk-open-actor-item").on("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const itemId = event.currentTarget.dataset.itemId;
+    if (!itemId) return;
+
+    const item = sheet.actor.items.get(itemId);
+    item?.sheet?.render(true);
+  });
+
+  html.find(".jk-delete-actor-item").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const itemId = event.currentTarget.dataset.itemId;
+    if (!itemId) return;
+
+    await sheet.actor.deleteEmbeddedDocuments("Item", [itemId]);
+    sheet.render(true);
+  });
+
 }
+
 
 function criarItemPadrao(prefixo) {
   if (prefixo === "habilidade") {
@@ -97,3 +130,76 @@ function criarItemPadrao(prefixo) {
   }
   return { nome: "", quantidade: 1, peso: "", cargas: "", notas: "" };
 }
+
+
+async function enviarHabilidadeParaChat(actor, key) {
+  const habilidade = foundry.utils.getProperty(actor.system, `combate.habilidades.${key}`);
+  if (!habilidade) return;
+
+  const nome = habilidade.nome?.trim() || "Habilidade";
+  const descricao = habilidade.descricao?.trim() || "Sem descrição.";
+  const descricaoProcessada = await processarInlineRolls(descricao, actor);
+
+  await ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    flavor: "Habilidade & Talento",
+    content: `
+      <div class="jk-ability-chat-card">
+        <div class="jk-ability-chat-title">${escapeHtml(nome)}</div>
+        <div class="jk-ability-chat-description">${descricaoProcessada}</div>
+      </div>
+    `
+  });
+}
+
+async function processarInlineRolls(texto, actor) {
+  const partes = [];
+  const regex = /\[\[([^\]]+)\]\]/g;
+  let ultimoIndice = 0;
+  let match;
+
+  while ((match = regex.exec(texto)) !== null) {
+    partes.push(escapeHtml(texto.slice(ultimoIndice, match.index)));
+
+    const formula = match[1].trim();
+    partes.push(await renderizarInlineRoll(formula, actor));
+
+    ultimoIndice = regex.lastIndex;
+  }
+
+  partes.push(escapeHtml(texto.slice(ultimoIndice)));
+
+  return partes.join("").replace(/\n/g, "<br>");
+}
+
+async function renderizarInlineRoll(formula, actor) {
+  try {
+    const rollData = typeof actor.getRollData === "function" ? actor.getRollData() : actor.system;
+    const roll = await new Roll(formula, rollData).evaluate();
+    const dados = obterResultadosDados(roll);
+    const tooltip = `${escapeHtml(formula)}${dados ? `: ${escapeHtml(dados)}` : ""}`;
+
+    return `<span class="jk-inline-roll-result" title="${tooltip}">${roll.total}</span>`;
+  } catch (error) {
+    console.warn("Jiujitsu Kaisen | Falha ao processar rolagem inline:", formula, error);
+    return `<span class="jk-inline-roll-error" title="Fórmula inválida">[[${escapeHtml(formula)}]]</span>`;
+  }
+}
+
+function obterResultadosDados(roll) {
+  return roll.dice
+    ?.flatMap(die => die.results?.map(result => result.result) ?? [])
+    .filter(result => result !== undefined && result !== null)
+    .join(" + ") ?? "";
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+

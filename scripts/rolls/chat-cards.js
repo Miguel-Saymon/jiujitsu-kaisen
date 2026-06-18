@@ -3,7 +3,8 @@ export function buildRollCard({
   formula,
   total,
   diceTotal,
-  bonus
+  bonus,
+  diceResults = []
 }) {
   const resultClass = getResultClass(diceTotal);
 
@@ -11,26 +12,10 @@ export function buildRollCard({
     <div class="jk-roll-card ${resultClass}">
       <div class="jk-roll-title">${title}</div>
 
-      <div class="jk-roll-result" title="${formula}">
+      <div class="jk-roll-result jk-roll-hover" data-breakdown="${buildBreakdown(formula,diceResults,bonus)}">
         <i class="fas fa-dice-d20 jk-roll-die-icon"></i>
         <span class="jk-roll-total">${total}</span>
       </div>
-
-      <details class="jk-roll-details">
-        <summary>⌄</summary>
-
-      <div class="jk-roll-breakdown">
-      <span class="jk-roll-breakdown-die">
-      <i class="fas fa-dice-d20"></i>
-      ${diceTotal}
-      </span>
-
-  <span class="jk-roll-breakdown-bonus">
-    ${formatBonus(bonus)}
-  </span>
-</div>
-
-      </details>
     </div>
   `;
 }
@@ -50,3 +35,10 @@ function formatBonus(value) {
 
   return "+0";
 }
+
+
+function buildBreakdown(formula, diceResults, bonus) {
+  const diceText = `${formula.split(/\s*[+-]/)[0]}: ${diceResults.join(' + ')}`;
+  return `${diceText}\n${formatBonus(bonus)} (bônus)`;
+}
+

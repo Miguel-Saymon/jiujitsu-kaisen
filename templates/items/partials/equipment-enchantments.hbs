@@ -1,0 +1,19 @@
+<h3>Encantos</h3>
+
+{{#if hasTipoEquipamento}}
+  {{#each encantosEquipamentoSlots}}
+    <div class="form-group">
+      <label>{{label}}</label>
+      <select name="system.equipamento.aprimoramentos.encantos.{{key}}">
+        {{#each options}}
+          <option value="{{value}}" {{#if (eq ../value value)}}selected{{/if}} {{#if disabled}}disabled{{/if}}>
+            {{label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+  {{/each}}
+{{else}}
+  <p>Selecione <strong>Escudo</strong> ou <strong>Uniforme</strong> para editar encantos.</p>
+{{/if}}
+

@@ -1,0 +1,28 @@
+<div class="form-group">
+  <label>Tipo</label>
+  <select name="system.equipamento.tipo">
+    {{#each tiposEquipamento}}
+      <option value="{{value}}" {{#if (eq ../system.equipamento.tipo value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+</div>
+
+<div class="form-group">
+  <label>Tipo de Uso</label>
+  <select name="system.equipamento.tipoUso">
+    {{#each tiposUsoEquipamento}}
+      <option value="{{value}}" {{#if (eq ../system.equipamento.tipoUso value)}}selected{{/if}}>{{label}}</option>
+    {{/each}}
+  </select>
+</div>
+
+<div class="form-group">
+  <label>Defesa</label>
+  <input type="number" name="system.equipamento.defesa" value="{{system.equipamento.defesa}}" />
+</div>
+
+<div class="form-group">
+  <label>Penalidade de Armadura</label>
+  <input type="number" name="system.equipamento.penalidadeArmadura" value="{{system.equipamento.penalidadeArmadura}}" />
+</div>
+

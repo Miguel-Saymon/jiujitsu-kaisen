@@ -21,12 +21,16 @@
     "styles/combate.css",
     "styles/notas.css",
     "styles/responsive.css",
+    "styles/items/item-sheet.css",
     "styles/components/chat-rolls.css"
   ],
   "template": "template.json",
   "documentTypes": {
     "Actor": {
       "character": {}
+    },
+    "Item": {
+      "item": {}
     }
   }
 }

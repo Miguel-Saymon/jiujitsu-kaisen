@@ -1,4 +1,5 @@
 import { JKCharacterSheet } from "./sheets/character-sheet.js";
+import { JKItemSheet } from "./sheets/item-sheet.js";
 
 Hooks.once("init", async function () {
   console.log("Jiujitsu Kaisen | Sistema inicializado com sucesso.");
@@ -8,7 +9,13 @@ Hooks.once("init", async function () {
     "systems/jiujitsu-kaisen/templates/partials/principal.hbs",
     "systems/jiujitsu-kaisen/templates/partials/tecnicas.hbs",
     "systems/jiujitsu-kaisen/templates/partials/combate.hbs",
-    "systems/jiujitsu-kaisen/templates/partials/notas.hbs"
+    "systems/jiujitsu-kaisen/templates/partials/notas.hbs",
+    "systems/jiujitsu-kaisen/templates/items/partials/description.hbs",
+    "systems/jiujitsu-kaisen/templates/items/partials/weapon-details.hbs",
+    "systems/jiujitsu-kaisen/templates/items/partials/weapon-enchantments.hbs",
+    "systems/jiujitsu-kaisen/templates/items/partials/consumable-details.hbs",
+    "systems/jiujitsu-kaisen/templates/items/partials/equipment-details.hbs",
+    "systems/jiujitsu-kaisen/templates/items/partials/equipment-enchantments.hbs"
   ]);
 
   Handlebars.registerHelper("gte", function (a, b) {
@@ -25,5 +32,13 @@ Hooks.once("init", async function () {
     types: ["character"],
     makeDefault: true
   });
+
+  Items.unregisterSheet("core", ItemSheet);
+
+  Items.registerSheet("jiujitsu-kaisen", JKItemSheet, {
+    types: ["item"],
+    makeDefault: true
+  });
 });
+
 
