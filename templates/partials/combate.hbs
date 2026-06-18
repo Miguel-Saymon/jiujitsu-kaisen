@@ -229,16 +229,26 @@
                                 <th>Bonus</th>
                                 <th>Dano</th>
                                 <th>Tipo</th>
+                                <th class="jk-action-heading" title="Equipar/Desequipar"><i class="fas fa-hand"></i></th>
+                                <th class="jk-action-heading" title="Rolar ataque"><i class="fas fa-dice-d20 jk-roll-icon"></i></th>
                                 <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each combateAtaques as |ataque|}}
-                            <tr data-item-id="{{ataque.id}}">
+                            <tr data-item-id="{{ataque.id}}" class="{{#if ataque.equipado}}is-equipped{{/if}}">
                                 <td><a class="jk-open-actor-item" data-item-id="{{ataque.id}}">{{ataque.nome}}</a></td>
                                 <td class="is-small">{{ataque.bonus}}</td>
                                 <td>{{ataque.dano}}</td>
                                 <td class="is-small">{{ataque.tipo}}</td>
+                                <td class="is-action">
+                                    <button class="jk-toggle-equipped" type="button" data-item-id="{{ataque.id}}" title="{{#if ataque.equipado}}Desequipar arma{{else}}Equipar arma{{/if}}">
+                                        <i class="fas {{#if ataque.equipado}}fa-toggle-on{{else}}fa-toggle-off{{/if}}"></i>
+                                    </button>
+                                </td>
+                                <td class="is-action">
+                                    <button class="jk-roll-weapon-attack" type="button" data-item-id="{{ataque.id}}" title="Rolar ataque"><i class="fas fa-dice-d20 jk-roll-icon"></i></button>
+                                </td>
                                 <td class="is-action">
                                     <button class="jk-delete-actor-item" type="button" data-item-id="{{ataque.id}}" title="Remover arma da ficha"><i class="fas fa-xmark jk-delete-x-icon"></i></button>
                                 </td>
@@ -260,16 +270,22 @@
                                 <th>Tipo</th>
                                 <th>Defesa</th>
                                 <th>Qtd.</th>
+                                <th class="jk-action-heading" title="Equipar/Desequipar"><i class="fas fa-hand"></i></th>
                                 <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
                             </tr>
                         </thead>
                         <tbody>
                             {{#each combateEquipamentos as |item|}}
-                            <tr data-item-id="{{item.id}}">
+                            <tr data-item-id="{{item.id}}" class="{{#if item.equipado}}is-equipped{{/if}}">
                                 <td><a class="jk-open-actor-item" data-item-id="{{item.id}}">{{item.nome}}</a></td>
                                 <td class="is-small">{{item.tipo}}</td>
                                 <td class="is-small">{{item.defesa}}</td>
                                 <td class="is-small">{{item.quantidade}}</td>
+                                <td class="is-action">
+                                    <button class="jk-toggle-equipped" type="button" data-item-id="{{item.id}}" title="{{#if item.equipado}}Desequipar equipamento{{else}}Equipar equipamento{{/if}}">
+                                        <i class="fas {{#if item.equipado}}fa-toggle-on{{else}}fa-toggle-off{{/if}}"></i>
+                                    </button>
+                                </td>
                                 <td class="is-action">
                                     <button class="jk-delete-actor-item" type="button" data-item-id="{{item.id}}" title="Remover equipamento da ficha"><i class="fas fa-xmark jk-delete-x-icon"></i></button>
                                 </td>
@@ -347,6 +363,7 @@
     </div>
 
 </div>
+
 
 
 

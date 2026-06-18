@@ -411,6 +411,7 @@
     "item": {
       "categoria": null,
       "descricao": null,
+      "equipado": false,
       "arma": {
         "proficiencia": null,
         "proposito": null,
@@ -428,7 +429,8 @@
         "ataque": {
           "atributo": null,
           "tipo": null,
-          "bonus": null
+          "bonus": null,
+          "treinado": false
         },
         "dano": {
           "formula": null,
@@ -491,3 +493,4 @@
     }
   }
 }
+

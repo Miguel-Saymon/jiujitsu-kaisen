@@ -1,5 +1,6 @@
 import { JKCharacterSheet } from "./sheets/character-sheet.js";
 import { JKItemSheet } from "./sheets/item-sheet.js";
+import { registerDamageApplicationHooks } from "./rolls/damage-application.js";
 
 Hooks.once("init", async function () {
   console.log("Jiujitsu Kaisen | Sistema inicializado com sucesso.");
@@ -39,6 +40,9 @@ Hooks.once("init", async function () {
     types: ["item"],
     makeDefault: true
   });
+
+  registerDamageApplicationHooks();
 });
+
 
 

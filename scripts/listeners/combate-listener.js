@@ -1,3 +1,5 @@
+import { rollWeaponAttack } from "../rolls/attack-rolls.js";
+
 // combate-listener.js — versão correta para Foundry 13
 
 function extrairPrefixo(key) {
@@ -107,6 +109,39 @@ export function registerCombatListener(sheet, html) {
     item?.sheet?.render(true);
   });
 
+  html.find(".jk-toggle-equipped").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const itemId = event.currentTarget.dataset.itemId;
+    if (!itemId) return;
+
+    const item = sheet.actor.items.get(itemId);
+    if (!item) return;
+
+    const categoria = item.system?.categoria;
+    if (!["arma", "equipamento"].includes(categoria)) {
+      ui.notifications?.warn("Apenas armas e equipamentos podem ser equipados ou desequipados.");
+      return;
+    }
+
+    await item.update({
+      "system.equipado": !Boolean(item.system?.equipado)
+    });
+
+    sheet.render(false);
+  });
+
+  html.find(".jk-roll-weapon-attack").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const itemId = event.currentTarget.dataset.itemId;
+    if (!itemId) return;
+
+    await rollWeaponAttack(sheet.actor, itemId);
+  });
+
   html.find(".jk-delete-actor-item").on("click", async event => {
     event.preventDefault();
     event.stopPropagation();
@@ -138,7 +173,7 @@ async function enviarHabilidadeParaChat(actor, key) {
 
   const nome = habilidade.nome?.trim() || "Habilidade";
   const descricao = habilidade.descricao?.trim() || "Sem descrição.";
-  const descricaoProcessada = await processarInlineRolls(descricao, actor);
+  const descricaoProcessada = await processarInlineRolls(descricao, actor, deveExibirBotaoCura(descricao));
 
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
@@ -152,7 +187,7 @@ async function enviarHabilidadeParaChat(actor, key) {
   });
 }
 
-async function processarInlineRolls(texto, actor) {
+async function processarInlineRolls(texto, actor, exibirBotaoCura = false) {
   const partes = [];
   const regex = /\[\[([^\]]+)\]\]/g;
   let ultimoIndice = 0;
@@ -162,7 +197,7 @@ async function processarInlineRolls(texto, actor) {
     partes.push(escapeHtml(texto.slice(ultimoIndice, match.index)));
 
     const formula = match[1].trim();
-    partes.push(await renderizarInlineRoll(formula, actor));
+    partes.push(await renderizarInlineRoll(formula, actor, exibirBotaoCura));
 
     ultimoIndice = regex.lastIndex;
   }
@@ -172,18 +207,26 @@ async function processarInlineRolls(texto, actor) {
   return partes.join("").replace(/\n/g, "<br>");
 }
 
-async function renderizarInlineRoll(formula, actor) {
+async function renderizarInlineRoll(formula, actor, exibirBotaoCura = false) {
   try {
     const rollData = typeof actor.getRollData === "function" ? actor.getRollData() : actor.system;
     const roll = await new Roll(formula, rollData).evaluate();
     const dados = obterResultadosDados(roll);
     const tooltip = `${escapeHtml(formula)}${dados ? `: ${escapeHtml(dados)}` : ""}`;
 
-    return `<span class="jk-inline-roll-result" title="${tooltip}">${roll.total}</span>`;
+    const healingButton = exibirBotaoCura
+      ? ` <button type="button" class="jk-apply-healing" data-healing="${Number(roll.total) || 0}">Aplicar Cura</button>`
+      : "";
+
+    return `<span class="jk-inline-roll-result" title="${tooltip}">${roll.total}</span>${healingButton}`;
   } catch (error) {
     console.warn("Jiujitsu Kaisen | Falha ao processar rolagem inline:", formula, error);
     return `<span class="jk-inline-roll-error" title="Fórmula inválida">[[${escapeHtml(formula)}]]</span>`;
   }
+}
+
+function deveExibirBotaoCura(texto) {
+  return /\b(curar|cura|cure|curativo|curativa|curativas|vida|pv)\b/i.test(String(texto ?? ""));
 }
 
 function obterResultadosDados(roll) {
@@ -201,5 +244,6 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+
 
 

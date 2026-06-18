@@ -1,5 +1,23 @@
 <div class="flexrow">
   <div class="flexcol">
+    {{#if isArma}}
+      <div class="form-group">
+        <label>
+          <input type="checkbox" name="system.equipado" {{checked system.equipado}} />
+          Equipada?
+        </label>
+      </div>
+    {{/if}}
+
+    {{#if isEquipamento}}
+      <div class="form-group">
+        <label>
+          <input type="checkbox" name="system.equipado" {{checked system.equipado}} />
+          Equipado?
+        </label>
+      </div>
+    {{/if}}
+
     <div class="form-group">
       <label>PV</label>
       <input type="number" name="system.pv.atual" value="{{system.pv.atual}}" placeholder="Atual" />
@@ -41,4 +59,5 @@
     <textarea name="system.descricao" rows="12">{{system.descricao}}</textarea>
   </div>
 </div>
+
 

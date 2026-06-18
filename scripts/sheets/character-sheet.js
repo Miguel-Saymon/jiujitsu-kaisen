@@ -209,6 +209,7 @@ function prepararItensCombate(items) {
       nome: item.name ?? "Item",
       img: item.img,
       categoria,
+      equipado: Boolean(system.equipado),
       quantidade: system.quantidade ?? "",
       espacos: system.espacos ?? "",
       preco: system.preco ?? "",
@@ -357,6 +358,7 @@ function criarLinhaVaziaCombate(prefixo) {
     notas: ""
   };
 }
+
 
 
 
