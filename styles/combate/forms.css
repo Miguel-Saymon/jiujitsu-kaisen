@@ -36,6 +36,7 @@
     min-height: 44px;
     width: 100%;
     resize: none;
+    overflow-y: hidden;
     padding: 8px;
     background: var(--jk-bg-section-soft);
     border: 1px solid var(--jk-border-soft) !important;
@@ -100,4 +101,5 @@
     color: var(--jk-text-value);
     font-size: 13px;
 }
+
 

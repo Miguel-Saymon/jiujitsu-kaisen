@@ -222,3 +222,508 @@
   text-align: center;
 }
 
+/* ============================= */
+/* Item Sheet - Armas            */
+/* ============================= */
+
+.jk-item-sheet .jk-weapon-details,
+.jk-item-sheet .jk-weapon-enhancements {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 2px 2px 8px;
+}
+
+.jk-item-sheet .jk-weapon-section {
+  padding: 10px 12px;
+  border: 1px solid rgba(25, 24, 19, 0.22);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.jk-item-sheet .jk-weapon-section__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(25, 24, 19, 0.3);
+}
+
+.jk-item-sheet .jk-weapon-section__header h3 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.jk-item-sheet .jk-weapon-section__header p {
+  margin: 3px 0 0;
+  color: rgba(25, 24, 19, 0.62);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.jk-item-sheet .jk-weapon-field-grid {
+  display: grid;
+  gap: 8px 12px;
+}
+
+.jk-item-sheet .jk-weapon-field-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.jk-item-sheet .jk-weapon-field {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+}
+
+.jk-item-sheet .jk-weapon-field > span,
+.jk-item-sheet .jk-weapon-enhancement-row > span {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.jk-item-sheet .jk-weapon-field input,
+.jk-item-sheet .jk-weapon-field select,
+.jk-item-sheet .jk-weapon-enhancement-row select {
+  width: 100%;
+  min-width: 0;
+  height: 28px;
+}
+
+.jk-item-sheet .jk-weapon-ammo-field__controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 70px;
+  gap: 6px;
+}
+
+.jk-item-sheet .jk-weapon-properties {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px 10px;
+}
+
+.jk-item-sheet .jk-weapon-properties label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  padding: 5px 6px;
+  border: 1px solid rgba(25, 24, 19, 0.16);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  font-weight: 400;
+}
+
+.jk-item-sheet .jk-weapon-properties input[type="checkbox"] {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.jk-item-sheet .jk-weapon-properties span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jk-item-sheet .jk-weapon-rolls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jk-item-sheet .jk-weapon-roll-card {
+  padding: 8px 10px;
+  border: 1px solid rgba(25, 24, 19, 0.18);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.jk-item-sheet .jk-weapon-roll-card h4 {
+  margin: 0 0 7px;
+  font-size: 14px;
+}
+
+.jk-item-sheet .jk-weapon-roll-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.jk-item-sheet .jk-weapon-roll-card__header h4 {
+  margin: 0;
+}
+
+.jk-item-sheet .jk-weapon-roll-grid {
+  display: grid;
+  gap: 8px 12px;
+}
+
+.jk-item-sheet .jk-weapon-roll-grid--attack {
+  grid-template-columns: minmax(0, 1.5fr) minmax(180px, 1fr);
+}
+
+.jk-item-sheet .jk-weapon-damage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jk-item-sheet .jk-weapon-damage-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(160px, 1fr) minmax(160px, 1fr) 28px;
+  gap: 6px;
+  align-items: center;
+}
+
+.jk-item-sheet .jk-weapon-damage-row .jk-weapon-field {
+  grid-template-columns: 64px minmax(0, 1fr);
+}
+
+.jk-item-sheet .jk-weapon-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  margin: 0;
+}
+
+.jk-item-sheet .jk-weapon-icon-button--danger {
+  align-self: center;
+}
+
+.jk-item-sheet .jk-weapon-critical-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px 12px;
+}
+
+.jk-item-sheet .jk-weapon-critical-grid .jk-weapon-field {
+  grid-template-columns: 120px minmax(0, 1fr);
+}
+
+.jk-item-sheet .jk-weapon-critical-grid .jk-weapon-field--wide {
+  grid-column: 1 / -1;
+}
+
+.jk-item-sheet .jk-weapon-enhancement-title {
+  margin: 0 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(25, 24, 19, 0.22);
+  font-size: 15px;
+}
+
+.jk-item-sheet .jk-weapon-enhancement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jk-item-sheet .jk-weapon-enhancement-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .jk-item-sheet .jk-weapon-field-grid--two,
+  .jk-item-sheet .jk-weapon-roll-grid--attack,
+  .jk-item-sheet .jk-weapon-critical-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .jk-item-sheet .jk-weapon-properties {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .jk-item-sheet .jk-weapon-damage-row {
+    grid-template-columns: 1fr;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(25, 24, 19, 0.16);
+  }
+
+  .jk-item-sheet .jk-weapon-icon-button--danger {
+    justify-self: end;
+  }
+
+  .jk-item-sheet .jk-weapon-critical-grid .jk-weapon-field--wide {
+    grid-column: auto;
+  }
+}
+
+
+/* ============================= */
+/* Item Sheet - Resumo lateral   */
+/* ============================= */
+
+.jk-item-sheet .jk-item-description-stats .jk-item-stat-row {
+  display: grid;
+  grid-template-columns: minmax(64px, auto) 1fr;
+  gap: 8px;
+  align-items: end;
+  margin: 8px 0;
+}
+
+.jk-item-sheet .jk-item-description-stats .jk-item-stat-row > label {
+  align-self: center;
+  white-space: nowrap;
+}
+
+.jk-item-sheet .jk-item-line-input,
+.jk-item-sheet .jk-item-inline-field input {
+  width: 100%;
+  min-width: 0;
+  height: 24px;
+  padding: 1px 3px;
+  border: 0;
+  border-bottom: 1px solid rgba(85, 74, 97, 0.55);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+}
+
+.jk-item-sheet .jk-item-line-input:hover,
+.jk-item-sheet .jk-item-inline-field input:hover {
+  border-bottom-color: rgba(126, 91, 148, 0.85);
+  box-shadow: none;
+}
+
+.jk-item-sheet .jk-item-line-input:focus,
+.jk-item-sheet .jk-item-inline-field input:focus {
+  outline: none;
+  border-bottom-color: #765486;
+  box-shadow: 0 2px 0 rgba(118, 84, 134, 0.2);
+}
+
+.jk-item-sheet .jk-item-stat-row--pv {
+  align-items: center;
+}
+
+.jk-item-sheet .jk-item-pv-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 4px;
+  align-items: end;
+}
+
+.jk-item-sheet .jk-item-inline-field {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.jk-item-sheet .jk-item-inline-field > span {
+  font-size: 10px;
+  line-height: 1;
+  text-align: center;
+  opacity: 0.72;
+}
+
+.jk-item-sheet .jk-item-pv-separator {
+  padding-bottom: 4px;
+  opacity: 0.6;
+}
+
+
+/* Evita o flash visual dos controles ao ganhar/perder foco. */
+.jk-item-sheet input,
+.jk-item-sheet select,
+.jk-item-sheet textarea {
+  transition: none !important;
+}
+
+.jk-item-sheet input:focus,
+.jk-item-sheet select:focus,
+.jk-item-sheet textarea:focus,
+.jk-item-sheet input:focus-visible,
+.jk-item-sheet select:focus-visible,
+.jk-item-sheet textarea:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.jk-item-sheet .jk-item-line-input:focus,
+.jk-item-sheet .jk-item-inline-field input:focus {
+  box-shadow: none !important;
+}
+
+/* ============================= */
+/* Item Sheet - Config comum     */
+/* Consumíveis / Equipamentos    */
+/* ============================= */
+
+.jk-item-sheet .jk-item-config-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 2px 2px 8px;
+}
+
+.jk-item-sheet .jk-item-config-section {
+  padding: 10px 12px;
+  border: 1px solid rgba(25, 24, 19, 0.22);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.jk-item-sheet .jk-item-config-section__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(25, 24, 19, 0.3);
+}
+
+.jk-item-sheet .jk-item-config-section__header h3 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.jk-item-sheet .jk-item-config-section__header p {
+  margin: 3px 0 0;
+  color: rgba(25, 24, 19, 0.62);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.jk-item-sheet .jk-item-config-field-grid {
+  display: grid;
+  gap: 8px 12px;
+}
+
+.jk-item-sheet .jk-item-config-field-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.jk-item-sheet .jk-item-config-field {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+}
+
+.jk-item-sheet .jk-item-config-field--wide {
+  grid-column: 1 / -1;
+}
+
+.jk-item-sheet .jk-item-config-field > span {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.jk-item-sheet .jk-item-config-field input,
+.jk-item-sheet .jk-item-config-field select {
+  width: 100%;
+  min-width: 0;
+  height: 28px;
+}
+
+.jk-item-sheet .jk-item-config-card {
+  padding: 8px 10px;
+  margin-top: 8px;
+  border: 1px solid rgba(25, 24, 19, 0.18);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.jk-item-sheet .jk-item-config-card:first-of-type {
+  margin-top: 0;
+}
+
+.jk-item-sheet .jk-item-config-card h4 {
+  margin: 0 0 7px;
+  font-size: 14px;
+}
+
+.jk-item-sheet .jk-item-config-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.jk-item-sheet .jk-item-config-card__header h4 {
+  margin: 0;
+}
+
+.jk-item-sheet .jk-item-config-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jk-item-sheet .jk-item-config-roll-row,
+.jk-item-sheet .jk-item-config-damage-row {
+  display: grid;
+  gap: 6px;
+  align-items: center;
+}
+
+.jk-item-sheet .jk-item-config-roll-row {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 28px;
+}
+
+.jk-item-sheet .jk-item-config-damage-row {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 28px;
+}
+
+.jk-item-sheet .jk-item-config-roll-row .jk-item-config-field,
+.jk-item-sheet .jk-item-config-damage-row .jk-item-config-field {
+  grid-template-columns: 64px minmax(0, 1fr);
+}
+
+.jk-item-sheet .jk-item-config-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .jk-item-sheet .jk-item-config-field-grid--two {
+    grid-template-columns: 1fr;
+  }
+
+  .jk-item-sheet .jk-item-config-field--wide {
+    grid-column: auto;
+  }
+
+  .jk-item-sheet .jk-item-config-roll-row,
+  .jk-item-sheet .jk-item-config-damage-row {
+    grid-template-columns: 1fr;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(25, 24, 19, 0.16);
+  }
+
+  .jk-item-sheet .jk-item-config-icon-button--danger {
+    justify-self: end;
+  }
+}
+

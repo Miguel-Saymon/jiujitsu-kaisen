@@ -31,6 +31,7 @@ function filtrarColecao(obj, prefixo) {
 }
 
 export function registerCombatListener(sheet, html) {
+  registrarAutoResizeCaracteristicas(html);
   html.find(".jk-create-actor-item").on("click", async event => {
     event.preventDefault();
     event.stopPropagation();
@@ -353,6 +354,25 @@ function registrarMenuContextoInventario(sheet, html) {
     document.body.appendChild(menu);
     setTimeout(() => document.addEventListener("click", fecharMenu, { once: true }), 0);
   });
+}
+
+function registrarAutoResizeCaracteristicas(html) {
+  const campos = html.find('textarea[data-auto-resize="true"]');
+
+  campos.each((_index, element) => ajustarAlturaTextarea(element));
+
+  campos.on("input", event => {
+    ajustarAlturaTextarea(event.currentTarget);
+  });
+}
+
+function ajustarAlturaTextarea(element) {
+  if (!element) return;
+
+  element.style.height = "auto";
+  const alturaMinima = 44;
+  const alturaConteudo = Math.max(alturaMinima, element.scrollHeight);
+  element.style.height = `${alturaConteudo}px`;
 }
 
 async function duplicarItemDoAtor(actor, item) {

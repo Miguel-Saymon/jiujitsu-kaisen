@@ -1,15 +1,27 @@
-<h3>Encantos</h3>
+<div class="jk-weapon-enhancements">
+  <section class="jk-weapon-section">
+    <header class="jk-weapon-section__header">
+      <div>
+        <h3>Aprimoramentos</h3>
+        <p>Os espaços abaixo seguem uma ordem única e consistente para os encantos da arma.</p>
+      </div>
+    </header>
 
-{{#each encantosArmaSlots}}
-  <div class="form-group">
-    <label>{{label}}</label>
-    <select name="system.arma.aprimoramentos.encantos.{{key}}">
-      {{#each options}}
-        <option value="{{value}}" {{#if (eq ../value value)}}selected{{/if}} {{#if disabled}}disabled{{/if}}>
-          {{label}}
-        </option>
+    <h4 class="jk-weapon-enhancement-title">Encantos</h4>
+    <div class="jk-weapon-enhancement-list">
+      {{#each encantosArmaSlots}}
+        <label class="jk-weapon-enhancement-row">
+          <span>{{label}}</span>
+          <select name="system.arma.aprimoramentos.encantos.{{key}}">
+            {{#each options}}
+              <option value="{{value}}" {{#if (eq ../value value)}}selected{{/if}} {{#if disabled}}disabled{{/if}}>
+                {{label}}
+              </option>
+            {{/each}}
+          </select>
+        </label>
       {{/each}}
-    </select>
-  </div>
-{{/each}}
+    </div>
+  </section>
+</div>
 

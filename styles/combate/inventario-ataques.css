@@ -112,6 +112,27 @@
     text-align: center;
 }
 
+/* O resumo de dano pode conter várias instâncias. Diferente das demais
+   células, ele pode crescer verticalmente para nunca invadir Crítico. */
+.jk-attack-table th:nth-child(3),
+.jk-attack-table td.jk-attack-damage {
+    padding-right: 10px;
+}
+
+.jk-attack-table td.jk-attack-damage {
+    overflow: hidden;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+    line-height: 1.35;
+    text-overflow: clip;
+    vertical-align: middle;
+}
+
+.jk-attack-table tbody tr {
+    height: auto;
+}
+
 .jk-item-name {
     display: block;
     width: 100%;
@@ -187,10 +208,11 @@
 }
 
 .jk-item-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1px;
+    /* Mantém o <td> participando normalmente do layout da tabela.
+       Usar display:flex diretamente na célula criava um bloco residual
+       abaixo de Ações quando a linha aumentava de altura. */
+    text-align: center;
+    white-space: nowrap;
     min-width: 0;
     padding-inline: 3px !important;
 }

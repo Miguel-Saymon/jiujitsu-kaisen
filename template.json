@@ -89,6 +89,7 @@
           "outros": 0
         },
         "deslocamento": 9,
+        "deslocamentoOutros": 0,
         "testesResistencia": {
           "astucia": {
             "total": 0,
@@ -449,8 +450,8 @@
           "tipo": null
         },
         "critico": {
-          "margem": null,
-          "multiplicador": null
+          "margem": 20,
+          "multiplicador": 2
         },
         "alcance": null,
         "aprimoramentos": {
@@ -579,8 +580,8 @@
           "tipo": null
         },
         "critico": {
-          "margem": null,
-          "multiplicador": null
+          "margem": 20,
+          "multiplicador": 2
         },
         "alcance": null,
         "aprimoramentos": {
@@ -652,4 +653,5 @@
     }
   }
 }
+
 

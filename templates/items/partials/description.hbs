@@ -1,29 +1,38 @@
 <div class="jk-item-description-layout">
   <aside class="jk-item-description-stats">
-    <div class="form-group">
+    <div class="form-group jk-item-stat-row jk-item-stat-row--pv">
       <label>PV</label>
-      <input type="number" name="system.pv.atual" value="{{system.pv.atual}}" placeholder="Atual" />
-      <input type="number" name="system.pv.max" value="{{system.pv.max}}" placeholder="Máx." />
+      <div class="jk-item-pv-fields">
+        <label class="jk-item-inline-field">
+          <span>Atual</span>
+          <input type="number" name="system.pv.atual" value="{{system.pv.atual}}" aria-label="PV Atual" />
+        </label>
+        <span class="jk-item-pv-separator">/</span>
+        <label class="jk-item-inline-field">
+          <span>Máx.</span>
+          <input type="number" name="system.pv.max" value="{{system.pv.max}}" aria-label="PV Máximo" />
+        </label>
+      </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group jk-item-stat-row">
       <label>RD</label>
-      <input type="number" name="system.rd" value="{{system.rd}}" />
+      <input class="jk-item-line-input" type="number" name="system.rd" value="{{system.rd}}" />
     </div>
 
-    <div class="form-group">
+    <div class="form-group jk-item-stat-row">
       <label>Quantidade</label>
-      <input type="number" name="system.quantidade" value="{{system.quantidade}}" />
+      <input class="jk-item-line-input" type="number" name="system.quantidade" value="{{system.quantidade}}" />
     </div>
 
-    <div class="form-group">
+    <div class="form-group jk-item-stat-row">
       <label>Peso</label>
-      <input type="number" min="0" step="0.1" name="system.espacos" value="{{system.espacos}}" />
+      <input class="jk-item-line-input" type="number" min="0" step="0.1" name="system.espacos" value="{{system.espacos}}" />
     </div>
 
-    <div class="form-group">
+    <div class="form-group jk-item-stat-row">
       <label>Preço</label>
-      <input type="number" name="system.preco" value="{{system.preco}}" />
+      <input class="jk-item-line-input" type="number" name="system.preco" value="{{system.preco}}" />
     </div>
 
     {{#if isTesouro}}

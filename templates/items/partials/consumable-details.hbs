@@ -1,140 +1,155 @@
-<section class="jk-item-detail-section">
-  <h3>Configuração do Consumível</h3>
-
-  <div class="form-group">
-    <label>Tipo</label>
-    <select name="system.consumivel.tipo">
-      {{#each tiposConsumivel}}
-        <option value="{{value}}" {{#if (eq ../system.consumivel.tipo value)}}selected{{/if}}>{{label}}</option>
-      {{/each}}
-    </select>
-  </div>
-</section>
-
-<section class="jk-item-detail-section">
-  <h3>Ativação</h3>
-
-  <div class="form-group">
-    <label>Consumível</label>
-    <input type="text" name="system.consumivel.ativacao.consumivel" value="{{system.consumivel.ativacao.consumivel}}" />
-  </div>
-
-  <div class="form-group">
-    <label>Execução</label>
-    <select name="system.consumivel.ativacao.execucao">
-      {{#each execucoes}}
-        <option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.execucao value)}}selected{{/if}}>{{label}}</option>
-      {{/each}}
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label>Condição de Ativação</label>
-    <input type="text" name="system.consumivel.ativacao.condicao" value="{{system.consumivel.ativacao.condicao}}" />
-  </div>
-
-  <div class="form-group">
-    <label>Alcance</label>
-    <select name="system.consumivel.ativacao.alcance">
-      {{#each alcances}}
-        <option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.alcance value)}}selected{{/if}}>{{label}}</option>
-      {{/each}}
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label>Alvo</label>
-    <input type="text" name="system.consumivel.ativacao.alvo" value="{{system.consumivel.ativacao.alvo}}" />
-  </div>
-
-  <div class="form-group">
-    <label>Área</label>
-    <input type="text" name="system.consumivel.ativacao.area" value="{{system.consumivel.ativacao.area}}" />
-  </div>
-
-  <div class="form-group">
-    <label>Efeito</label>
-    <input type="text" name="system.consumivel.ativacao.efeito" value="{{system.consumivel.ativacao.efeito}}" />
-  </div>
-
-  <div class="form-group">
-    <label>Duração</label>
-    <select name="system.consumivel.ativacao.duracao">
-      {{#each duracoes}}
-        <option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.duracao value)}}selected{{/if}}>{{label}}</option>
-      {{/each}}
-    </select>
-  </div>
-</section>
-
-<section class="jk-item-detail-section">
-  <header class="jk-item-section-header">
-    <h3>Rolagens</h3>
-  </header>
-
-  <div class="jk-roll-config-block">
-    <header class="jk-item-inline-header">
-      <h4>Ataque</h4>
-      <button class="jk-consumable-add-attack" type="button" title="Adicionar ataque"><i class="fas fa-plus"></i></button>
+<div class="jk-item-config-details jk-consumable-details">
+  <section class="jk-item-config-section">
+    <header class="jk-item-config-section__header">
+      <div>
+        <h3>Configuração</h3>
+        <p>Definições básicas do consumível.</p>
+      </div>
     </header>
 
-    {{#each consumableAttacks as |ataque|}}
-      <div class="form-group jk-roll-row" data-key="{{ataque.key}}">
-        <select name="system.consumivel.rolagens.ataques.{{ataque.key}}.atributo">
-          {{#each ../atributos}}
-            <option value="{{value}}" {{#if (eq ataque.atributo value)}}selected{{/if}}>{{label}}</option>
+    <div class="jk-item-config-field-grid jk-item-config-field-grid--two">
+      <label class="jk-item-config-field jk-item-config-field--wide">
+        <span>Tipo</span>
+        <select name="system.consumivel.tipo">
+          {{#each tiposConsumivel}}
+            <option value="{{value}}" {{#if (eq ../system.consumivel.tipo value)}}selected{{/if}}>{{label}}</option>
           {{/each}}
         </select>
-        <input type="text" name="system.consumivel.rolagens.ataques.{{ataque.key}}.bonus" value="{{ataque.bonus}}" placeholder="Bônus" />
-        <button class="jk-consumable-remove-attack" type="button" data-key="{{ataque.key}}" title="Remover ataque"><i class="fas fa-trash"></i></button>
-      </div>
-    {{/each}}
-  </div>
-
-  <div class="jk-roll-config-block">
-    <header class="jk-item-inline-header">
-      <h4>Dano</h4>
-      <button class="jk-consumable-add-damage" type="button" title="Adicionar dano"><i class="fas fa-plus"></i></button>
-    </header>
-
-    {{#each consumableDamages as |dano|}}
-      <div class="form-group jk-roll-row jk-damage-row" data-key="{{dano.key}}">
-        <input type="text" name="system.consumivel.rolagens.danos.{{dano.key}}.formula" value="{{dano.formula}}" placeholder="ex. 1d8" />
-        <select name="system.consumivel.rolagens.danos.{{dano.key}}.atributo">
-          {{#each ../atributos}}
-            <option value="{{value}}" {{#if (eq dano.atributo value)}}selected{{/if}}>{{label}}</option>
-          {{/each}}
-        </select>
-        <select name="system.consumivel.rolagens.danos.{{dano.key}}.tipo">
-          {{#each ../tiposDano}}
-            <option value="{{value}}" {{#if (eq dano.tipo value)}}selected{{/if}}>{{label}}</option>
-          {{/each}}
-        </select>
-        <button class="jk-consumable-remove-damage" type="button" data-key="{{dano.key}}" title="Remover dano"><i class="fas fa-trash"></i></button>
-      </div>
-    {{/each}}
-  </div>
-
-  <div class="jk-roll-config-block">
-    <h4>Teste de Resistência</h4>
-    <div class="form-group">
-      <label>Teste</label>
-      <input type="text" name="system.consumivel.rolagens.resistencia.teste" value="{{consumableResistance.teste}}" placeholder="Ex.: Reflexos reduz à metade" />
+      </label>
     </div>
+  </section>
 
-    <div class="form-group jk-roll-row">
-      <label>CD Atributo / Bônus</label>
-      <select name="system.consumivel.rolagens.resistencia.atributo">
-        {{#each atributos}}
-          <option value="{{value}}" {{#if (eq ../consumableResistance.atributo value)}}selected{{/if}}>{{label}}</option>
+  <section class="jk-item-config-section jk-consumable-rolls">
+    <header class="jk-item-config-section__header">
+      <div>
+        <h3>Rolagens</h3>
+        <p>Configure ataques, danos e teste de resistência do consumível.</p>
+      </div>
+    </header>
+
+    <div class="jk-item-config-card">
+      <header class="jk-item-config-card__header">
+        <h4>Ataque</h4>
+        <button class="jk-consumable-add-attack jk-item-config-icon-button" type="button" title="Adicionar ataque"><i class="fas fa-plus"></i></button>
+      </header>
+
+      <div class="jk-consumable-attack-list jk-item-config-list">
+        {{#each consumableAttacks as |ataque|}}
+          <div class="jk-consumable-attack-row jk-item-config-roll-row" data-key="{{ataque.key}}">
+            <label class="jk-item-config-field">
+              <span>Atributo</span>
+              <select name="system.consumivel.rolagens.ataques.{{ataque.key}}.atributo">
+                {{#each ../atributos}}
+                  <option value="{{value}}" {{#if (eq ataque.atributo value)}}selected{{/if}}>{{label}}</option>
+                {{/each}}
+              </select>
+            </label>
+            <label class="jk-item-config-field">
+              <span>Bônus</span>
+              <input type="text" name="system.consumivel.rolagens.ataques.{{ataque.key}}.bonus" value="{{ataque.bonus}}" placeholder="+0" />
+            </label>
+            <button class="jk-consumable-remove-attack jk-item-config-icon-button jk-item-config-icon-button--danger" type="button" data-key="{{ataque.key}}" title="Remover ataque"><i class="fas fa-trash"></i></button>
+          </div>
         {{/each}}
-      </select>
-      <input type="number" name="system.consumivel.rolagens.resistencia.bonus" value="{{consumableResistance.bonus}}" />
+      </div>
+
+      <template class="jk-consumable-attack-template">
+        <div class="jk-consumable-attack-row jk-item-config-roll-row" data-key="__KEY__">
+          <label class="jk-item-config-field">
+            <span>Atributo</span>
+            <select name="system.consumivel.rolagens.ataques.__KEY__.atributo">
+              {{#each atributos}}<option value="{{value}}">{{label}}</option>{{/each}}
+            </select>
+          </label>
+          <label class="jk-item-config-field">
+            <span>Bônus</span>
+            <input type="text" name="system.consumivel.rolagens.ataques.__KEY__.bonus" value="" placeholder="+0" />
+          </label>
+          <button class="jk-consumable-remove-attack jk-item-config-icon-button jk-item-config-icon-button--danger" type="button" data-key="__KEY__" title="Remover ataque"><i class="fas fa-trash"></i></button>
+        </div>
+      </template>
     </div>
 
-    {{#if consumableResistance.teste}}
-      <div class="jk-derived-cd">CD Base do Item: {{consumableResistance.total}}</div>
-    {{/if}}
-  </div>
-</section>
+    <div class="jk-item-config-card">
+      <header class="jk-item-config-card__header">
+        <h4>Dano</h4>
+        <button class="jk-consumable-add-damage jk-item-config-icon-button" type="button" title="Adicionar dano"><i class="fas fa-plus"></i></button>
+      </header>
+
+      <div class="jk-consumable-damage-list jk-item-config-list">
+        {{#each consumableDamages as |dano|}}
+          <div class="jk-consumable-damage-row jk-item-config-damage-row" data-key="{{dano.key}}">
+            <label class="jk-item-config-field">
+              <span>Fórmula</span>
+              <input type="text" name="system.consumivel.rolagens.danos.{{dano.key}}.formula" value="{{dano.formula}}" placeholder="Ex.: 1d8" />
+            </label>
+            <label class="jk-item-config-field">
+              <span>Atributo</span>
+              <select name="system.consumivel.rolagens.danos.{{dano.key}}.atributo">
+                {{#each ../atributos}}<option value="{{value}}" {{#if (eq dano.atributo value)}}selected{{/if}}>{{label}}</option>{{/each}}
+              </select>
+            </label>
+            <label class="jk-item-config-field">
+              <span>Tipo</span>
+              <select name="system.consumivel.rolagens.danos.{{dano.key}}.tipo">
+                {{#each ../tiposDano}}<option value="{{value}}" {{#if (eq dano.tipo value)}}selected{{/if}}>{{label}}</option>{{/each}}
+              </select>
+            </label>
+            <button class="jk-consumable-remove-damage jk-item-config-icon-button jk-item-config-icon-button--danger" type="button" data-key="{{dano.key}}" title="Remover dano"><i class="fas fa-trash"></i></button>
+          </div>
+        {{/each}}
+      </div>
+
+      <template class="jk-consumable-damage-template">
+        <div class="jk-consumable-damage-row jk-item-config-damage-row" data-key="__KEY__">
+          <label class="jk-item-config-field"><span>Fórmula</span><input type="text" name="system.consumivel.rolagens.danos.__KEY__.formula" value="" placeholder="Ex.: 1d8" /></label>
+          <label class="jk-item-config-field"><span>Atributo</span><select name="system.consumivel.rolagens.danos.__KEY__.atributo">{{#each atributos}}<option value="{{value}}">{{label}}</option>{{/each}}</select></label>
+          <label class="jk-item-config-field"><span>Tipo</span><select name="system.consumivel.rolagens.danos.__KEY__.tipo">{{#each tiposDano}}<option value="{{value}}">{{label}}</option>{{/each}}</select></label>
+          <button class="jk-consumable-remove-damage jk-item-config-icon-button jk-item-config-icon-button--danger" type="button" data-key="__KEY__" title="Remover dano"><i class="fas fa-trash"></i></button>
+        </div>
+      </template>
+    </div>
+
+    <div class="jk-item-config-card">
+      <h4>Teste de Resistência</h4>
+      <div class="jk-item-config-field-grid jk-item-config-field-grid--two">
+        <label class="jk-item-config-field jk-item-config-field--wide">
+          <span>Teste</span>
+          <input type="text" name="system.consumivel.rolagens.resistencia.teste" value="{{consumableResistance.teste}}" placeholder="Ex.: Reflexos reduz à metade" />
+        </label>
+        <label class="jk-item-config-field">
+          <span>CD Atributo</span>
+          <select name="system.consumivel.rolagens.resistencia.atributo">
+            {{#each atributos}}<option value="{{value}}" {{#if (eq ../consumableResistance.atributo value)}}selected{{/if}}>{{label}}</option>{{/each}}
+          </select>
+        </label>
+        <label class="jk-item-config-field">
+          <span>Bônus</span>
+          <input type="number" name="system.consumivel.rolagens.resistencia.bonus" value="{{consumableResistance.bonus}}" />
+        </label>
+      </div>
+      {{#if consumableResistance.teste}}<div class="jk-derived-cd">CD Base do Item: {{consumableResistance.total}}</div>{{/if}}
+    </div>
+  </section>
+
+  <section class="jk-item-config-section">
+    <header class="jk-item-config-section__header">
+      <div>
+        <h3>Ativação</h3>
+        <p>Condições, alcance e duração de uso do consumível.</p>
+      </div>
+    </header>
+
+    <div class="jk-item-config-field-grid jk-item-config-field-grid--two">
+      <label class="jk-item-config-field"><span>Consumível</span><input type="text" name="system.consumivel.ativacao.consumivel" value="{{system.consumivel.ativacao.consumivel}}" /></label>
+      <label class="jk-item-config-field"><span>Execução</span><select name="system.consumivel.ativacao.execucao">{{#each execucoes}}<option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.execucao value)}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+      <label class="jk-item-config-field jk-item-config-field--wide"><span>Condição de Ativação</span><input type="text" name="system.consumivel.ativacao.condicao" value="{{system.consumivel.ativacao.condicao}}" /></label>
+      <label class="jk-item-config-field"><span>Alcance</span><select name="system.consumivel.ativacao.alcance">{{#each alcances}}<option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.alcance value)}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+      <label class="jk-item-config-field"><span>Alvo</span><input type="text" name="system.consumivel.ativacao.alvo" value="{{system.consumivel.ativacao.alvo}}" /></label>
+      <label class="jk-item-config-field"><span>Área</span><input type="text" name="system.consumivel.ativacao.area" value="{{system.consumivel.ativacao.area}}" /></label>
+      <label class="jk-item-config-field"><span>Duração</span><select name="system.consumivel.ativacao.duracao">{{#each duracoes}}<option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.duracao value)}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+      <label class="jk-item-config-field jk-item-config-field--wide"><span>Efeito</span><input type="text" name="system.consumivel.ativacao.efeito" value="{{system.consumivel.ativacao.efeito}}" /></label>
+    </div>
+  </section>
+</div>
 

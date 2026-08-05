@@ -9,9 +9,10 @@
                 <h2>Características</h2>
 
                 <textarea
-                    class="jk-free-field"
+                    class="jk-free-field jk-characteristics-field"
                     name="system.combate.caracteristicas"
-                    placeholder="campo livre..."
+                    data-auto-resize="true"
+                    placeholder="Campo livre..."
                 >{{system.combate.caracteristicas}}</textarea>
             </section>
 
@@ -172,7 +173,7 @@
                         <h3>Deslocamento</h3>
 
                         <div class="jk-combat-total">
-                            {{system.combate.deslocamento}}
+                            <span class="jk-deslocamento-total">{{deslocamentoTotal}}</span>
                             <span class="jk-unit">m</span>
                         </div>
 
@@ -183,6 +184,15 @@
                                     name="system.combate.deslocamento"
                                     type="number"
                                     value="{{system.combate.deslocamento}}"
+                                />
+                            </label>
+
+                            <label>
+                                Outros
+                                <input
+                                    name="system.combate.deslocamentoOutros"
+                                    type="number"
+                                    value="{{system.combate.deslocamentoOutros}}"
                                 />
                             </label>
                         </div>
@@ -238,7 +248,7 @@
                             {{#each combateAtaques as |ataque|}}
                             <tr class="jk-inventory-row {{#if ataque.equipado}}is-equipped{{/if}}" data-item-id="{{ataque.id}}">
                                 <td><div class="jk-item-identity"><button class="jk-drag-item" type="button" draggable="true" title="Arrastar para reorganizar" tabindex="-1"><i class="fas fa-grip-vertical"></i></button><span class="jk-item-name" title="{{ataque.nome}}">{{ataque.nome}}</span></div></td>
-                                <td class="is-small">{{ataque.bonus}}</td><td>{{ataque.dano}}</td><td class="is-small">{{ataque.critico}}</td><td class="is-small">{{ataque.espacos}}</td>
+                                <td class="is-small">{{ataque.bonus}}</td><td class="jk-attack-damage" title="{{ataque.dano}}">{{ataque.dano}}</td><td class="is-small">{{ataque.critico}}</td><td class="is-small">{{ataque.espacos}}</td>
                                 <td class="jk-item-actions"><button class="jk-roll-weapon-attack" type="button" data-item-id="{{ataque.id}}" title="Rolar ataque"><i class="fas fa-dice-d20"></i></button><button class="jk-edit-actor-item" type="button" data-item-id="{{ataque.id}}" title="Editar"><i class="fas fa-pen"></i></button></td>
                                 <td class="jk-delete-cell"><button class="jk-delete-actor-item jk-row-delete" type="button" data-item-id="{{ataque.id}}" title="Remover"><i class="fas fa-xmark"></i></button></td>
                             </tr>
@@ -256,7 +266,7 @@
                             {{#each combateEquipamentos as |item|}}
                             <tr class="jk-inventory-row {{#if item.equipado}}is-equipped{{/if}}" data-item-id="{{item.id}}">
                                 <td><div class="jk-item-identity"><button class="jk-drag-item" type="button" draggable="true" title="Arrastar para reorganizar" tabindex="-1"><i class="fas fa-grip-vertical"></i></button><span class="jk-item-name" title="{{item.nome}}">{{item.nome}}</span></div></td>
-                                <td class="is-small">{{item.tipo}}</td><td class="is-small">{{item.defesa}}</td><td class="is-small">{{item.quantidade}}</td><td class="is-small">{{item.espacos}}</td>
+                                <td class="is-small" data-item-field="tipo">{{item.tipo}}</td><td class="is-small" data-item-field="defesa">{{item.defesa}}</td><td class="is-small" data-item-field="quantidade">{{item.quantidade}}</td><td class="is-small" data-item-field="espacos">{{item.espacos}}</td>
                                 <td class="jk-item-actions"><button class="jk-toggle-equipped" type="button" data-item-id="{{item.id}}" title="{{#if item.equipado}}Desequipar equipamento{{else}}Equipar equipamento{{/if}}"><i class="fas {{#if item.equipado}}fa-toggle-on{{else}}fa-toggle-off{{/if}}"></i></button><button class="jk-edit-actor-item" type="button" data-item-id="{{item.id}}" title="Editar"><i class="fas fa-pen"></i></button></td>
                                 <td class="jk-delete-cell"><button class="jk-delete-actor-item jk-row-delete" type="button" data-item-id="{{item.id}}" title="Remover"><i class="fas fa-xmark"></i></button></td>
                             </tr>
@@ -330,16 +340,6 @@
     </div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
 
 
 

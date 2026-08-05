@@ -147,7 +147,7 @@ function buildAttackFormula(actor, item, config) {
 
 function buildDamageFormula(actor, item, config, { critical = false, multiplier = 2 } = {}) {
   const damages = getWeaponDamages(item);
-  const terms = [];
+  const damageExpressions = [];
 
   for (const damage of damages) {
     const baseDamage = String(damage.formula ?? "").trim();
@@ -162,14 +162,16 @@ function buildDamageFormula(actor, item, config, { critical = false, multiplier 
       ? obterModificadorAtributo(actor.system, damageAttribute)
       : 0;
 
-    terms.push(effectiveBaseDamage);
-    if (attributeBonus !== 0) terms.push(formatBonus(attributeBonus));
+    const expressionParts = [effectiveBaseDamage];
+    if (attributeBonus !== 0) expressionParts.push(formatBonus(attributeBonus));
+    damageExpressions.push(normalizeFormulaStart(expressionParts.join(" ")));
   }
 
+  let formula = damageExpressions.join(" + ");
   const damageBonus = normalizeFormulaBonus(config.damageBonus);
-  if (damageBonus) terms.push(damageBonus);
+  if (damageBonus) formula = `${formula}${formula ? " " : ""}${damageBonus}`;
 
-  return normalizeFormulaStart(terms.join(" "));
+  return normalizeFormulaStart(formula);
 }
 
 async function buildCombinedAttackContent({

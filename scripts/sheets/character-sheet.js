@@ -99,6 +99,10 @@ context.cargaPercentual = carga.percentual;
 context.cargaSobrecarregado = carga.sobrecarregado;
 context.cargaImpossivel = carga.impossivel;
 
+context.deslocamentoTotal =
+  (Number(context.system.combate?.deslocamento) || 0) +
+  (Number(context.system.combate?.deslocamentoOutros) || 0);
+
   return context;
 }
 
@@ -172,6 +176,15 @@ activateListeners(html) {
   registerAttributeListener(this, html);
   registerDeathSaveListener(this, html);
   registerCombatListener(this, html);
+
+  const atualizarDeslocamentoTotal = () => {
+    const base = Number(html.find('[name="system.combate.deslocamento"]').val()) || 0;
+    const outros = Number(html.find('[name="system.combate.deslocamentoOutros"]').val()) || 0;
+    html.find('.jk-deslocamento-total').text(base + outros);
+  };
+
+  html.find('[name="system.combate.deslocamento"], [name="system.combate.deslocamentoOutros"]')
+    .on('input', atualizarDeslocamentoTotal);
 }
 
 }
@@ -203,6 +216,12 @@ function gerarResumoEspecializacoes(system, especializacoes) {
     .join(" / ");
 }
 
+
+function capitalizarInicial(valor) {
+  const texto = String(valor ?? "").trim();
+  if (!texto) return "";
+  return texto.charAt(0).toLocaleUpperCase("pt-BR") + texto.slice(1);
+}
 
 function aplicarDefesaDeEquipamentos(system, items) {
   const defesa = calcularDefesaEquipamentosAtivos(items);
@@ -267,7 +286,7 @@ function prepararItensCombate(items) {
     if (categoria === "equipamento") {
       listas.equipamentos.push({
         ...base,
-        tipo: system.equipamento?.tipo ?? "",
+        tipo: capitalizarInicial(system.equipamento?.tipo ?? ""),
         defesa: system.equipamento?.defesa ?? "",
         penalidadeArmadura: system.equipamento?.penalidadeArmadura ?? ""
       });
@@ -277,7 +296,7 @@ function prepararItensCombate(items) {
     if (categoria === "consumivel") {
       listas.consumiveis.push({
         ...base,
-        tipo: system.consumivel?.tipo ?? "",
+        tipo: capitalizarInicial(system.consumivel?.tipo ?? ""),
         execucao: system.consumivel?.ativacao?.execucao ?? "",
         duracao: system.consumivel?.ativacao?.duracao ?? ""
       });
@@ -461,6 +480,7 @@ function criarLinhaVaziaCombate(prefixo) {
     notas: ""
   };
 }
+
 
 
 

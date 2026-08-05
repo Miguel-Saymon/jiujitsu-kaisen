@@ -1,28 +1,47 @@
-<div class="form-group">
-  <label>Tipo</label>
-  <select name="system.equipamento.tipo">
-    {{#each tiposEquipamento}}
-      <option value="{{value}}" {{#if (eq ../system.equipamento.tipo value)}}selected{{/if}}>{{label}}</option>
-    {{/each}}
-  </select>
-</div>
+<div class="jk-item-config-details jk-equipment-details">
+  <section class="jk-item-config-section">
+    <header class="jk-item-config-section__header">
+      <div>
+        <h3>Configuração</h3>
+        <p>Definições de categoria, uso e proteção do equipamento.</p>
+      </div>
+    </header>
 
-<div class="form-group">
-  <label>Tipo de Uso</label>
-  <select name="system.equipamento.tipoUso">
-    {{#each tiposUsoEquipamento}}
-      <option value="{{value}}" {{#if (eq ../system.equipamento.tipoUso value)}}selected{{/if}}>{{label}}</option>
-    {{/each}}
-  </select>
-</div>
+    <div class="jk-item-config-field-grid jk-item-config-field-grid--two">
+      <label class="jk-item-config-field">
+        <span>Tipo</span>
+        <select name="system.equipamento.tipo">
+          {{#each tiposEquipamento}}<option value="{{value}}" {{#if (eq ../system.equipamento.tipo value)}}selected{{/if}}>{{label}}</option>{{/each}}
+        </select>
+      </label>
 
-<div class="form-group">
-  <label>Defesa</label>
-  <input type="number" name="system.equipamento.defesa" value="{{system.equipamento.defesa}}" />
-</div>
+      <label class="jk-item-config-field">
+        <span>Tipo de Uso</span>
+        <select name="system.equipamento.tipoUso">
+          {{#each tiposUsoEquipamento}}<option value="{{value}}" {{#if (eq ../system.equipamento.tipoUso value)}}selected{{/if}}>{{label}}</option>{{/each}}
+        </select>
+      </label>
+    </div>
+  </section>
 
-<div class="form-group">
-  <label>Penalidade de Armadura</label>
-  <input type="number" name="system.equipamento.penalidadeArmadura" value="{{system.equipamento.penalidadeArmadura}}" />
+  <section class="jk-item-config-section">
+    <header class="jk-item-config-section__header">
+      <div>
+        <h3>Defesa</h3>
+        <p>Valores mecânicos aplicados quando o equipamento estiver em uso.</p>
+      </div>
+    </header>
+
+    <div class="jk-item-config-field-grid jk-item-config-field-grid--two">
+      <label class="jk-item-config-field">
+        <span>Defesa</span>
+        <input type="number" name="system.equipamento.defesa" value="{{system.equipamento.defesa}}" />
+      </label>
+      <label class="jk-item-config-field">
+        <span>Penalidade de Armadura</span>
+        <input type="number" name="system.equipamento.penalidadeArmadura" value="{{system.equipamento.penalidadeArmadura}}" />
+      </label>
+    </div>
+  </section>
 </div>
 

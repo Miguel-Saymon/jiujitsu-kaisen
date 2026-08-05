@@ -1,125 +1,157 @@
-<section class="jk-item-detail-section">
-  <h3>Configuração da Arma</h3>
-
-  <div class="form-group">
-    <label>Proficiência</label>
-    <select name="system.arma.proficiencia">
-      {{#each proficienciasArma}}
-        <option value="{{value}}" {{#if (eq ../system.arma.proficiencia value)}}selected{{/if}}>{{label}}</option>
-      {{/each}}
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label>Propósito</label>
-    <select name="system.arma.proposito">
-      {{#each propositosArma}}
-        <option value="{{value}}" {{#if (eq ../system.arma.proposito value)}}selected{{/if}}>{{label}}</option>
-      {{/each}}
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label>Empunhadura</label>
-    <select name="system.arma.empunhadura">
-      {{#each empunhadurasArma}}
-        <option value="{{value}}" {{#if (eq ../system.arma.empunhadura value)}}selected{{/if}}>{{label}}</option>
-      {{/each}}
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label>Consumível</label>
-    <select name="system.arma.consumivel">
-      {{#each consumiveisArma}}
-        <option value="{{value}}" {{#if (eq ../system.arma.consumivel value)}}selected{{/if}}>{{label}}</option>
-      {{/each}}
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label>Munição / Recurso Atual</label>
-    <input type="number" name="system.arma.municaoAtual" value="{{system.arma.municaoAtual}}" min="0" />
-  </div>
-</section>
-
-<section class="jk-item-detail-section">
-  <h3>Propriedades</h3>
-  <div class="form-group jk-item-checkbox-grid">
-    <label><input type="checkbox" name="system.arma.propriedades.adaptavel" {{checked system.arma.propriedades.adaptavel}} /> Adaptável</label>
-    <label><input type="checkbox" name="system.arma.propriedades.agil" {{checked system.arma.propriedades.agil}} /> Ágil</label>
-    <label><input type="checkbox" name="system.arma.propriedades.alongada" {{checked system.arma.propriedades.alongada}} /> Alongada</label>
-    <label><input type="checkbox" name="system.arma.propriedades.desbalanceada" {{checked system.arma.propriedades.desbalanceada}} /> Desbalanceada</label>
-    <label><input type="checkbox" name="system.arma.propriedades.dupla" {{checked system.arma.propriedades.dupla}} /> Dupla</label>
-    <label><input type="checkbox" name="system.arma.propriedades.versatil" {{checked system.arma.propriedades.versatil}} /> Versátil</label>
-    <label><input type="checkbox" name="system.arma.propriedades.hibrida" {{checked system.arma.propriedades.hibrida}} /> Híbrida</label>
-  </div>
-</section>
-
-<section class="jk-item-detail-section">
-  <header class="jk-item-section-header">
-    <h3>Rolagens</h3>
-  </header>
-
-  <div class="jk-roll-config-block">
-    <h4>Ataque</h4>
-    <div class="form-group jk-roll-row">
-      <label>Atributo</label>
-      <select name="system.arma.ataque.atributo">
-        {{#each atributos}}
-          <option value="{{value}}" {{#if (eq ../system.arma.ataque.atributo value)}}selected{{/if}}>{{label}}</option>
-        {{/each}}
-      </select>
-
-      <label>Bônus</label>
-      <input type="text" name="system.arma.ataque.bonus" value="{{system.arma.ataque.bonus}}" placeholder="+0" pattern="[+-]?[0-9]+" />
-    </div>
-  </div>
-
-  <div class="jk-roll-config-block">
-    <header class="jk-item-inline-header">
-      <h4>Dano</h4>
-      <button class="jk-item-add-damage" type="button" title="Adicionar dano"><i class="fas fa-plus"></i></button>
+<div class="jk-weapon-details">
+  <section class="jk-weapon-section">
+    <header class="jk-weapon-section__header">
+      <div>
+        <h3>Configuração</h3>
+        <p>Definições básicas de uso e proficiência da arma.</p>
+      </div>
     </header>
 
-    {{#each weaponDamages as |dano|}}
-      <div class="form-group jk-roll-row jk-damage-row" data-key="{{dano.key}}">
-        <input type="text" name="system.arma.danos.{{dano.key}}.formula" value="{{dano.formula}}" placeholder="ex. 1d8" />
-
-        <select name="system.arma.danos.{{dano.key}}.atributo">
-          {{#each ../atributos}}
-            <option value="{{value}}" {{#if (eq dano.atributo value)}}selected{{/if}}>{{label}}</option>
+    <div class="jk-weapon-field-grid jk-weapon-field-grid--two">
+      <label class="jk-weapon-field">
+        <span>Proficiência</span>
+        <select name="system.arma.proficiencia">
+          {{#each proficienciasArma}}
+            <option value="{{value}}" {{#if (eq ../system.arma.proficiencia value)}}selected{{/if}}>{{label}}</option>
           {{/each}}
         </select>
+      </label>
 
-        <select name="system.arma.danos.{{dano.key}}.tipo">
-          {{#each ../tiposDano}}
-            <option value="{{value}}" {{#if (eq dano.tipo value)}}selected{{/if}}>{{label}}</option>
+      <label class="jk-weapon-field">
+        <span>Propósito</span>
+        <select name="system.arma.proposito">
+          {{#each propositosArma}}
+            <option value="{{value}}" {{#if (eq ../system.arma.proposito value)}}selected{{/if}}>{{label}}</option>
           {{/each}}
         </select>
+      </label>
 
-        <button class="jk-item-remove-damage" type="button" data-key="{{dano.key}}" title="Remover dano"><i class="fas fa-trash"></i></button>
+      <label class="jk-weapon-field">
+        <span>Empunhadura</span>
+        <select name="system.arma.empunhadura">
+          {{#each empunhadurasArma}}
+            <option value="{{value}}" {{#if (eq ../system.arma.empunhadura value)}}selected{{/if}}>{{label}}</option>
+          {{/each}}
+        </select>
+      </label>
+
+      <div class="jk-weapon-field jk-weapon-ammo-field">
+        <span>Consumível</span>
+        <div class="jk-weapon-ammo-field__controls">
+          <select name="system.arma.consumivel">
+            {{#each consumiveisArma}}
+              <option value="{{value}}" {{#if (eq ../system.arma.consumivel value)}}selected{{/if}}>{{label}}</option>
+            {{/each}}
+          </select>
+          <input type="number" name="system.arma.municaoAtual" value="{{system.arma.municaoAtual}}" min="0" title="Munição ou recurso atual" placeholder="0" />
+        </div>
       </div>
-    {{/each}}
-  </div>
-
-  <div class="jk-roll-config-block">
-    <h4>Crítico</h4>
-    <div class="form-group jk-roll-row">
-      <label>Margem</label>
-      <input type="number" name="system.arma.critico.margem" value="{{system.arma.critico.margem}}" placeholder="20" />
-      <label>Multiplicador</label>
-      <input type="number" name="system.arma.critico.multiplicador" value="{{system.arma.critico.multiplicador}}" placeholder="2" />
     </div>
-  </div>
+  </section>
 
-  <div class="form-group">
-    <label>Alcance</label>
-    <select name="system.arma.alcance">
-      {{#each alcances}}
-        <option value="{{value}}" {{#if (eq ../system.arma.alcance value)}}selected{{/if}}>{{label}}</option>
-      {{/each}}
-    </select>
-  </div>
-</section>
+  <section class="jk-weapon-section">
+    <header class="jk-weapon-section__header">
+      <div>
+        <h3>Propriedades</h3>
+        <p>Características especiais aplicadas ao uso da arma.</p>
+      </div>
+    </header>
+
+    <div class="jk-weapon-properties">
+      <label><input type="checkbox" name="system.arma.propriedades.adaptavel" {{checked system.arma.propriedades.adaptavel}} /> <span>Adaptável</span></label>
+      <label><input type="checkbox" name="system.arma.propriedades.agil" {{checked system.arma.propriedades.agil}} /> <span>Ágil</span></label>
+      <label><input type="checkbox" name="system.arma.propriedades.alongada" {{checked system.arma.propriedades.alongada}} /> <span>Alongada</span></label>
+      <label><input type="checkbox" name="system.arma.propriedades.desbalanceada" {{checked system.arma.propriedades.desbalanceada}} /> <span>Desbalanceada</span></label>
+      <label><input type="checkbox" name="system.arma.propriedades.dupla" {{checked system.arma.propriedades.dupla}} /> <span>Dupla</span></label>
+      <label><input type="checkbox" name="system.arma.propriedades.versatil" {{checked system.arma.propriedades.versatil}} /> <span>Versátil</span></label>
+      <label><input type="checkbox" name="system.arma.propriedades.hibrida" {{checked system.arma.propriedades.hibrida}} /> <span>Híbrida</span></label>
+    </div>
+  </section>
+
+  <section class="jk-weapon-section jk-weapon-rolls">
+    <header class="jk-weapon-section__header">
+      <div>
+        <h3>Rolagens</h3>
+        <p>Configure ataque, danos, crítico e alcance em blocos padronizados.</p>
+      </div>
+    </header>
+
+    <div class="jk-weapon-roll-card">
+      <h4>Ataque</h4>
+      <div class="jk-weapon-roll-grid jk-weapon-roll-grid--attack">
+        <label class="jk-weapon-field">
+          <span>Atributo</span>
+          <select name="system.arma.ataque.atributo">
+            {{#each atributos}}
+              <option value="{{value}}" {{#if (eq ../system.arma.ataque.atributo value)}}selected{{/if}}>{{label}}</option>
+            {{/each}}
+          </select>
+        </label>
+        <label class="jk-weapon-field">
+          <span>Bônus</span>
+          <input type="text" name="system.arma.ataque.bonus" value="{{system.arma.ataque.bonus}}" placeholder="+0" pattern="[+-]?[0-9]+" />
+        </label>
+      </div>
+    </div>
+
+    <div class="jk-weapon-roll-card">
+      <header class="jk-weapon-roll-card__header">
+        <h4>Dano</h4>
+        <button class="jk-item-add-damage jk-weapon-icon-button" type="button" title="Adicionar dano"><i class="fas fa-plus"></i></button>
+      </header>
+
+      <div class="jk-weapon-damage-list">
+        {{#each weaponDamages as |dano|}}
+          <div class="jk-weapon-damage-row" data-key="{{dano.key}}">
+            <label class="jk-weapon-field">
+              <span>Fórmula</span>
+              <input type="text" name="system.arma.danos.{{dano.key}}.formula" value="{{dano.formula}}" placeholder="Ex.: 1d8" />
+            </label>
+
+            <label class="jk-weapon-field">
+              <span>Atributo</span>
+              <select name="system.arma.danos.{{dano.key}}.atributo">
+                {{#each ../atributos}}
+                  <option value="{{value}}" {{#if (eq dano.atributo value)}}selected{{/if}}>{{label}}</option>
+                {{/each}}
+              </select>
+            </label>
+
+            <label class="jk-weapon-field">
+              <span>Tipo</span>
+              <select name="system.arma.danos.{{dano.key}}.tipo">
+                {{#each ../tiposDano}}
+                  <option value="{{value}}" {{#if (eq dano.tipo value)}}selected{{/if}}>{{label}}</option>
+                {{/each}}
+              </select>
+            </label>
+
+            <button class="jk-item-remove-damage jk-weapon-icon-button jk-weapon-icon-button--danger" type="button" data-key="{{dano.key}}" title="Remover dano"><i class="fas fa-trash"></i></button>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="jk-weapon-roll-card jk-weapon-roll-card--footer">
+      <div class="jk-weapon-critical-grid">
+        <label class="jk-weapon-field">
+          <span>Margem de crítico</span>
+          <input type="number" name="system.arma.critico.margem" value="{{weaponCritical.margem}}" placeholder="20" min="1" max="20" />
+        </label>
+        <label class="jk-weapon-field">
+          <span>Multiplicador</span>
+          <input type="number" name="system.arma.critico.multiplicador" value="{{weaponCritical.multiplicador}}" placeholder="2" min="1" />
+        </label>
+        <label class="jk-weapon-field jk-weapon-field--wide">
+          <span>Alcance</span>
+          <select name="system.arma.alcance">
+            {{#each alcances}}
+              <option value="{{value}}" {{#if (eq ../system.arma.alcance value)}}selected{{/if}}>{{label}}</option>
+            {{/each}}
+          </select>
+        </label>
+      </div>
+    </div>
+  </section>
+</div>
 
