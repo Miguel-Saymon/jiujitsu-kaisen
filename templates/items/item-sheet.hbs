@@ -1,19 +1,18 @@
-<form class="{{cssClass}} jk-item-form" autocomplete="off">
-  <header class="sheet-header">
-    <div class="header-fields">
-      <h1 class="charname">
-        <input name="name" type="text" value="{{item.name}}" placeholder="Nome do item" />
-      </h1>
+<form class="{{cssClass}} jk-item-form jk-item-form--{{item.type}}" autocomplete="off">
+  <header class="sheet-header jk-item-header">
+    <img class="jk-item-img profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
 
-      <div class="form-group">
-        <label>Categoria</label>
-        <select name="system.categoria">
-          {{#each categorias}}
-            <option value="{{value}}" {{#if (eq ../system.categoria value)}}selected{{/if}}>
-              {{label}}
-            </option>
-          {{/each}}
-        </select>
+    <div class="header-fields">
+      <div class="jk-item-title-row">
+        <h1 class="charname">
+          <input name="name" type="text" value="{{item.name}}" placeholder="Nome do item" />
+        </h1>
+        <span class="jk-item-type-label">{{itemTypeLabel}}</span>
+      </div>
+
+      <div class="form-group jk-item-source-row">
+        <label>Fonte</label>
+        <input type="text" name="system.fonte" value="{{system.fonte}}" placeholder="Ex.: Livro do Jogador, p. 347" />
       </div>
     </div>
   </header>

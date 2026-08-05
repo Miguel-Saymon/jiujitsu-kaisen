@@ -1,68 +1,140 @@
-<div class="form-group">
-  <label>Tipo</label>
-  <select name="system.consumivel.tipo">
-    {{#each tiposConsumivel}}
-      <option value="{{value}}" {{#if (eq ../system.consumivel.tipo value)}}selected{{/if}}>{{label}}</option>
+<section class="jk-item-detail-section">
+  <h3>Configuração do Consumível</h3>
+
+  <div class="form-group">
+    <label>Tipo</label>
+    <select name="system.consumivel.tipo">
+      {{#each tiposConsumivel}}
+        <option value="{{value}}" {{#if (eq ../system.consumivel.tipo value)}}selected{{/if}}>{{label}}</option>
+      {{/each}}
+    </select>
+  </div>
+</section>
+
+<section class="jk-item-detail-section">
+  <h3>Ativação</h3>
+
+  <div class="form-group">
+    <label>Consumível</label>
+    <input type="text" name="system.consumivel.ativacao.consumivel" value="{{system.consumivel.ativacao.consumivel}}" />
+  </div>
+
+  <div class="form-group">
+    <label>Execução</label>
+    <select name="system.consumivel.ativacao.execucao">
+      {{#each execucoes}}
+        <option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.execucao value)}}selected{{/if}}>{{label}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Condição de Ativação</label>
+    <input type="text" name="system.consumivel.ativacao.condicao" value="{{system.consumivel.ativacao.condicao}}" />
+  </div>
+
+  <div class="form-group">
+    <label>Alcance</label>
+    <select name="system.consumivel.ativacao.alcance">
+      {{#each alcances}}
+        <option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.alcance value)}}selected{{/if}}>{{label}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Alvo</label>
+    <input type="text" name="system.consumivel.ativacao.alvo" value="{{system.consumivel.ativacao.alvo}}" />
+  </div>
+
+  <div class="form-group">
+    <label>Área</label>
+    <input type="text" name="system.consumivel.ativacao.area" value="{{system.consumivel.ativacao.area}}" />
+  </div>
+
+  <div class="form-group">
+    <label>Efeito</label>
+    <input type="text" name="system.consumivel.ativacao.efeito" value="{{system.consumivel.ativacao.efeito}}" />
+  </div>
+
+  <div class="form-group">
+    <label>Duração</label>
+    <select name="system.consumivel.ativacao.duracao">
+      {{#each duracoes}}
+        <option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.duracao value)}}selected{{/if}}>{{label}}</option>
+      {{/each}}
+    </select>
+  </div>
+</section>
+
+<section class="jk-item-detail-section">
+  <header class="jk-item-section-header">
+    <h3>Rolagens</h3>
+  </header>
+
+  <div class="jk-roll-config-block">
+    <header class="jk-item-inline-header">
+      <h4>Ataque</h4>
+      <button class="jk-consumable-add-attack" type="button" title="Adicionar ataque"><i class="fas fa-plus"></i></button>
+    </header>
+
+    {{#each consumableAttacks as |ataque|}}
+      <div class="form-group jk-roll-row" data-key="{{ataque.key}}">
+        <select name="system.consumivel.rolagens.ataques.{{ataque.key}}.atributo">
+          {{#each ../atributos}}
+            <option value="{{value}}" {{#if (eq ataque.atributo value)}}selected{{/if}}>{{label}}</option>
+          {{/each}}
+        </select>
+        <input type="text" name="system.consumivel.rolagens.ataques.{{ataque.key}}.bonus" value="{{ataque.bonus}}" placeholder="Bônus" />
+        <button class="jk-consumable-remove-attack" type="button" data-key="{{ataque.key}}" title="Remover ataque"><i class="fas fa-trash"></i></button>
+      </div>
     {{/each}}
-  </select>
-</div>
+  </div>
 
-<h3>Ativação</h3>
+  <div class="jk-roll-config-block">
+    <header class="jk-item-inline-header">
+      <h4>Dano</h4>
+      <button class="jk-consumable-add-damage" type="button" title="Adicionar dano"><i class="fas fa-plus"></i></button>
+    </header>
 
-<div class="form-group">
-  <label>Consumível</label>
-  <input type="text" name="system.consumivel.ativacao.consumivel" value="{{system.consumivel.ativacao.consumivel}}" />
-</div>
-
-<div class="form-group">
-  <label>Execução</label>
-  <select name="system.consumivel.ativacao.execucao">
-    {{#each execucoes}}
-      <option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.execucao value)}}selected{{/if}}>{{label}}</option>
+    {{#each consumableDamages as |dano|}}
+      <div class="form-group jk-roll-row jk-damage-row" data-key="{{dano.key}}">
+        <input type="text" name="system.consumivel.rolagens.danos.{{dano.key}}.formula" value="{{dano.formula}}" placeholder="ex. 1d8" />
+        <select name="system.consumivel.rolagens.danos.{{dano.key}}.atributo">
+          {{#each ../atributos}}
+            <option value="{{value}}" {{#if (eq dano.atributo value)}}selected{{/if}}>{{label}}</option>
+          {{/each}}
+        </select>
+        <select name="system.consumivel.rolagens.danos.{{dano.key}}.tipo">
+          {{#each ../tiposDano}}
+            <option value="{{value}}" {{#if (eq dano.tipo value)}}selected{{/if}}>{{label}}</option>
+          {{/each}}
+        </select>
+        <button class="jk-consumable-remove-damage" type="button" data-key="{{dano.key}}" title="Remover dano"><i class="fas fa-trash"></i></button>
+      </div>
     {{/each}}
-  </select>
-</div>
+  </div>
 
-<div class="form-group">
-  <label>Condição de Ativação</label>
-  <input type="text" name="system.consumivel.ativacao.condicao" value="{{system.consumivel.ativacao.condicao}}" />
-</div>
+  <div class="jk-roll-config-block">
+    <h4>Teste de Resistência</h4>
+    <div class="form-group">
+      <label>Teste</label>
+      <input type="text" name="system.consumivel.rolagens.resistencia.teste" value="{{consumableResistance.teste}}" placeholder="Ex.: Reflexos reduz à metade" />
+    </div>
 
-<div class="form-group">
-  <label>Alcance</label>
-  <select name="system.consumivel.ativacao.alcance">
-    {{#each alcances}}
-      <option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.alcance value)}}selected{{/if}}>{{label}}</option>
-    {{/each}}
-  </select>
-</div>
+    <div class="form-group jk-roll-row">
+      <label>CD Atributo / Bônus</label>
+      <select name="system.consumivel.rolagens.resistencia.atributo">
+        {{#each atributos}}
+          <option value="{{value}}" {{#if (eq ../consumableResistance.atributo value)}}selected{{/if}}>{{label}}</option>
+        {{/each}}
+      </select>
+      <input type="number" name="system.consumivel.rolagens.resistencia.bonus" value="{{consumableResistance.bonus}}" />
+    </div>
 
-<div class="form-group">
-  <label>Alvo</label>
-  <input type="text" name="system.consumivel.ativacao.alvo" value="{{system.consumivel.ativacao.alvo}}" />
-</div>
-
-<div class="form-group">
-  <label>Área</label>
-  <input type="text" name="system.consumivel.ativacao.area" value="{{system.consumivel.ativacao.area}}" />
-</div>
-
-<div class="form-group">
-  <label>Efeito</label>
-  <input type="text" name="system.consumivel.ativacao.efeito" value="{{system.consumivel.ativacao.efeito}}" />
-</div>
-
-<div class="form-group">
-  <label>Duração</label>
-  <select name="system.consumivel.ativacao.duracao">
-    {{#each duracoes}}
-      <option value="{{value}}" {{#if (eq ../system.consumivel.ativacao.duracao value)}}selected{{/if}}>{{label}}</option>
-    {{/each}}
-  </select>
-</div>
-
-<div class="form-group">
-  <label>Teste de Resistência</label>
-  <input type="text" name="system.consumivel.ativacao.testeResistencia" value="{{system.consumivel.ativacao.testeResistencia}}" />
-</div>
+    {{#if consumableResistance.teste}}
+      <div class="jk-derived-cd">CD Base do Item: {{consumableResistance.total}}</div>
+    {{/if}}
+  </div>
+</section>
 

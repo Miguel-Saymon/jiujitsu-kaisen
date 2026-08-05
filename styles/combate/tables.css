@@ -174,3 +174,115 @@
     text-align: center;
 }
 
+
+/* ==========================================================
+   HABILIDADES & TALENTOS — PADRÃO VISUAL DO INVENTÁRIO
+   ========================================================== */
+
+.jk-ability-table {
+    table-layout: fixed;
+}
+
+.jk-ability-table col.is-name-col { width: 30%; }
+.jk-ability-table col.is-value-col { width: 15%; }
+.jk-ability-table col.is-cost-col { width: 18%; }
+.jk-ability-table col.is-actions-col { width: 16%; }
+.jk-ability-table col.is-delete-col { width: 28px; }
+
+.jk-ability-table .jk-actions-heading {
+    text-align: center;
+}
+
+.jk-ability-table .jk-ability-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding-inline: 3px !important;
+}
+
+.jk-ability-table .jk-ability-actions button,
+.jk-ability-table .jk-row-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    min-width: 22px;
+    height: 22px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--jk-text-muted);
+    font-size: 10px;
+    line-height: 1;
+}
+
+.jk-ability-table .jk-delete-heading,
+.jk-ability-table .jk-delete-cell {
+    width: 28px;
+    padding-left: 0 !important;
+    padding-right: 4px !important;
+    text-align: right !important;
+}
+
+.jk-ability-table .jk-ability-actions button:hover,
+.jk-ability-table .jk-ability-actions button:focus-visible,
+.jk-ability-table .jk-row-delete:hover,
+.jk-ability-table .jk-row-delete:focus-visible {
+    background: color-mix(in srgb, var(--jk-accent-purple) 24%, transparent);
+    color: var(--jk-text-primary);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--jk-accent-purple) 72%, transparent),
+                0 0 8px color-mix(in srgb, var(--jk-accent-purple) 42%, transparent);
+}
+
+.jk-ability-table tbody tr:not(.jk-description-row):hover td {
+    background: color-mix(in srgb, var(--jk-accent-purple) 16%, transparent);
+}
+
+
+/* Habilidades & Talentos usam o mesmo handle e feedback de ordenação do inventário. */
+.jk-ability-identity {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+
+.jk-ability-identity .jk-description-hover {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.jk-drag-ability {
+    display: inline-flex;
+    flex: 0 0 18px;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    min-width: 18px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--jk-text-muted);
+    cursor: grab;
+    font-size: 10px;
+    line-height: 1;
+}
+
+.jk-drag-ability:active { cursor: grabbing; }
+
+.jk-drag-ability:hover,
+.jk-drag-ability:focus-visible {
+    background: color-mix(in srgb, var(--jk-accent-purple) 24%, transparent);
+    color: var(--jk-text-primary);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--jk-accent-purple) 72%, transparent),
+                0 0 8px color-mix(in srgb, var(--jk-accent-purple) 42%, transparent);
+}
+
+.jk-ability-row.is-dragging { opacity: .45; }
+.jk-ability-row.is-drop-target td { border-top: 2px solid var(--jk-border-input); }
+

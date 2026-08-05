@@ -1,11 +1,3 @@
-export const ITEM_CATEGORIAS = [
-  { value: "", label: "-" },
-  { value: "arma", label: "Arma" },
-  { value: "consumivel", label: "Consumível" },
-  { value: "equipamento", label: "Equipamento" },
-  { value: "tesouro", label: "Tesouro" }
-];
-
 export const ATRIBUTOS = [
   { value: "", label: "-" },
   { value: "forca", label: "Força" },
@@ -119,8 +111,8 @@ export const EMPUNHADURAS_ARMA = [
 
 export const CONSUMIVEIS_ARMA = [
   { value: "", label: "-" },
-  { value: "sim", label: "Sim" },
-  { value: "nao", label: "Não" }
+  { value: "municao", label: "Munição" },
+  { value: "recurso", label: "Recurso" }
 ];
 
 export const TIPOS_ATAQUE = [
@@ -201,4 +193,6 @@ export function prepararSlotsEncantos(encantos, opcoes, quantidade) {
     };
   });
 }
+
+
 

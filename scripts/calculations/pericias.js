@@ -26,7 +26,7 @@ export function calcularPericias(system) {
         ? obterBonusMaestria(system)
         : 0;
 
-    const outros = Number(pericia.outro) || 0;
+    const outros = Number(pericia.outros) || 0;
 
     pericia.total =
       modificador +
@@ -43,3 +43,4 @@ export function calcularPericias(system) {
 
   return pericias;
 }
+

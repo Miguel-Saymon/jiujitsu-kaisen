@@ -406,11 +406,23 @@
   },
   "Item": {
     "types": [
-      "item"
+      "item",
+      "arma",
+      "consumivel",
+      "equipamento",
+      "tesouro"
     ],
-    "item": {
-      "categoria": null,
-      "descricao": null,
+    "arma": {
+      "descricao": "",
+      "pv": {
+        "atual": null,
+        "max": null
+      },
+      "rd": null,
+      "quantidade": null,
+      "espacos": null,
+      "preco": null,
+      "fonte": "",
       "equipado": false,
       "arma": {
         "proficiencia": null,
@@ -428,9 +440,8 @@
         },
         "ataque": {
           "atributo": null,
-          "tipo": null,
           "bonus": null,
-          "treinado": false
+          "treinado": true
         },
         "dano": {
           "formula": null,
@@ -449,6 +460,144 @@
             "slot3": null,
             "slot4": null
           }
+        },
+        "municaoAtual": 0,
+        "danos": {
+          "dano1": {
+            "formula": null,
+            "atributo": null,
+            "tipo": null
+          }
+        }
+      }
+    },
+    "consumivel": {
+      "descricao": "",
+      "pv": {
+        "atual": null,
+        "max": null
+      },
+      "rd": null,
+      "quantidade": null,
+      "espacos": null,
+      "preco": null,
+      "fonte": "",
+      "consumivel": {
+        "tipo": null,
+        "ativacao": {
+          "consumivel": null,
+          "execucao": null,
+          "condicao": null,
+          "alcance": null,
+          "alvo": null,
+          "area": null,
+          "efeito": null,
+          "duracao": null,
+          "testeResistencia": null
+        },
+        "rolagens": {
+          "ataques": {},
+          "danos": {},
+          "resistencia": {
+            "teste": "",
+            "atributo": "",
+            "bonus": 0,
+            "total": 10
+          }
+        }
+      }
+    },
+    "equipamento": {
+      "descricao": "",
+      "pv": {
+        "atual": null,
+        "max": null
+      },
+      "rd": null,
+      "quantidade": null,
+      "espacos": null,
+      "preco": null,
+      "fonte": "",
+      "equipado": false,
+      "equipamento": {
+        "tipo": null,
+        "tipoUso": null,
+        "defesa": null,
+        "penalidadeArmadura": null,
+        "aprimoramentos": {
+          "encantos": {
+            "slot1": null,
+            "slot2": null,
+            "slot3": null,
+            "slot4": null
+          }
+        }
+      }
+    },
+    "tesouro": {
+      "descricao": "",
+      "pv": {
+        "atual": null,
+        "max": null
+      },
+      "rd": null,
+      "quantidade": null,
+      "espacos": null,
+      "preco": null,
+      "fonte": "",
+      "tesouro": {
+        "recipiente": false
+      }
+    },
+    "item": {
+      "categoria": null,
+      "descricao": "",
+      "fonte": "",
+      "equipado": false,
+      "arma": {
+        "proficiencia": null,
+        "proposito": null,
+        "empunhadura": null,
+        "consumivel": null,
+        "propriedades": {
+          "adaptavel": false,
+          "agil": false,
+          "alongada": false,
+          "desbalanceada": false,
+          "dupla": false,
+          "versatil": false,
+          "hibrida": false
+        },
+        "ataque": {
+          "atributo": null,
+          "bonus": null,
+          "treinado": true
+        },
+        "dano": {
+          "formula": null,
+          "atributo": null,
+          "tipo": null
+        },
+        "critico": {
+          "margem": null,
+          "multiplicador": null
+        },
+        "alcance": null,
+        "aprimoramentos": {
+          "encantos": {
+            "slot1": null,
+            "slot2": null,
+            "slot3": null,
+            "slot4": null
+          }
+        },
+        "municaoAtual": 0,
+        "danos": {
+          "dano1": {
+            "formula": null,
+            "atributo": null,
+            "tipo": null
+          }
         }
       },
       "consumivel": {
@@ -463,6 +612,16 @@
           "efeito": null,
           "duracao": null,
           "testeResistencia": null
+        },
+        "rolagens": {
+          "ataques": {},
+          "danos": {},
+          "resistencia": {
+            "teste": "",
+            "atributo": "",
+            "bonus": 0,
+            "total": 10
+          }
         }
       },
       "equipamento": {

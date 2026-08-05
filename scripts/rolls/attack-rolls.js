@@ -1,7 +1,5 @@
-import { ATRIBUTOS_LABELS } from "../constants/atributos.js";
 import { obterModificadorAtributo } from "../helpers/atributos.js";
 import { obterBonusTreino, obterNivel } from "../helpers/proficiencia.js";
-import { executeRoll } from "./roll-service.js";
 import { formatBonus, getNumericBonus } from "./roll-utils.js";
 
 const ROLL_MODE_OPTIONS = {
@@ -13,98 +11,64 @@ const ROLL_MODE_OPTIONS = {
 
 export async function rollWeaponAttack(actor, itemId) {
   const item = actor?.items?.get(itemId);
+  const itemType = ["arma", "equipamento", "consumivel", "tesouro"].includes(item?.type) ? item.type : item?.system?.categoria;
 
-  if (!item || item.system?.categoria !== "arma") {
+  if (!item || itemType !== "arma") {
     ui.notifications?.warn("Item de arma não encontrado na ficha.");
     return;
   }
 
-  const config = await promptWeaponAttackConfig(actor, item);
+  const config = await promptWeaponAttackConfig();
   if (!config) return;
 
   const weaponName = item.name ?? "Ataque";
   const attackFormula = buildAttackFormula(actor, item, config);
   const criticalConfig = getCriticalConfig(item);
-  const normalDamageFormula = buildDamageFormula(actor, item, config, { critical: false });
 
-  const initialFlavor = buildAttackFlavor({
-    weaponName,
-    item,
-    config,
-    attackFormula,
-    damageFormula: normalDamageFormula,
-    criticalConfig
-  });
-
-  const attackRoll = await executeRoll({
-    actor,
-    title: `Ataque: ${weaponName}`,
-    flavor: initialFlavor,
-    formula: attackFormula,
-    rollMode: config.rollMode
-  });
-
+  const attackRoll = await evaluateFormula(attackFormula, actor);
   const naturalD20 = getNaturalD20Result(attackRoll);
   const isCritical = isCriticalHit(naturalD20, criticalConfig.margin);
   const damageFormula = buildDamageFormula(actor, item, config, {
     critical: isCritical,
     multiplier: criticalConfig.multiplier
   });
+  const damageRoll = damageFormula ? await evaluateFormula(damageFormula, actor) : null;
 
-  if (damageFormula) {
-    await executeRoll({
-      actor,
-      title: `${isCritical ? "Dano Crítico" : "Dano"}: ${weaponName}`,
-      flavor: buildDamageFlavor({
-        weaponName,
+  const rolls = damageRoll ? [attackRoll, damageRoll] : [attackRoll];
+
+  await ChatMessage.create(
+    {
+      speaker: ChatMessage.getSpeaker({ actor }),
+      flavor: `Ataque: ${weaponName}`,
+      content: buildCombinedAttackContent({
+        actor,
         item,
-        config,
-        damageFormula,
-        naturalD20,
+        weaponName,
+        attackRoll,
+        damageRoll,
         isCritical,
-        criticalConfig
+        hasConsumable: Boolean(item.system?.arma?.consumivel)
       }),
-      formula: damageFormula,
-      rollMode: config.rollMode
-    });
-  }
+      rolls
+    },
+    {
+      rollMode: config.rollMode || game.settings.get("core", "rollMode")
+    }
+  );
 }
 
-async function promptWeaponAttackConfig(actor, item) {
+async function promptWeaponAttackConfig() {
   const currentRollMode = game.settings.get("core", "rollMode") || "publicroll";
-  const attack = item.system?.arma?.ataque ?? {};
-  const damage = item.system?.arma?.dano ?? {};
-  const defaultAttackAttribute = normalizeAttribute(attack.atributo) || getDefaultAttackAttribute(item);
-  const defaultDamageAttribute = normalizeAttribute(damage.atributo) || defaultAttackAttribute;
 
   const content = `
     <form class="jk-weapon-attack-dialog">
-      <div class="form-group">
-        <label>Atributo do Ataque:</label>
-        <select name="attackAttribute">
-          ${buildAttributeOptions(defaultAttackAttribute)}
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Atributo do Dano:</label>
-        <select name="damageAttribute">
-          ${buildAttributeOptions(defaultDamageAttribute)}
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Treinado:</label>
-        <input type="checkbox" name="trained" ${attack.treinado ? "checked" : ""} />
-      </div>
-
       <div class="form-group">
         <label>Bônus no Teste:</label>
         <input type="text" name="attackBonus" placeholder="ex. +1d4 ou -3" />
       </div>
 
       <div class="form-group">
-        <label>Dano:</label>
+        <label>Dano Bônus:</label>
         <input type="text" name="damageBonus" placeholder="ex. +1d4 ou -4" />
       </div>
 
@@ -133,7 +97,7 @@ async function promptWeaponAttackConfig(actor, item) {
   `;
 
   return Dialog.prompt({
-    title: `Configuração de ataque: ${item.name ?? "Arma"}`,
+    title: "Configuração de ataque",
     content,
     label: "Rolar Ataque",
     callback: html => {
@@ -141,9 +105,6 @@ async function promptWeaponAttackConfig(actor, item) {
       if (!form) return null;
 
       return {
-        attackAttribute: normalizeAttribute(form.attackAttribute?.value),
-        damageAttribute: normalizeAttribute(form.damageAttribute?.value),
-        trained: Boolean(form.trained?.checked),
         attackBonus: form.attackBonus?.value?.trim() ?? "",
         damageBonus: form.damageBonus?.value?.trim() ?? "",
         d20Mode: form.d20Mode?.value ?? "normal",
@@ -154,12 +115,22 @@ async function promptWeaponAttackConfig(actor, item) {
   });
 }
 
+async function evaluateFormula(formula, actor) {
+  const rollData = typeof actor?.getRollData === "function"
+    ? actor.getRollData()
+    : actor?.system ?? {};
+
+  return new Roll(formula, rollData).evaluate();
+}
+
 function buildAttackFormula(actor, item, config) {
   const dice = getD20Formula(config.d20Mode);
-  const attributeBonus = obterModificadorAtributo(actor.system, config.attackAttribute);
+  const attack = item.system?.arma?.ataque ?? {};
+  const attackAttribute = normalizeAttribute(attack.atributo) || getDefaultAttackAttribute(item);
+  const attributeBonus = obterModificadorAtributo(actor.system, attackAttribute);
   const halfLevel = Math.floor(obterNivel(actor.system) / 2);
-  const trainingBonus = config.trained ? obterBonusTreino(actor.system) : 0;
-  const itemBonus = getNumericBonus(item.system?.arma?.ataque?.bonus);
+  const trainingBonus = obterBonusTreino(actor.system);
+  const itemBonus = getNumericBonus(attack.bonus);
   const situationalBonus = normalizeFormulaBonus(config.attackBonus);
 
   const terms = [dice];
@@ -174,56 +145,78 @@ function buildAttackFormula(actor, item, config) {
 }
 
 function buildDamageFormula(actor, item, config, { critical = false, multiplier = 2 } = {}) {
-  const baseDamage = String(item.system?.arma?.dano?.formula ?? "").trim();
-  const effectiveBaseDamage = critical
-    ? multiplyDiceFormula(baseDamage, multiplier)
-    : baseDamage;
-  const damageBonus = normalizeFormulaBonus(config.damageBonus);
-  const damageAttribute = normalizeAttribute(config.damageAttribute);
-  const attributeBonus = damageAttribute
-    ? obterModificadorAtributo(actor.system, damageAttribute)
-    : 0;
-
+  const damages = getWeaponDamages(item);
   const terms = [];
-  if (effectiveBaseDamage) terms.push(effectiveBaseDamage);
-  if (attributeBonus !== 0) terms.push(formatBonus(attributeBonus));
+
+  for (const damage of damages) {
+    const baseDamage = String(damage.formula ?? "").trim();
+    if (!baseDamage) continue;
+
+    const effectiveBaseDamage = critical
+      ? multiplyDiceFormula(baseDamage, multiplier)
+      : baseDamage;
+
+    const damageAttribute = normalizeAttribute(damage.atributo);
+    const attributeBonus = damageAttribute
+      ? obterModificadorAtributo(actor.system, damageAttribute)
+      : 0;
+
+    terms.push(effectiveBaseDamage);
+    if (attributeBonus !== 0) terms.push(formatBonus(attributeBonus));
+  }
+
+  const damageBonus = normalizeFormulaBonus(config.damageBonus);
   if (damageBonus) terms.push(damageBonus);
 
   return normalizeFormulaStart(terms.join(" "));
 }
 
-function buildAttackFlavor({ weaponName, item, config, attackFormula, damageFormula, criticalConfig }) {
-  const attackLabel = ATRIBUTOS_LABELS[config.attackAttribute] ?? config.attackAttribute ?? "-";
-  const damageLabel = ATRIBUTOS_LABELS[config.damageAttribute] ?? config.damageAttribute ?? "-";
-  const damageType = item.system?.arma?.dano?.tipo ?? "";
+function buildCombinedAttackContent({ actor, item, weaponName, attackRoll, damageRoll, isCritical, hasConsumable }) {
+  const damageTotal = Number(damageRoll?.total) || 0;
+  const doubled = damageTotal * 2;
+  const halved = Math.floor(damageTotal / 2);
+  const consumeButton = hasConsumable
+    ? `<button type="button" class="jk-spend-ammo-chat" data-actor-id="${escapeHtml(actor.id)}" data-item-id="${escapeHtml(item.id)}">Gastar munição</button>`
+    : "";
 
   return `
-    <div>
-      <strong>Ataque: ${escapeHtml(weaponName)}</strong><br>
-      Ataque (${escapeHtml(attackLabel)}): ${escapeHtml(attackFormula)}<br>
-      Crítico: ${criticalConfig.margin}+ / x${criticalConfig.multiplier}<br>
-      ${damageFormula ? `Dano (${escapeHtml(damageLabel)}${damageType ? `, ${escapeHtml(damageType)}` : ""}): ${escapeHtml(damageFormula)}` : "Dano: não configurado"}
+    <div class="jk-attack-chat-card">
+      <div class="jk-attack-chat-header">
+        <img src="${escapeHtml(item.img ?? "icons/svg/sword.svg")}" alt="" />
+        <strong>${escapeHtml(weaponName)}</strong>
+      </div>
+
+      <div class="jk-attack-chat-section">
+        <strong>Ataque</strong>
+        <div class="jk-attack-chat-result">${Number(attackRoll.total) || 0}</div>
+      </div>
+
+      ${damageRoll ? `
+        <div class="jk-attack-chat-section jk-damage-result-block" data-damage="${damageTotal}">
+          <strong>${isCritical ? "Dano Crítico" : "Dano"}</strong>
+          <div class="jk-attack-chat-result">${damageTotal}</div>
+          <div class="jk-damage-hover-actions">
+            <button type="button" class="jk-apply-damage" data-damage="${damageTotal}" title="Aplicar dano"><i class="fas fa-user-minus"></i></button>
+            <button type="button" class="jk-apply-damage" data-damage="${doubled}" title="Aplicar dano dobrado">2x</button>
+            <button type="button" class="jk-apply-damage" data-damage="${halved}" title="Aplicar metade do dano">1/2</button>
+            <button type="button" class="jk-apply-healing" data-healing="${damageTotal}" title="Aplicar cura"><i class="fas fa-user-plus"></i></button>
+          </div>
+        </div>
+      ` : ""}
+
+      ${consumeButton}
     </div>
   `;
 }
 
-function buildDamageFlavor({ weaponName, item, config, damageFormula, naturalD20, isCritical, criticalConfig }) {
-  const damageLabel = ATRIBUTOS_LABELS[config.damageAttribute] ?? config.damageAttribute ?? "-";
-  const damageType = item.system?.arma?.dano?.tipo ?? "";
-  const criticalLine = isCritical
-    ? `<strong>Crítico!</strong> D20 natural ${naturalD20}. Margem ${criticalConfig.margin}+ / x${criticalConfig.multiplier}.<br>`
-    : naturalD20
-      ? `D20 natural ${naturalD20}. Crítico em ${criticalConfig.margin}+. <br>`
-      : "";
+function getWeaponDamages(item) {
+  const damages = item.system?.arma?.danos;
+  if (damages && typeof damages === "object" && !Array.isArray(damages)) {
+    return Object.values(damages).filter(Boolean);
+  }
 
-  return `
-    <div>
-      <strong>${isCritical ? "Dano Crítico" : "Dano"}: ${escapeHtml(weaponName)}</strong><br>
-      ${criticalLine}
-      Dano (${escapeHtml(damageLabel)}${damageType ? `, ${escapeHtml(damageType)}` : ""}): ${escapeHtml(damageFormula)}<br>
-      <button type="button" class="jk-apply-damage">Aplicar Dano</button>
-    </div>
-  `;
+  const legacyDamage = item.system?.arma?.dano;
+  return legacyDamage ? [legacyDamage] : [];
 }
 
 function getCriticalConfig(item) {
@@ -264,16 +257,6 @@ function multiplyDiceFormula(formula, multiplier) {
   });
 }
 
-function buildAttributeOptions(selectedAttribute) {
-  return Object.entries(ATRIBUTOS_LABELS)
-    .map(([value, label]) => `
-      <option value="${value}" ${value === selectedAttribute ? "selected" : ""}>
-        ${label}
-      </option>
-    `)
-    .join("");
-}
-
 function getDefaultAttackAttribute(item) {
   const purpose = item.system?.arma?.proposito;
   if (purpose === "distancia") return "destreza";
@@ -301,7 +284,7 @@ function normalizeFormulaBonus(value) {
 }
 
 function normalizeAttribute(attribute) {
-  const valid = Object.keys(ATRIBUTOS_LABELS);
+  const valid = ["forca", "destreza", "constituicao", "inteligencia", "sabedoria", "presenca"];
   return valid.includes(attribute) ? attribute : "";
 }
 

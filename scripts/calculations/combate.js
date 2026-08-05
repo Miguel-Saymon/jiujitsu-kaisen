@@ -1,7 +1,7 @@
 import { obterNivel, obterBonusTreino, obterBonusMaestria } from "../helpers/proficiencia.js";
 import { ATRIBUTOS } from "../constants/atributos.js";
 
-export function calcularCombate(system) {
+export function calcularCombate(system, { penalidadeDefesa = 0 } = {}) {
   const nivel = obterNivel(system);
 
   const atributoDefesa =
@@ -13,7 +13,7 @@ export function calcularCombate(system) {
   const modDestreza =
     Number(system.atributos?.[ATRIBUTOS.DESTREZA]?.mod) || 0;
 
-  calcularDefesa(system, modDefesa, nivel);
+  calcularDefesa(system, modDefesa, nivel, penalidadeDefesa);
   calcularAtencao(system);
   calcularIniciativa(system, modDestreza);
   calcularTestesResistencia(system, nivel);
@@ -22,7 +22,7 @@ export function calcularCombate(system) {
   return system.combate;
 }
 
-function calcularDefesa(system, modDefesa, nivel) {
+function calcularDefesa(system, modDefesa, nivel, penalidadeDefesa = 0) {
   const defesa = system.combate?.defesa;
 
   if (!defesa) return;
@@ -33,7 +33,8 @@ function calcularDefesa(system, modDefesa, nivel) {
 
   defesa.base = 10;
   defesa.nivel = metadeNivel;
-  defesa.total = defesa.base + modDefesa + defesa.nivel + equipamentos + outros;
+  defesa.penalidadeCarga = Number(penalidadeDefesa) || 0;
+  defesa.total = defesa.base + modDefesa + defesa.nivel + equipamentos + outros + defesa.penalidadeCarga;
 }
 
 function calcularAtencao(system) {
@@ -138,4 +139,5 @@ function normalizarAtributoCd(atributo) {
 
   return mapaLegado[atributo] ?? atributo ?? ATRIBUTOS.PRESENCA;
 }
+
 

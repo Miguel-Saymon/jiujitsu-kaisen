@@ -1,0 +1,65 @@
+/* ==========================================================
+   ABA TÉCNICAS
+   ========================================================== */
+
+.jk-tecnicas-layout .jk-combate-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+    align-items: start;
+}
+
+.jk-tecnicas-layout .jk-combate-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.jk-tecnicas-layout .jk-combate-card label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+    color: var(--jk-text-secondary);
+    font-weight: 600;
+}
+
+.jk-tecnicas-layout .jk-combate-card label:last-child {
+    margin-bottom: 0;
+}
+
+.jk-tecnicas-layout .jk-combate-card details {
+    overflow: hidden;
+    margin-bottom: 8px;
+    background: var(--jk-bg-section-soft);
+    border: 1px solid var(--jk-border-soft);
+    border-radius: 4px;
+}
+
+.jk-tecnicas-layout .jk-combate-card details:last-child {
+    margin-bottom: 0;
+}
+
+.jk-tecnicas-layout .jk-combate-card summary {
+    padding: 8px;
+    background: var(--jk-bg-input-hover);
+    color: var(--jk-text-secondary);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.jk-tecnicas-layout .jk-combate-card details textarea,
+.jk-tecnicas-layout textarea {
+    min-height: 96px;
+    padding: 8px;
+    border: none;
+}
+
+@media (max-width: 1100px) {
+    .jk-tecnicas-layout .jk-combate-main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

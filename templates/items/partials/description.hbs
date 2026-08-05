@@ -1,23 +1,5 @@
-<div class="flexrow">
-  <div class="flexcol">
-    {{#if isArma}}
-      <div class="form-group">
-        <label>
-          <input type="checkbox" name="system.equipado" {{checked system.equipado}} />
-          Equipada?
-        </label>
-      </div>
-    {{/if}}
-
-    {{#if isEquipamento}}
-      <div class="form-group">
-        <label>
-          <input type="checkbox" name="system.equipado" {{checked system.equipado}} />
-          Equipado?
-        </label>
-      </div>
-    {{/if}}
-
+<div class="jk-item-description-layout">
+  <aside class="jk-item-description-stats">
     <div class="form-group">
       <label>PV</label>
       <input type="number" name="system.pv.atual" value="{{system.pv.atual}}" placeholder="Atual" />
@@ -35,8 +17,8 @@
     </div>
 
     <div class="form-group">
-      <label>Espaços</label>
-      <input type="number" name="system.espacos" value="{{system.espacos}}" />
+      <label>Peso</label>
+      <input type="number" min="0" step="0.1" name="system.espacos" value="{{system.espacos}}" />
     </div>
 
     <div class="form-group">
@@ -52,12 +34,12 @@
         </label>
       </div>
     {{/if}}
-  </div>
+  </aside>
 
-  <div class="form-group stacked">
+  <section class="jk-item-description-editor">
     <label>Descrição</label>
-    <textarea name="system.descricao" rows="12">{{system.descricao}}</textarea>
-  </div>
+    {{editor system.descricao target="system.descricao" button=true owner=owner editable=editable}}
+  </section>
 </div>
 
 

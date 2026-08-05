@@ -6,9 +6,14 @@
     min-height: 100%;
 }
 
+/* As subdivisões seguem a mesma composição compacta usada no
+   restante da ficha: título, linha divisória, botão e tabela. */
 .jk-combat-list-block {
-    margin-bottom: 14px;
+    margin: 0 0 12px;
+    padding: 0;
     background: transparent;
+    border: 0;
+    border-radius: 0;
 }
 
 .jk-combat-list-block:last-child {
@@ -18,32 +23,26 @@
 .jk-combat-subheader {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 0 0 6px;
+    gap: 8px;
+    min-height: 24px;
+    margin: 0 0 5px;
     padding: 0;
     background: transparent;
-    border: none;
-}
-
-.jk-combat-subheader::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--jk-border-soft);
+    border: 0;
 }
 
 .jk-combat-subheader h3 {
     flex: 0 0 auto;
     margin: 0;
     padding: 0;
-    border: none !important;
+    border: 0 !important;
     box-shadow: none !important;
     background: transparent !important;
     color: var(--jk-text-secondary);
     font-family: var(--jk-font-title);
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: .04em;
+    letter-spacing: .02em;
     line-height: 1.2;
     text-transform: uppercase;
 }
@@ -54,8 +53,344 @@
     content: none !important;
 }
 
-.jk-combat-subheader .jk-add-combat-row {
-    order: 2;
-    margin-left: 0;
+.jk-combat-subheader::after {
+    content: "";
+    flex: 1 1 auto;
+    height: 1px;
+    background: var(--jk-border-soft);
+}
+
+/* Mesmo padrão visual do + de Habilidades & Talentos. */
+.jk-combat-subheader .jk-create-actor-item {
+    display: inline-flex;
+    flex: 0 0 18px;
+    order: 3;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--jk-text-muted);
+    font-size: 11px;
+    line-height: 1;
+}
+
+.jk-combat-subheader .jk-create-actor-item:hover {
+    background: transparent;
+    color: var(--jk-text-primary);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--jk-accent-purple) 72%, transparent),
+                0 0 8px color-mix(in srgb, var(--jk-accent-purple) 42%, transparent);
+}
+
+/* Grade semântica compartilhada: Nome | Info 1 | Info 2 | Qtd./Peso | Ações | X.
+   Assim, campos equivalentes permanecem exatamente no mesmo eixo entre categorias. */
+.jk-inventory-table {
+    width: 100%;
+    margin: 0;
+    table-layout: fixed;
+}
+
+.jk-inventory-table col.is-name-col { width: 30%; }
+.jk-inventory-table col.is-info-col { width: 14%; }
+.jk-inventory-table col.is-qty-col { width: 11%; }
+.jk-inventory-table col.is-actions-col { width: 13%; }
+.jk-inventory-table col.is-delete-col { width: 28px; }
+
+.jk-inventory-table th,
+.jk-inventory-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.jk-inventory-table .jk-actions-heading {
+    text-align: center;
+}
+
+.jk-item-name {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    background: transparent;
+    color: var(--jk-text-secondary);
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.jk-item-identity {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+}
+
+.jk-item-identity .jk-drag-item {
+    display: inline-flex;
+    flex: 0 0 18px;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    min-width: 18px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--jk-text-muted);
+    cursor: grab;
+    font-size: 10px;
+    line-height: 1;
+}
+
+.jk-item-identity .jk-drag-item:active { cursor: grabbing; }
+
+.jk-item-identity .jk-drag-item:hover,
+.jk-item-identity .jk-drag-item:focus-visible {
+    background: color-mix(in srgb, var(--jk-accent-purple) 24%, transparent);
+    color: var(--jk-text-primary);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--jk-accent-purple) 72%, transparent),
+                0 0 8px color-mix(in srgb, var(--jk-accent-purple) 42%, transparent);
+}
+
+.jk-item-name {
+    min-width: 0;
+    cursor: default;
+}
+
+.jk-inventory-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--jk-accent-purple) 16%, transparent);
+}
+
+.jk-inventory-attack-card button {
+    outline: none;
+}
+
+.jk-inventory-attack-card button:hover,
+.jk-inventory-attack-card button:focus-visible {
+    border-color: var(--jk-accent-purple);
+    text-shadow: none;
+}
+
+.jk-item-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    min-width: 0;
+    padding-inline: 3px !important;
+}
+
+.jk-item-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    min-width: 22px;
+    height: 22px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--jk-text-muted);
+    font-size: 10px;
+    line-height: 1;
+}
+
+.jk-item-actions button:hover,
+.jk-item-actions button:focus-visible {
+    border-color: var(--jk-accent-purple);
+    background: color-mix(in srgb, var(--jk-accent-purple) 24%, transparent);
+    color: var(--jk-text-primary);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--jk-accent-purple) 72%, transparent),
+                0 0 8px color-mix(in srgb, var(--jk-accent-purple) 42%, transparent);
+}
+
+.jk-inventory-row.is-equipped td {
+    background: color-mix(in srgb, var(--jk-accent-purple) 18%, transparent);
+}
+
+.jk-inventory-row.is-dragging { opacity: .45; }
+
+.jk-inventory-row.is-drop-target td {
+    border-top: 2px solid var(--jk-border-input);
+}
+
+.jk-inventory-context-menu {
+    position: fixed;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    padding: 4px;
+    border: 1px solid var(--jk-border-soft);
+    border-radius: 6px;
+    background: var(--jk-bg-section);
+    box-shadow: 0 7px 20px rgb(0 0 0 / 45%);
+}
+
+.jk-inventory-context-menu button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: 28px;
+    margin: 0;
+    padding: 4px 8px;
+    border: 0;
+    background: transparent;
+    color: var(--jk-text-secondary);
+    font-size: 11px;
+    text-align: left;
+}
+
+.jk-inventory-context-menu button:hover,
+.jk-inventory-context-menu button:focus-visible {
+    background: color-mix(in srgb, var(--jk-accent-purple) 24%, transparent);
+    color: var(--jk-text-primary);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--jk-accent-purple) 72%, transparent);
+}
+
+.jk-inventory-context-menu button.is-danger:hover,
+.jk-inventory-context-menu button.is-danger:focus-visible {
+    color: var(--jk-text-primary);
+}
+
+/* Remoção fica em uma coluna própria e fixa no extremo direito. */
+
+.jk-inventory-table .jk-delete-heading,
+.jk-inventory-table .jk-delete-cell {
+    width: 28px;
+    padding-left: 0 !important;
+    padding-right: 4px !important;
+    text-align: right !important;
+}
+
+.jk-inventory-table .jk-row-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    min-width: 20px;
+    height: 22px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--jk-text-muted);
+    font-size: 10px;
+    line-height: 1;
+}
+
+.jk-inventory-table .jk-row-delete:hover,
+.jk-inventory-table .jk-row-delete:focus-visible {
+    background: color-mix(in srgb, var(--jk-accent-purple) 24%, transparent);
+    color: var(--jk-text-primary);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--jk-accent-purple) 72%, transparent),
+                0 0 8px color-mix(in srgb, var(--jk-accent-purple) 42%, transparent);
+}
+
+/* Ações ficam centralizadas independentemente da presença do X. */
+
+
+/* ==========================================================
+   CAPACIDADE DE CARGA
+   A barra completa representa o máximo absoluto (2x o limite).
+   O marcador central representa o limite normal.
+   ========================================================== */
+
+.jk-carry-capacity {
+    margin-top: 14px;
+    padding: 9px 10px 8px;
+    border-top: 1px solid var(--jk-border-soft);
+}
+
+.jk-carry-capacity-header,
+.jk-carry-capacity-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.jk-carry-capacity-header {
+    margin-bottom: 6px;
+    color: var(--jk-text-secondary);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.jk-carry-capacity-header i {
+    margin-right: 5px;
+    color: var(--jk-text-muted);
+}
+
+.jk-carry-capacity-header strong {
+    color: var(--jk-text-primary);
+    font-family: var(--jk-font-number);
+    font-size: 11px;
+}
+
+.jk-carry-track {
+    position: relative;
+    height: 9px;
+    overflow: hidden;
+    border: 1px solid var(--jk-border-soft);
+    border-radius: 999px;
+    background: var(--jk-bg-section);
+}
+
+.jk-carry-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    min-width: 0;
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--jk-accent-purple) 72%, var(--jk-bg-section));
+    transition: width .18s ease;
+}
+
+.jk-carry-normal-limit {
+    position: absolute;
+    z-index: 2;
+    top: -2px;
+    bottom: -2px;
+    left: 50%;
+    width: 1px;
+    background: var(--jk-text-secondary);
+    opacity: .7;
+}
+
+.jk-carry-capacity.is-overloaded .jk-carry-fill {
+    background: color-mix(in srgb, var(--jk-accent-purple) 48%, #c58be8);
+}
+
+.jk-carry-capacity.is-impossible .jk-carry-fill {
+    background: color-mix(in srgb, var(--jk-accent-purple) 34%, #e0b0ff);
+}
+
+.jk-carry-capacity-meta {
+    margin-top: 5px;
+    color: var(--jk-text-muted);
+    font-size: 9px;
+    line-height: 1.25;
+}
+
+.jk-carry-capacity.is-overloaded .jk-carry-capacity-meta span:first-child {
+    color: var(--jk-text-secondary);
 }
 

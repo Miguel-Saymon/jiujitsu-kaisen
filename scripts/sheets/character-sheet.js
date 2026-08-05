@@ -39,7 +39,12 @@ getData() {
 
   calcularAtributos(context.system);
   calcularPericias(context.system);
-  calcularCombate(context.system);
+  aplicarDefesaDeEquipamentos(context.system, this.actor.items);
+
+  const carga = calcularCargaInventario(this.actor.items, context.system);
+  calcularCombate(context.system, {
+    penalidadeDefesa: carga.sobrecarregado ? -5 : 0
+  });
   calcularDadosVida(context.system);
 
   context.periciasOrdenadas = Object.entries(context.system.pericias ?? {})
@@ -86,6 +91,13 @@ context.combateAtaques = itensCombate.ataques;
 context.combateEquipamentos = itensCombate.equipamentos;
 context.combateConsumiveis = itensCombate.consumiveis;
 context.combateTesouros = itensCombate.tesouros;
+
+context.cargaAtual = carga.atual;
+context.cargaLimite = carga.limite;
+context.cargaMaxima = carga.maxima;
+context.cargaPercentual = carga.percentual;
+context.cargaSobrecarregado = carga.sobrecarregado;
+context.cargaImpossivel = carga.impossivel;
 
   return context;
 }
@@ -192,6 +204,26 @@ function gerarResumoEspecializacoes(system, especializacoes) {
 }
 
 
+function aplicarDefesaDeEquipamentos(system, items) {
+  const defesa = calcularDefesaEquipamentosAtivos(items);
+  foundry.utils.setProperty(system, "combate.defesa.equipamentos", defesa);
+}
+
+function calcularDefesaEquipamentosAtivos(items) {
+  let total = 0;
+
+  for (const item of items ?? []) {
+    const system = item.system ?? {};
+    const categoria = ["arma", "equipamento", "consumivel", "tesouro"].includes(item.type) ? item.type : system.categoria ?? "";
+
+    if (categoria !== "equipamento" || !system.equipado) continue;
+
+    total += Number(system.equipamento?.defesa) || 0;
+  }
+
+  return total;
+}
+
 function prepararItensCombate(items) {
   const listas = {
     ataques: [],
@@ -202,10 +234,11 @@ function prepararItensCombate(items) {
 
   for (const item of items ?? []) {
     const system = item.system ?? {};
-    const categoria = system.categoria ?? "";
+    const categoria = ["arma", "equipamento", "consumivel", "tesouro"].includes(item.type) ? item.type : system.categoria ?? "";
 
     const base = {
       id: item.id,
+      sort: Number(item.sort ?? 0),
       nome: item.name ?? "Item",
       img: item.img,
       categoria,
@@ -222,9 +255,11 @@ function prepararItensCombate(items) {
       listas.ataques.push({
         ...base,
         bonus: system.arma?.ataque?.bonus ?? "",
-        dano: system.arma?.dano?.formula ?? "",
-        tipo: system.arma?.dano?.tipo ?? "",
-        alcance: system.arma?.alcance ?? ""
+        dano: obterResumoDanosArma(system.arma),
+        tipo: obterResumoTiposDano(system.arma),
+        municaoAtual: system.arma?.municaoAtual ?? "",
+        alcance: system.arma?.alcance ?? "",
+        critico: formatarCriticoArma(system.arma?.critico)
       });
       continue;
     }
@@ -258,10 +293,71 @@ function prepararItensCombate(items) {
   }
 
   for (const lista of Object.values(listas)) {
-    lista.sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+    lista.sort((a, b) => (a.sort - b.sort) || a.nome.localeCompare(b.nome, "pt-BR"));
   }
 
   return listas;
+}
+
+function calcularCargaInventario(items, system) {
+  let atual = 0;
+
+  for (const item of items ?? []) {
+    const categoria = ["arma", "equipamento", "consumivel", "tesouro"].includes(item.type)
+      ? item.type
+      : item.system?.categoria;
+    if (!["arma", "equipamento", "consumivel", "tesouro"].includes(categoria)) continue;
+
+    const peso = Math.max(0, Number(item.system?.espacos) || 0);
+    const quantidadeFonte = item.system?.quantidade;
+    const quantidadeRaw = Number(quantidadeFonte);
+    const quantidade = quantidadeFonte === null || quantidadeFonte === undefined || quantidadeFonte === ""
+      ? 1
+      : (Number.isFinite(quantidadeRaw) ? Math.max(0, quantidadeRaw) : 1);
+    atual += peso * quantidade;
+  }
+
+  const modForca = Number(system.atributos?.forca?.mod) || 0;
+  const limite = Math.max(0, 8 + (2 * modForca));
+  const maxima = limite * 2;
+  const basePercentual = maxima > 0 ? (atual / maxima) * 100 : (atual > 0 ? 100 : 0);
+
+  return {
+    atual: formatarCarga(atual),
+    limite: formatarCarga(limite),
+    maxima: formatarCarga(maxima),
+    percentual: Math.min(100, Math.max(0, basePercentual)).toFixed(2),
+    sobrecarregado: atual > limite,
+    impossivel: atual > maxima
+  };
+}
+
+function formatarCarga(valor) {
+  const numero = Number(valor) || 0;
+  return Number.isInteger(numero) ? numero : Number(numero.toFixed(2));
+}
+
+function formatarCriticoArma(critico) {
+  const margem = Number.isFinite(Number(critico?.margem)) ? Number(critico.margem) : 20;
+  const multiplicador = Number.isFinite(Number(critico?.multiplicador)) ? Number(critico.multiplicador) : 2;
+  return `${margem}/${multiplicador}x`;
+}
+
+function obterResumoDanosArma(arma) {
+  const danos = arma?.danos && typeof arma.danos === "object" ? arma.danos : null;
+  if (!danos) return arma?.dano?.formula ?? "";
+
+  return Object.values(danos)
+    .map(dano => dano?.formula)
+    .filter(Boolean)
+    .join(" + ");
+}
+
+function obterResumoTiposDano(arma) {
+  const danos = arma?.danos && typeof arma.danos === "object" ? arma.danos : null;
+  if (!danos) return arma?.dano?.tipo ?? "";
+
+  return [...new Set(Object.values(danos).map(dano => dano?.tipo).filter(Boolean))].join(", ");
 }
 
 function prepararListaCombate(colecao, prefixo, chavesIgnoradas = []) {
@@ -285,13 +381,20 @@ function prepararListaCombate(colecao, prefixo, chavesIgnoradas = []) {
       ...obterPadroesListaCombate(prefixo),
       ...item
     }))
-    .sort((a, b) => obterIndiceLista(a.key, prefixo) - obterIndiceLista(b.key, prefixo));
+    .sort((a, b) => {
+      const temOrdemA = a.ordem !== null && a.ordem !== undefined && a.ordem !== "" && Number.isFinite(Number(a.ordem));
+      const temOrdemB = b.ordem !== null && b.ordem !== undefined && b.ordem !== "" && Number.isFinite(Number(b.ordem));
+      const ordemA = temOrdemA ? Number(a.ordem) : obterIndiceLista(a.key, prefixo) * 1000;
+      const ordemB = temOrdemB ? Number(b.ordem) : obterIndiceLista(b.key, prefixo) * 1000;
+      return ordemA - ordemB || obterIndiceLista(a.key, prefixo) - obterIndiceLista(b.key, prefixo);
+    });
 }
 
 function obterPadroesListaCombate(prefixo) {
   if (prefixo === "habilidade") {
     return {
       nome: "",
+      ordem: null,
       atributo: "presenca",
       bonus: 0,
       atual: 0,
@@ -358,6 +461,9 @@ function criarLinhaVaziaCombate(prefixo) {
     notas: ""
   };
 }
+
+
+
 
 
 

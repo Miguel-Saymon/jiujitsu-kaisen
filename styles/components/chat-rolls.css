@@ -1,7 +1,70 @@
-/* Rolagens usam o layout nativo do Foundry.
-   Este arquivo permanece importado pelo system.json para uso futuro. */
+/* Rolagens principais usam o layout nativo do Foundry. */
 
 .chat-message .flavor-text {
-    font-size: 18px;
-    font-weight: 600;
+  font-size: 18px;
+  font-weight: 600;
 }
+
+.jk-attack-chat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jk-attack-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.jk-attack-chat-header img {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.jk-attack-chat-section {
+  position: relative;
+  padding: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.jk-attack-chat-result {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.jk-damage-hover-actions {
+  position: absolute;
+  inset: auto 4px 4px 4px;
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.jk-damage-result-block:hover .jk-damage-hover-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.jk-damage-hover-actions button {
+  min-width: 24px;
+  height: 22px;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.jk-ability-chat-details summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.jk-ability-chat-details div {
+  margin-top: 6px;
+}
+

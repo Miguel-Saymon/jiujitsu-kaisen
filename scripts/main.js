@@ -37,12 +37,9 @@ Hooks.once("init", async function () {
   Items.unregisterSheet("core", ItemSheet);
 
   Items.registerSheet("jiujitsu-kaisen", JKItemSheet, {
-    types: ["item"],
+    types: ["item", "arma", "consumivel", "equipamento", "tesouro"],
     makeDefault: true
   });
 
   registerDamageApplicationHooks();
 });
-
-
-

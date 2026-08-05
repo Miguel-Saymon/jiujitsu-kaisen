@@ -9,7 +9,7 @@ export function registerDamageApplicationHooks() {
         event.preventDefault();
         event.stopPropagation();
 
-        await applyDamageFromMessage(message);
+        await applyDamageFromMessage(message, button);
       });
     }
 
@@ -22,11 +22,21 @@ export function registerDamageApplicationHooks() {
         await applyHealingFromMessage(message, button);
       });
     }
+
+    const ammoButtons = root.querySelectorAll(".jk-spend-ammo-chat");
+    for (const button of ammoButtons) {
+      button.addEventListener("click", async event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        await spendAmmoFromChat(button);
+      });
+    }
   });
 }
 
-async function applyDamageFromMessage(message) {
-  const damage = getMessageDamageTotal(message);
+async function applyDamageFromMessage(message, button) {
+  const damage = getMessageDamageTotal(message, button);
 
   if (!Number.isFinite(damage) || damage <= 0) {
     ui.notifications?.warn("Não foi possível identificar um dano válido nesta rolagem.");
@@ -48,10 +58,7 @@ async function applyDamageFromMessage(message) {
     "system.recursos.pv.atual": result.pvFinal
   });
 
-  await ChatMessage.create({
-    speaker: ChatMessage.getSpeaker({ actor: targetActor }),
-    content: buildDamageApplicationMessage(targetActor, result)
-  });
+  ui.notifications?.info(`Dano aplicado em ${targetActor.name}: ${result.dano}.`);
 }
 
 async function applyHealingFromMessage(message, button) {
@@ -76,14 +83,49 @@ async function applyHealingFromMessage(message, button) {
     "system.recursos.pv.atual": result.pvFinal
   });
 
-  await ChatMessage.create({
-    speaker: ChatMessage.getSpeaker({ actor: targetActor }),
-    content: buildHealingApplicationMessage(targetActor, result)
-  });
+  ui.notifications?.info(`Cura aplicada em ${targetActor.name}: ${result.curaAplicada}.`);
 }
 
-function getMessageDamageTotal(message) {
-  const roll = message?.rolls?.[0] ?? message?.roll;
+async function spendAmmoFromChat(button) {
+  const actorId = button?.dataset?.actorId;
+  const itemId = button?.dataset?.itemId;
+  const actor = game.actors?.get(actorId);
+  const item = actor?.items?.get(itemId);
+
+  if (!actor || !item) {
+    ui.notifications?.warn("Não foi possível encontrar a arma na ficha.");
+    return;
+  }
+
+  if (!actor.isOwner && !game.user?.isGM) {
+    ui.notifications?.warn("Você não tem permissão para alterar esta ficha.");
+    return;
+  }
+
+  const tipoConsumo = item.system?.arma?.consumivel ?? "";
+  if (!tipoConsumo) {
+    ui.notifications?.info("Esta arma não usa munição ou recurso.");
+    return;
+  }
+
+  const atual = Number(item.system?.arma?.municaoAtual) || 0;
+  if (atual <= 0) {
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content: "Você não tem munição."
+    });
+    return;
+  }
+
+  await item.update({ "system.arma.municaoAtual": Math.max(0, atual - 1) });
+  ui.notifications?.info(`${item.name}: munição/recurso restante ${Math.max(0, atual - 1)}.`);
+}
+
+function getMessageDamageTotal(message, button) {
+  const buttonValue = Number(button?.dataset?.damage);
+  if (Number.isFinite(buttonValue)) return buttonValue;
+
+  const roll = message?.rolls?.[1] ?? message?.rolls?.[0] ?? message?.roll;
   return Number(roll?.total);
 }
 
@@ -91,7 +133,7 @@ function getHealingTotal(message, button) {
   const buttonValue = Number(button?.dataset?.healing);
   if (Number.isFinite(buttonValue)) return buttonValue;
 
-  const roll = message?.rolls?.[0] ?? message?.roll;
+  const roll = message?.rolls?.[1] ?? message?.rolls?.[0] ?? message?.roll;
   return Number(roll?.total);
 }
 
@@ -157,40 +199,8 @@ function calculateHealingApplication(actor, healing) {
   };
 }
 
-function buildDamageApplicationMessage(actor, result) {
-  return `
-    <div class="jk-damage-application-message">
-      <strong>Dano aplicado: ${escapeHtml(actor.name)}</strong><br>
-      Dano total: ${result.dano}<br>
-      ${result.absorvidoPorTemp > 0 ? `PV Temporário absorveu: ${result.absorvidoPorTemp}<br>` : ""}
-      PV: ${result.pvInicial} → ${result.pvFinal}
-      ${result.tempInicial > 0 ? `<br>PV Temporário: ${result.tempInicial} → ${result.tempFinal}` : ""}
-    </div>
-  `;
-}
-
-function buildHealingApplicationMessage(actor, result) {
-  return `
-    <div class="jk-healing-application-message">
-      <strong>Cura aplicada: ${escapeHtml(actor.name)}</strong><br>
-      Cura total: ${result.cura}<br>
-      Cura efetiva: ${result.curaAplicada}<br>
-      PV: ${result.pvInicial} → ${result.pvFinal}${result.pvMax > 0 ? ` / ${result.pvMax}` : ""}
-    </div>
-  `;
-}
-
 function getNumber(value) {
   const number = Number(value);
   return Number.isFinite(number) ? number : 0;
-}
-
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 }
 

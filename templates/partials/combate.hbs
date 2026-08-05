@@ -27,24 +27,33 @@
                     ><i class="fa-solid fa-plus"></i></button>
                 </header>
 
-                <table class="jk-talent-table">
+                <table class="jk-talent-table jk-ability-table">
+                    <colgroup>
+                        <col class="is-name-col">
+                        <col class="is-value-col">
+                        <col class="is-value-col">
+                        <col class="is-cost-col">
+                        <col class="is-actions-col">
+                        <col class="is-delete-col">
+                    </colgroup>
                     <thead>
                         <tr>
                             <th>Nome</th>
                             <th>Atual</th>
                             <th>Max.</th>
                             <th>Custo</th>
-                            <th class="jk-action-heading" title="Enviar habilidade para o chat"><i class="fas fa-dice-d20 jk-roll-icon"></i></th>
-                            <th>Desc.</th>
-                            <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
+                            <th class="jk-actions-heading">Ações</th>
+                            <th class="jk-delete-heading" title="Remover"></th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {{#each combateHabilidades as |habilidade|}}
-                        <tr>
+                        <tr class="jk-ability-row" data-ability-key="{{habilidade.key}}">
                             <td>
-                                <div
+                                <div class="jk-ability-identity">
+                                    <button class="jk-drag-ability" type="button" draggable="true" title="Arrastar para reorganizar" tabindex="-1"><i class="fas fa-grip-vertical"></i></button>
+                                    <div
                                     class="jk-description-hover jk-name-description-hover"
                                     data-description="{{habilidade.descricao}}"
                                 >
@@ -54,6 +63,7 @@
                                         value="{{habilidade.nome}}"
                                         placeholder="+ nova habilidade"
                                     />
+                                    </div>
                                 </div>
                             </td>
                             <td class="is-val">
@@ -77,36 +87,34 @@
                                     value="{{habilidade.custo}}"
                                 />
                             </td>
-                            <td class="is-action">
+                            <td class="jk-ability-actions">
                                 <button
                                     class="jk-roll-habilidade"
                                     type="button"
                                     data-key="{{habilidade.key}}"
                                     title="Enviar habilidade para o chat"
                                 ><i class="fas fa-dice-d20 jk-roll-icon"></i></button>
-                            </td>
-                            <td class="is-action">
                                 <button
                                     class="jk-toggle-description-row jk-description-button"
                                     type="button"
                                     data-target="habilidade-desc-{{habilidade.key}}"
                                     data-description="{{habilidade.descricao}}"
                                     title="Editar descrição"
-                                ><i class="fas fa-note-sticky jk-desc-note-icon"></i></button>
+                                ><i class="fas fa-pen"></i></button>
                             </td>
-                            <td class="is-action">
+                            <td class="jk-delete-cell">
                                 <button
-                                    class="jk-remove-combat-row"
+                                    class="jk-remove-combat-row jk-row-delete"
                                     type="button"
                                     data-path="combate.habilidades"
                                     data-key="{{habilidade.key}}"
-				    data-prefix="habilidade"
+                                    data-prefix="habilidade"
                                     title="Remover habilidade ou talento"
                                 ><i class="fas fa-xmark jk-delete-x-icon"></i></button>
                             </td>
                         </tr>
                         <tr class="jk-description-row" data-row="habilidade-desc-{{habilidade.key}}">
-                            <td colspan="7">
+                            <td colspan="6">
                                 <textarea
                                     class="jk-description-field"
                                     name="system.combate.habilidades.{{habilidade.key}}.descricao"
@@ -215,146 +223,105 @@
             </div>
 
             <section class="jk-card jk-combate-card jk-inventory-attack-card">
-                <h2>Ataques &amp; Inventário</h2>
+                <h2>Inventário &amp; Ataques</h2>
 
-                <div class="jk-combat-list-block jk-attack-block">
+                <div class="jk-combat-list-block jk-attack-block" data-item-type="arma">
                     <header class="jk-combat-subheader">
                         <h3>Ataques</h3>
+                        <button class="jk-create-actor-item" type="button" data-item-type="arma" title="Adicionar ataque"><i class="fas fa-plus"></i></button>
                     </header>
 
-                    <table class="jk-combat-list-table jk-attack-table">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Bonus</th>
-                                <th>Dano</th>
-                                <th>Tipo</th>
-                                <th class="jk-action-heading" title="Equipar/Desequipar"><i class="fas fa-hand"></i></th>
-                                <th class="jk-action-heading" title="Rolar ataque"><i class="fas fa-dice-d20 jk-roll-icon"></i></th>
-                                <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <table class="jk-combat-list-table jk-inventory-table jk-attack-table">
+                        <colgroup><col class="is-name-col"><col class="is-info-col"><col class="is-info-col"><col class="is-info-col"><col class="is-qty-col"><col class="is-actions-col"><col class="is-delete-col"></colgroup>
+                        <thead><tr><th>Nome</th><th>Bônus</th><th>Dano</th><th>Crítico</th><th>Peso</th><th class="jk-actions-heading">Ações</th><th class="jk-delete-heading"></th></tr></thead>
+                        <tbody class="jk-sortable-item-list" data-item-type="arma">
                             {{#each combateAtaques as |ataque|}}
-                            <tr data-item-id="{{ataque.id}}" class="{{#if ataque.equipado}}is-equipped{{/if}}">
-                                <td><a class="jk-open-actor-item" data-item-id="{{ataque.id}}">{{ataque.nome}}</a></td>
-                                <td class="is-small">{{ataque.bonus}}</td>
-                                <td>{{ataque.dano}}</td>
-                                <td class="is-small">{{ataque.tipo}}</td>
-                                <td class="is-action">
-                                    <button class="jk-toggle-equipped" type="button" data-item-id="{{ataque.id}}" title="{{#if ataque.equipado}}Desequipar arma{{else}}Equipar arma{{/if}}">
-                                        <i class="fas {{#if ataque.equipado}}fa-toggle-on{{else}}fa-toggle-off{{/if}}"></i>
-                                    </button>
-                                </td>
-                                <td class="is-action">
-                                    <button class="jk-roll-weapon-attack" type="button" data-item-id="{{ataque.id}}" title="Rolar ataque"><i class="fas fa-dice-d20 jk-roll-icon"></i></button>
-                                </td>
-                                <td class="is-action">
-                                    <button class="jk-delete-actor-item" type="button" data-item-id="{{ataque.id}}" title="Remover arma da ficha"><i class="fas fa-xmark jk-delete-x-icon"></i></button>
-                                </td>
+                            <tr class="jk-inventory-row {{#if ataque.equipado}}is-equipped{{/if}}" data-item-id="{{ataque.id}}">
+                                <td><div class="jk-item-identity"><button class="jk-drag-item" type="button" draggable="true" title="Arrastar para reorganizar" tabindex="-1"><i class="fas fa-grip-vertical"></i></button><span class="jk-item-name" title="{{ataque.nome}}">{{ataque.nome}}</span></div></td>
+                                <td class="is-small">{{ataque.bonus}}</td><td>{{ataque.dano}}</td><td class="is-small">{{ataque.critico}}</td><td class="is-small">{{ataque.espacos}}</td>
+                                <td class="jk-item-actions"><button class="jk-roll-weapon-attack" type="button" data-item-id="{{ataque.id}}" title="Rolar ataque"><i class="fas fa-dice-d20"></i></button><button class="jk-edit-actor-item" type="button" data-item-id="{{ataque.id}}" title="Editar"><i class="fas fa-pen"></i></button></td>
+                                <td class="jk-delete-cell"><button class="jk-delete-actor-item jk-row-delete" type="button" data-item-id="{{ataque.id}}" title="Remover"><i class="fas fa-xmark"></i></button></td>
                             </tr>
                             {{/each}}
                         </tbody>
                     </table>
                 </div>
 
-                <div class="jk-combat-list-block">
-                    <header class="jk-combat-subheader">
-                        <h3>Equipamentos</h3>
-                    </header>
-
+                <div class="jk-combat-list-block" data-item-type="equipamento">
+                    <header class="jk-combat-subheader"><h3>Equipamentos</h3><button class="jk-create-actor-item" type="button" data-item-type="equipamento" title="Adicionar equipamento"><i class="fas fa-plus"></i></button></header>
                     <table class="jk-combat-list-table jk-inventory-table">
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Tipo</th>
-                                <th>Defesa</th>
-                                <th>Qtd.</th>
-                                <th class="jk-action-heading" title="Equipar/Desequipar"><i class="fas fa-hand"></i></th>
-                                <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                        <colgroup><col class="is-name-col"><col class="is-info-col"><col class="is-info-col"><col class="is-qty-col"><col class="is-qty-col"><col class="is-actions-col"><col class="is-delete-col"></colgroup>
+                        <thead><tr><th>Nome</th><th>Tipo</th><th>Defesa</th><th>Qtd.</th><th>Peso</th><th class="jk-actions-heading">Ações</th><th class="jk-delete-heading"></th></tr></thead>
+                        <tbody class="jk-sortable-item-list" data-item-type="equipamento">
                             {{#each combateEquipamentos as |item|}}
-                            <tr data-item-id="{{item.id}}" class="{{#if item.equipado}}is-equipped{{/if}}">
-                                <td><a class="jk-open-actor-item" data-item-id="{{item.id}}">{{item.nome}}</a></td>
-                                <td class="is-small">{{item.tipo}}</td>
-                                <td class="is-small">{{item.defesa}}</td>
-                                <td class="is-small">{{item.quantidade}}</td>
-                                <td class="is-action">
-                                    <button class="jk-toggle-equipped" type="button" data-item-id="{{item.id}}" title="{{#if item.equipado}}Desequipar equipamento{{else}}Equipar equipamento{{/if}}">
-                                        <i class="fas {{#if item.equipado}}fa-toggle-on{{else}}fa-toggle-off{{/if}}"></i>
-                                    </button>
-                                </td>
-                                <td class="is-action">
-                                    <button class="jk-delete-actor-item" type="button" data-item-id="{{item.id}}" title="Remover equipamento da ficha"><i class="fas fa-xmark jk-delete-x-icon"></i></button>
-                                </td>
+                            <tr class="jk-inventory-row {{#if item.equipado}}is-equipped{{/if}}" data-item-id="{{item.id}}">
+                                <td><div class="jk-item-identity"><button class="jk-drag-item" type="button" draggable="true" title="Arrastar para reorganizar" tabindex="-1"><i class="fas fa-grip-vertical"></i></button><span class="jk-item-name" title="{{item.nome}}">{{item.nome}}</span></div></td>
+                                <td class="is-small">{{item.tipo}}</td><td class="is-small">{{item.defesa}}</td><td class="is-small">{{item.quantidade}}</td><td class="is-small">{{item.espacos}}</td>
+                                <td class="jk-item-actions"><button class="jk-toggle-equipped" type="button" data-item-id="{{item.id}}" title="{{#if item.equipado}}Desequipar equipamento{{else}}Equipar equipamento{{/if}}"><i class="fas {{#if item.equipado}}fa-toggle-on{{else}}fa-toggle-off{{/if}}"></i></button><button class="jk-edit-actor-item" type="button" data-item-id="{{item.id}}" title="Editar"><i class="fas fa-pen"></i></button></td>
+                                <td class="jk-delete-cell"><button class="jk-delete-actor-item jk-row-delete" type="button" data-item-id="{{item.id}}" title="Remover"><i class="fas fa-xmark"></i></button></td>
                             </tr>
                             {{/each}}
                         </tbody>
                     </table>
                 </div>
 
-                <div class="jk-combat-list-block">
-                    <header class="jk-combat-subheader">
-                        <h3>Consumiveis</h3>
-                    </header>
-
+                <div class="jk-combat-list-block" data-item-type="consumivel">
+                    <header class="jk-combat-subheader"><h3>Consumíveis</h3><button class="jk-create-actor-item" type="button" data-item-type="consumivel" title="Adicionar consumível"><i class="fas fa-plus"></i></button></header>
                     <table class="jk-combat-list-table jk-inventory-table">
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Tipo</th>
-                                <th>Qtd.</th>
-                                <th>Preço</th>
-                                <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                        <colgroup><col class="is-name-col"><col class="is-info-col"><col class="is-info-col"><col class="is-qty-col"><col class="is-qty-col"><col class="is-actions-col"><col class="is-delete-col"></colgroup>
+                        <thead><tr><th>Nome</th><th>Tipo</th><th>Preço</th><th>Qtd.</th><th>Peso</th><th class="jk-actions-heading">Ações</th><th class="jk-delete-heading"></th></tr></thead>
+                        <tbody class="jk-sortable-item-list" data-item-type="consumivel">
                             {{#each combateConsumiveis as |item|}}
-                            <tr data-item-id="{{item.id}}">
-                                <td><a class="jk-open-actor-item" data-item-id="{{item.id}}">{{item.nome}}</a></td>
-                                <td class="is-small">{{item.tipo}}</td>
-                                <td class="is-small">{{item.quantidade}}</td>
-                                <td class="is-small">{{item.preco}}</td>
-                                <td class="is-action">
-                                    <button class="jk-delete-actor-item" type="button" data-item-id="{{item.id}}" title="Remover consumível da ficha"><i class="fas fa-xmark jk-delete-x-icon"></i></button>
-                                </td>
+                            <tr class="jk-inventory-row" data-item-id="{{item.id}}">
+                                <td><div class="jk-item-identity"><button class="jk-drag-item" type="button" draggable="true" title="Arrastar para reorganizar" tabindex="-1"><i class="fas fa-grip-vertical"></i></button><span class="jk-item-name" title="{{item.nome}}">{{item.nome}}</span></div></td>
+                                <td class="is-small">{{item.tipo}}</td><td class="is-small">{{item.preco}}</td><td class="is-small">{{item.quantidade}}</td><td class="is-small">{{item.espacos}}</td>
+                                <td class="jk-item-actions"><button class="jk-edit-actor-item" type="button" data-item-id="{{item.id}}" title="Editar"><i class="fas fa-pen"></i></button></td>
+                                <td class="jk-delete-cell"><button class="jk-delete-actor-item jk-row-delete" type="button" data-item-id="{{item.id}}" title="Remover"><i class="fas fa-xmark"></i></button></td>
                             </tr>
                             {{/each}}
                         </tbody>
                     </table>
                 </div>
 
-                <div class="jk-combat-list-block">
-                    <header class="jk-combat-subheader">
-                        <h3>Tesouros</h3>
-                    </header>
-
+                <div class="jk-combat-list-block" data-item-type="tesouro">
+                    <header class="jk-combat-subheader"><h3>Tesouros</h3><button class="jk-create-actor-item" type="button" data-item-type="tesouro" title="Adicionar tesouro"><i class="fas fa-plus"></i></button></header>
                     <table class="jk-combat-list-table jk-inventory-table">
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Qtd.</th>
-                                <th>Preço</th>
-                                <th>Recip.</th>
-                                <th class="jk-action-heading" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                        <colgroup><col class="is-name-col"><col class="is-info-col"><col class="is-info-col"><col class="is-qty-col"><col class="is-qty-col"><col class="is-actions-col"><col class="is-delete-col"></colgroup>
+                        <thead><tr><th>Nome</th><th>Recip.</th><th>Preço</th><th>Qtd.</th><th>Peso</th><th class="jk-actions-heading">Ações</th><th class="jk-delete-heading"></th></tr></thead>
+                        <tbody class="jk-sortable-item-list" data-item-type="tesouro">
                             {{#each combateTesouros as |item|}}
-                            <tr data-item-id="{{item.id}}">
-                                <td><a class="jk-open-actor-item" data-item-id="{{item.id}}">{{item.nome}}</a></td>
-                                <td class="is-small">{{item.quantidade}}</td>
-                                <td class="is-small">{{item.preco}}</td>
-                                <td class="is-small">{{#if item.recipiente}}Sim{{else}}Não{{/if}}</td>
-                                <td class="is-action">
-                                    <button class="jk-delete-actor-item" type="button" data-item-id="{{item.id}}" title="Remover tesouro da ficha"><i class="fas fa-xmark jk-delete-x-icon"></i></button>
-                                </td>
+                            <tr class="jk-inventory-row" data-item-id="{{item.id}}">
+                                <td><div class="jk-item-identity"><button class="jk-drag-item" type="button" draggable="true" title="Arrastar para reorganizar" tabindex="-1"><i class="fas fa-grip-vertical"></i></button><span class="jk-item-name" title="{{item.nome}}">{{item.nome}}</span></div></td>
+                                <td class="is-small">{{#if item.recipiente}}Sim{{else}}Não{{/if}}</td><td class="is-small">{{item.preco}}</td><td class="is-small">{{item.quantidade}}</td><td class="is-small">{{item.espacos}}</td>
+                                <td class="jk-item-actions"><button class="jk-edit-actor-item" type="button" data-item-id="{{item.id}}" title="Editar"><i class="fas fa-pen"></i></button></td>
+                                <td class="jk-delete-cell"><button class="jk-delete-actor-item jk-row-delete" type="button" data-item-id="{{item.id}}" title="Remover"><i class="fas fa-xmark"></i></button></td>
                             </tr>
                             {{/each}}
                         </tbody>
                     </table>
+                </div>
+
+                <div class="jk-carry-capacity {{#if cargaSobrecarregado}}is-overloaded{{/if}} {{#if cargaImpossivel}}is-impossible{{/if}}" title="Limite normal: {{cargaLimite}}. Máximo absoluto: {{cargaMaxima}}.">
+                    <div class="jk-carry-capacity-header">
+                        <span><i class="fas fa-weight-hanging"></i> Carga</span>
+                        <strong>{{cargaAtual}} / {{cargaLimite}}</strong>
+                    </div>
+                    <div class="jk-carry-track" aria-label="Carga atual {{cargaAtual}}, limite {{cargaLimite}}, máximo {{cargaMaxima}}">
+                        <div class="jk-carry-normal-limit" title="Limite normal"></div>
+                        <div class="jk-carry-fill" style="width: {{cargaPercentual}}%;"></div>
+                    </div>
+                    <div class="jk-carry-capacity-meta">
+                        {{#if cargaImpossivel}}
+                            <span>Carga acima do máximo permitido ({{cargaMaxima}}).</span>
+                        {{else}}
+                            {{#if cargaSobrecarregado}}
+                                <span>Sobrecarregado: -5 Defesa e -4,5 m de Deslocamento.</span>
+                            {{else}}
+                                <span>Limite: 8 + 2× modificador de Força.</span>
+                            {{/if}}
+                        {{/if}}
+                        <span>Máx. {{cargaMaxima}}</span>
+                    </div>
                 </div>
             </section>
 
@@ -363,6 +330,25 @@
     </div>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
