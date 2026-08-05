@@ -1,5 +1,4 @@
-import { buildD20Formula, getNumericBonus, formatBonus } from "./roll-utils.js";
-import { executeRoll } from "./roll-service.js";
+import { getNumericBonus, formatBonus } from "./roll-utils.js";
 
 const ROLL_MODE_OPTIONS = {
   publicroll: "Public Roll",
@@ -38,13 +37,27 @@ async function rollSkill(actor, skillKey) {
     d20Mode: config.d20Mode
   });
 
-  await executeRoll({
-    actor,
-    title: skillName,
-    flavor: skillName,
-    formula,
-    rollMode: config.rollMode
-  });
+  const roll = await evaluateFormula(formula, actor);
+  const naturalD20 = getNaturalD20Result(roll);
+  const resultState = naturalD20 === 1
+    ? "fumble"
+    : naturalD20 === 20
+      ? "critical"
+      : "normal";
+
+  const nativeRollHtml = await renderNativeRoll(roll, resultState);
+
+  await ChatMessage.create(
+    {
+      speaker: ChatMessage.getSpeaker({ actor }),
+      flavor: skillName,
+      content: `<div class="jk-skill-chat-card">${nativeRollHtml}</div>`,
+      rolls: [roll]
+    },
+    {
+      rollMode: config.rollMode || game.settings.get("core", "rollMode")
+    }
+  );
 }
 
 async function promptSkillRollConfig(skillName) {
@@ -131,5 +144,41 @@ function normalizeSituationalBonus(value) {
   }
 
   return `+ ${bonus}`;
+}
+
+async function evaluateFormula(formula, actor) {
+  const rollData = typeof actor?.getRollData === "function"
+    ? actor.getRollData()
+    : actor?.system ?? {};
+
+  return new Roll(formula, rollData).evaluate();
+}
+
+async function renderNativeRoll(roll, resultState) {
+  const html = await roll.render();
+  return `<div class="jk-native-roll jk-roll-state-${resultState}">${html}</div>`;
+}
+
+function getNaturalD20Result(roll) {
+  const d20 = roll?.dice?.find(die => die.faces === 20);
+  if (!d20) return null;
+
+  const activeResults = d20.results?.filter(result => result.active !== false) ?? [];
+  const results = activeResults.length ? activeResults : d20.results ?? [];
+
+  return results.reduce((highest, result) => {
+    const value = Number(result.result);
+    if (!Number.isFinite(value)) return highest;
+    return highest === null ? value : Math.max(highest, value);
+  }, null);
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 

@@ -1,10 +1,11 @@
-/* Rolagens principais usam o layout nativo do Foundry. */
+/* Rolagens principais e cards de chat do sistema. */
 
 .chat-message .flavor-text {
   font-size: 18px;
   font-weight: 600;
 }
 
+.jk-skill-chat-card,
 .jk-attack-chat-card {
   display: flex;
   flex-direction: column;
@@ -15,7 +16,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .jk-attack-chat-header img {
@@ -25,43 +26,121 @@
   border: 1px solid rgba(0, 0, 0, 0.35);
 }
 
-.jk-attack-chat-section {
-  position: relative;
-  padding: 6px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.jk-attack-chat-result {
-  text-align: center;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.jk-damage-hover-actions {
-  position: absolute;
-  inset: auto 4px 4px 4px;
+.jk-chat-roll-group,
+.jk-chat-roll-block {
   display: flex;
-  justify-content: space-between;
-  opacity: 0;
-  pointer-events: none;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.jk-damage-result-block:hover .jk-damage-hover-actions {
-  opacity: 1;
-  pointer-events: auto;
+.jk-chat-roll-group + .jk-chat-roll-group {
+  margin-top: 3px;
+  padding-top: 7px;
+  border-top: 1px solid rgba(60, 45, 70, 0.28);
 }
 
-.jk-damage-hover-actions button {
-  min-width: 24px;
-  height: 22px;
-  padding: 0 4px;
+.jk-chat-roll-label {
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/*
+ * O HTML da rolagem é renderizado pelo próprio Roll.render() do Foundry.
+ * Isso preserva o comportamento nativo de clicar no total para expandir
+ * os dados individuais, modificadores e resultados descartados.
+ */
+.jk-native-roll .dice-roll {
+  margin: 0;
+}
+
+.jk-native-roll .dice-formula,
+.jk-native-roll .dice-total {
+  border-radius: 3px;
+}
+
+/* O estado depende somente do resultado natural ativo do d20. */
+.jk-native-roll.jk-roll-state-fumble .dice-total {
+  border-color: #c12c34;
+  background: rgba(255, 74, 84, 0.22);
+  color: #b8000b;
+  box-shadow: inset 0 0 4px rgba(193, 44, 52, 0.18), 0 0 3px rgba(193, 44, 52, 0.22);
+}
+
+.jk-native-roll.jk-roll-state-critical .dice-total {
+  border-color: #2f7f43;
+  background: rgba(71, 181, 99, 0.22);
+  color: #17672b;
+  box-shadow: inset 0 0 4px rgba(47, 127, 67, 0.16), 0 0 3px rgba(47, 127, 67, 0.2);
+}
+
+.jk-native-roll.jk-roll-state-damage .dice-total {
+  border-color: rgba(73, 56, 86, 0.55);
+  background: rgba(105, 82, 121, 0.11);
+}
+
+.jk-damage-result-block {
+  position: relative;
+}
+
+/*
+ * As quatro ações ficam encaixadas na linha do resultado do dano,
+ * como no layout de referência, sem criar uma barra grande separada.
+ */
+.jk-damage-native-wrap {
+  position: relative;
+}
+
+.jk-damage-native-wrap .dice-total {
+  padding-left: 58px;
+  padding-right: 58px;
+}
+
+.jk-damage-actions {
+  position: absolute;
+  bottom: 3px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.jk-damage-actions-left {
+  left: 3px;
+}
+
+.jk-damage-actions-right {
+  right: 3px;
+}
+
+.jk-damage-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  min-height: 20px;
+  margin: 0;
+  padding: 0 2px;
+  border-radius: 3px;
+  font-size: 10px;
   line-height: 1;
+}
+
+.jk-damage-actions button i {
+  margin: 0;
+  font-size: 9px;
+}
+
+.jk-spend-ammo-chat {
+  margin-top: 2px;
 }
 
 .jk-ability-chat-details summary {
   cursor: pointer;
+  font-size: 17px;
   font-weight: 700;
+  line-height: 1.25;
 }
 
 .jk-ability-chat-details div {

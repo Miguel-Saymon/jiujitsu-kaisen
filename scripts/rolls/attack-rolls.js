@@ -39,13 +39,14 @@ export async function rollWeaponAttack(actor, itemId) {
   await ChatMessage.create(
     {
       speaker: ChatMessage.getSpeaker({ actor }),
-      flavor: `Ataque: ${weaponName}`,
-      content: buildCombinedAttackContent({
+      content: await buildCombinedAttackContent({
         actor,
         item,
         weaponName,
         attackRoll,
         damageRoll,
+        naturalD20,
+        criticalMargin: criticalConfig.margin,
         isCritical,
         hasConsumable: Boolean(item.system?.arma?.consumivel)
       }),
@@ -171,13 +172,30 @@ function buildDamageFormula(actor, item, config, { critical = false, multiplier 
   return normalizeFormulaStart(terms.join(" "));
 }
 
-function buildCombinedAttackContent({ actor, item, weaponName, attackRoll, damageRoll, isCritical, hasConsumable }) {
+async function buildCombinedAttackContent({
+  actor,
+  item,
+  weaponName,
+  attackRoll,
+  damageRoll,
+  naturalD20,
+  criticalMargin,
+  isCritical,
+  hasConsumable
+}) {
   const damageTotal = Number(damageRoll?.total) || 0;
   const doubled = damageTotal * 2;
   const halved = Math.floor(damageTotal / 2);
+  const attackState = naturalD20 === 1
+    ? "fumble"
+    : naturalD20 !== null && naturalD20 >= criticalMargin
+      ? "critical"
+      : "normal";
   const consumeButton = hasConsumable
     ? `<button type="button" class="jk-spend-ammo-chat" data-actor-id="${escapeHtml(actor.id)}" data-item-id="${escapeHtml(item.id)}">Gastar munição</button>`
     : "";
+  const attackRollHtml = await renderNativeRoll(attackRoll, attackState);
+  const damageRollHtml = damageRoll ? await renderNativeRoll(damageRoll, "damage") : "";
 
   return `
     <div class="jk-attack-chat-card">
@@ -186,20 +204,24 @@ function buildCombinedAttackContent({ actor, item, weaponName, attackRoll, damag
         <strong>${escapeHtml(weaponName)}</strong>
       </div>
 
-      <div class="jk-attack-chat-section">
-        <strong>Ataque</strong>
-        <div class="jk-attack-chat-result">${Number(attackRoll.total) || 0}</div>
+      <div class="jk-chat-roll-group">
+        <div class="jk-chat-roll-label">Ataque</div>
+        ${attackRollHtml}
       </div>
 
       ${damageRoll ? `
-        <div class="jk-attack-chat-section jk-damage-result-block" data-damage="${damageTotal}">
-          <strong>${isCritical ? "Dano Crítico" : "Dano"}</strong>
-          <div class="jk-attack-chat-result">${damageTotal}</div>
-          <div class="jk-damage-hover-actions">
-            <button type="button" class="jk-apply-damage" data-damage="${damageTotal}" title="Aplicar dano"><i class="fas fa-user-minus"></i></button>
-            <button type="button" class="jk-apply-damage" data-damage="${doubled}" title="Aplicar dano dobrado">2x</button>
-            <button type="button" class="jk-apply-damage" data-damage="${halved}" title="Aplicar metade do dano">1/2</button>
-            <button type="button" class="jk-apply-healing" data-healing="${damageTotal}" title="Aplicar cura"><i class="fas fa-user-plus"></i></button>
+        <div class="jk-chat-roll-group jk-damage-result-block" data-damage="${damageTotal}">
+          <div class="jk-chat-roll-label">${isCritical ? "Dano Crítico" : "Dano"}</div>
+          <div class="jk-damage-native-wrap">
+            ${damageRollHtml}
+            <div class="jk-damage-actions jk-damage-actions-left">
+              <button type="button" class="jk-apply-damage" data-damage="${damageTotal}" title="Aplicar dano"><i class="fas fa-user-minus"></i></button>
+              <button type="button" class="jk-apply-damage" data-damage="${doubled}" title="Aplicar dano dobrado">2x</button>
+            </div>
+            <div class="jk-damage-actions jk-damage-actions-right">
+              <button type="button" class="jk-apply-damage" data-damage="${halved}" title="Aplicar metade do dano">½</button>
+              <button type="button" class="jk-apply-healing" data-healing="${damageTotal}" title="Aplicar cura"><i class="fas fa-user-plus"></i></button>
+            </div>
           </div>
         </div>
       ` : ""}
@@ -207,6 +229,11 @@ function buildCombinedAttackContent({ actor, item, weaponName, attackRoll, damag
       ${consumeButton}
     </div>
   `;
+}
+
+async function renderNativeRoll(roll, resultState) {
+  const html = await roll.render();
+  return `<div class="jk-native-roll jk-roll-state-${resultState}">${html}</div>`;
 }
 
 function getWeaponDamages(item) {
@@ -228,7 +255,7 @@ function getCriticalConfig(item) {
 }
 
 function isCriticalHit(naturalD20, margin) {
-  if (!naturalD20) return false;
+  if (!naturalD20 || naturalD20 === 1) return false;
   return naturalD20 >= margin;
 }
 
@@ -303,4 +330,5 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+
 
