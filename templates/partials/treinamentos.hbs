@@ -1,0 +1,100 @@
+<div class="tab jk-training-tab" data-group="primary" data-tab="treinamentos">
+  <section class="jk-training-shell">
+    <header class="jk-training-page-header">
+      <div>
+        <h2>Treinamentos</h2>
+        <p>Marque as etapas conquistadas. Passe o mouse sobre cada etapa para consultar foco, requisito e benefício.</p>
+        <div class="jk-training-automation-legend" title="Etapas com este símbolo possuem benefício automatizado pela ficha">
+          <i class="fas fa-bolt"></i>
+          <span>Benefício automatizado</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="jk-training-grid">
+      {{#each treinamentos as |treino|}}
+        <article class="jk-training-card {{#if treino.completo}}is-complete{{/if}}" data-training-key="{{treino.key}}">
+          <header class="jk-training-card-header">
+            {{#if treino.temAutomacao}}
+              <span class="jk-training-card-auto" title="Este treinamento possui automações">
+                <i class="fas fa-bolt"></i>
+              </span>
+            {{/if}}
+            <h3>{{treino.nome}}</h3>
+            <span class="jk-training-focus" title="Foco investido nas etapas marcadas">{{treino.focoGasto}}/5 Foco</span>
+          </header>
+
+          <div class="jk-training-stages">
+            {{#each treino.etapas as |etapa|}}
+              <label class="jk-training-stage {{#if etapa.ativa}}is-active{{/if}} {{#if etapa.requisitoManual}}is-requirement-manual{{/if}} {{#unless etapa.requisitoCumprido}}{{#unless etapa.requisitoManual}}is-requirement-unmet{{/unless}}{{/unless}} {{#if etapa.sequenciaPendente}}has-sequence-gap{{/if}}">
+                <input
+                  class="jk-training-stage-input"
+                  type="checkbox"
+                  data-training="{{treino.key}}"
+                  data-stage="{{etapa.key}}"
+                  {{checked etapa.ativa}}
+                />
+                <span class="jk-training-stage-index">{{etapa.numero}}ª</span>
+                <span class="jk-training-stage-label">Etapa</span>
+                {{#if etapa.automatizada}}
+                  <span class="jk-training-stage-auto" title="Benefício automatizado">
+                    <i class="fas fa-bolt"></i>
+                  </span>
+                {{/if}}
+                {{#unless etapa.requisitoManual}}
+                  {{#unless etapa.requisitoCumprido}}
+                    <span class="jk-training-stage-requirement is-unmet" title="Requisito não cumprido"><i class="fas fa-exclamation-triangle"></i></span>
+                  {{/unless}}
+                {{/unless}}
+                <span class="jk-training-stage-check"><i class="fas fa-check"></i></span>
+                <span class="jk-training-tooltip">
+                  <strong>{{treino.nome}} — {{etapa.numero}}ª Etapa</strong>
+                  <span><b>Foco:</b> {{etapa.foco}}</span>
+                  <span><b>Requisito:</b> {{etapa.requisito}}</span>
+                  {{#if etapa.requisitoManual}}
+                    <span class="jk-training-requirement-status is-manual"><i class="fas fa-question-circle"></i> Verificação manual</span>
+                  {{else}}
+                    {{#if etapa.requisitoCumprido}}
+                      <span class="jk-training-requirement-status is-met"><i class="fas fa-check-circle"></i> Requisito cumprido</span>
+                    {{else}}
+                      <span class="jk-training-requirement-status is-unmet"><i class="fas fa-exclamation-triangle"></i> Requisito não cumprido</span>
+                    {{/if}}
+                  {{/if}}
+                  <span class="jk-training-requirement-detail">{{etapa.requisitoDetalhe}}</span>
+                  {{#if etapa.sequenciaPendente}}
+                    <span class="jk-training-sequence-warning"><i class="fas fa-link"></i> Etapas anteriores pendentes: {{etapa.etapasAnterioresPendentes}}</span>
+                  {{/if}}
+                  <em>{{etapa.beneficio}}</em>
+                </span>
+              </label>
+            {{/each}}
+          </div>
+
+          <div class="jk-training-complete {{#if treino.completo}}is-active{{/if}}">
+            <i class="fas fa-star"></i>
+            <span>Bônus de Treinamento Completo</span>
+            <span class="jk-training-tooltip jk-training-complete-tooltip">
+              <strong>{{treino.nome}} — Completo</strong>
+              <em>{{treino.bonusCompleto}}</em>
+            </span>
+          </div>
+
+          <div class="jk-training-progress">
+            <div class="jk-training-progress-labels">
+              <span>Progresso</span>
+              <div class="jk-training-progress-inputs">
+                <input class="jk-training-progress-input" data-progress="current" name="system.treinamentos.{{treino.key}}.progresso.atual" type="number" min="0" value="{{treino.progressoAtual}}" title="Progresso atual" />
+                <span>/</span>
+                <input class="jk-training-progress-input" data-progress="target" name="system.treinamentos.{{treino.key}}.progresso.meta" type="number" min="0" value="{{treino.progressoMeta}}" title="Meta definida pelo mestre" />
+              </div>
+            </div>
+            <div class="jk-training-progress-track">
+              <span class="jk-training-progress-fill" style="width: {{treino.progressoPercentual}}%;"></span>
+            </div>
+          </div>
+        </article>
+      {{/each}}
+    </div>
+  </section>
+</div>
+

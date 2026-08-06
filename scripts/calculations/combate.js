@@ -1,8 +1,10 @@
 import { obterNivel, obterBonusTreino, obterBonusMaestria } from "../helpers/proficiencia.js";
 import { ATRIBUTOS } from "../constants/atributos.js";
+import { calcularBonusTreinamentos } from "../trainings/training-calculations.js";
 
 export function calcularCombate(system, { penalidadeDefesa = 0 } = {}) {
   const nivel = obterNivel(system);
+  const bonusTreinos = calcularBonusTreinamentos(system);
 
   const atributoDefesa =
     system.combate?.defesa?.atributo ?? ATRIBUTOS.DESTREZA;
@@ -13,16 +15,16 @@ export function calcularCombate(system, { penalidadeDefesa = 0 } = {}) {
   const modDestreza =
     Number(system.atributos?.[ATRIBUTOS.DESTREZA]?.mod) || 0;
 
-  calcularDefesa(system, modDefesa, nivel, penalidadeDefesa);
+  calcularDefesa(system, modDefesa, nivel, penalidadeDefesa, bonusTreinos.combate.defesa);
   calcularAtencao(system);
-  calcularIniciativa(system, modDestreza);
-  calcularTestesResistencia(system, nivel);
+  calcularIniciativa(system, modDestreza, bonusTreinos.combate.iniciativa);
+  calcularTestesResistencia(system, nivel, bonusTreinos.combate.resistencias);
   calcularCdEspecializacao(system, nivel);
 
   return system.combate;
 }
 
-function calcularDefesa(system, modDefesa, nivel, penalidadeDefesa = 0) {
+function calcularDefesa(system, modDefesa, nivel, penalidadeDefesa = 0, bonusTreinamento = 0) {
   const defesa = system.combate?.defesa;
 
   if (!defesa) return;
@@ -34,7 +36,8 @@ function calcularDefesa(system, modDefesa, nivel, penalidadeDefesa = 0) {
   defesa.base = 10;
   defesa.nivel = metadeNivel;
   defesa.penalidadeCarga = Number(penalidadeDefesa) || 0;
-  defesa.total = defesa.base + modDefesa + defesa.nivel + equipamentos + outros + defesa.penalidadeCarga;
+  defesa.bonusTreinamento = Number(bonusTreinamento) || 0;
+  defesa.total = defesa.base + modDefesa + defesa.nivel + equipamentos + outros + defesa.penalidadeCarga + defesa.bonusTreinamento;
 }
 
 function calcularAtencao(system) {
@@ -51,7 +54,7 @@ function calcularAtencao(system) {
   atencao.total = base + percepcao + outros;
 }
 
-function calcularIniciativa(system, modDestreza) {
+function calcularIniciativa(system, modDestreza, bonusTreinamento = 0) {
   const iniciativa = system.combate?.iniciativa;
 
   if (!iniciativa) return;
@@ -59,10 +62,11 @@ function calcularIniciativa(system, modDestreza) {
   const outros = Number(iniciativa.outros) || 0;
 
   iniciativa.atributo = modDestreza;
-  iniciativa.total = iniciativa.atributo + outros;
+  iniciativa.bonusTreinamento = Number(bonusTreinamento) || 0;
+  iniciativa.total = iniciativa.atributo + outros + iniciativa.bonusTreinamento;
 }
 
-function calcularTestesResistencia(system, nivel) {
+function calcularTestesResistencia(system, nivel, bonusTreinamentos = {}) {
   const testes = system.combate?.testesResistencia;
 
   if (!testes) return;
@@ -92,18 +96,21 @@ const bonusMaestria =
   teste.maestria ? obterBonusMaestria(system) : 0;
 
 const outros = Number(teste.outros) || 0;
+const bonusTreinamento = Number(bonusTreinamentos?.[key]) || 0;
 
 teste.atributo = modificadorAtributo;
 teste.nivel = metadeNivel;
 teste.bonusTreino = bonusTreino;
 teste.bonusMaestria = bonusMaestria;
+teste.bonusTreinamento = bonusTreinamento;
 
 teste.total =
   modificadorAtributo +
   metadeNivel +
   bonusTreino +
   bonusMaestria +
-  outros;
+  outros +
+  bonusTreinamento;
   }
 }
 
@@ -139,5 +146,6 @@ function normalizarAtributoCd(atributo) {
 
   return mapaLegado[atributo] ?? atributo ?? ATRIBUTOS.PRESENCA;
 }
+
 
 

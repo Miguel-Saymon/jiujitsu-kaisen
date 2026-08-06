@@ -10,6 +10,7 @@ Hooks.once("init", async function () {
     "systems/jiujitsu-kaisen/templates/partials/principal.hbs",
     "systems/jiujitsu-kaisen/templates/partials/tecnicas.hbs",
     "systems/jiujitsu-kaisen/templates/partials/combate.hbs",
+    "systems/jiujitsu-kaisen/templates/partials/treinamentos.hbs",
     "systems/jiujitsu-kaisen/templates/partials/notas.hbs",
     "systems/jiujitsu-kaisen/templates/items/partials/description.hbs",
     "systems/jiujitsu-kaisen/templates/items/partials/weapon-details.hbs",
@@ -43,3 +44,4 @@ Hooks.once("init", async function () {
 
   registerDamageApplicationHooks();
 });
+

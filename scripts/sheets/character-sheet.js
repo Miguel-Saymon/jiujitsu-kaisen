@@ -14,6 +14,9 @@ import { registerDeathSaveListener } from "../listeners/death-save-listener.js";
 import { registerCombatListener } from "../listeners/combate-listener.js";
 import { calcularDadosVida } from "../calculations/recursos.js";
 import { obterBonusTreino } from "../helpers/proficiencia.js";
+import { prepararTreinamentos } from "../trainings/training-config.js";
+import { calcularBonusTreinamentos, calcularAptidoesEfetivas, calcularRecursosEfetivos } from "../trainings/training-calculations.js";
+import { registerTrainingListener } from "../trainings/training-listener.js";
 
 export class JKCharacterSheet extends ActorSheet {
   static get defaultOptions() {
@@ -32,20 +35,37 @@ tabs: [
     });
   }
 
+recalcularDadosDerivados() {
+  const system = this.actor.system;
+
+  calcularAtributos(system);
+  calcularPericias(system);
+  aplicarDefesaDeEquipamentos(system, this.actor.items);
+
+  const carga = calcularCargaInventario(this.actor.items, system);
+  calcularCombate(system, {
+    penalidadeDefesa: carga.sobrecarregado ? -5 : 0
+  });
+  calcularDadosVida(system);
+
+  return { carga };
+}
+
+renderPreservandoEstado(html) {
+  const activeTab = this._tabs?.[0]?.active ?? "principal";
+  const body = html?.find?.(".sheet-body")?.[0];
+
+  this._jkDerivedReturnTab = activeTab;
+  this._jkDerivedScrollTop = body?.scrollTop ?? 0;
+  this.render(false);
+}
+
 getData() {
   const context = super.getData();
 
   context.system = this.actor.system;
 
-  calcularAtributos(context.system);
-  calcularPericias(context.system);
-  aplicarDefesaDeEquipamentos(context.system, this.actor.items);
-
-  const carga = calcularCargaInventario(this.actor.items, context.system);
-  calcularCombate(context.system, {
-    penalidadeDefesa: carga.sobrecarregado ? -5 : 0
-  });
-  calcularDadosVida(context.system);
+  const { carga } = this.recalcularDadosDerivados();
 
   context.periciasOrdenadas = Object.entries(context.system.pericias ?? {})
   .map(([key, pericia]) => ({
@@ -80,6 +100,17 @@ context.estadoIntegridade = calcularEstadoIntegridade(
 
 context.bonusTreino = obterBonusTreino(context.system);
 
+const bonusTreinamentos = calcularBonusTreinamentos(context.system);
+context.treinamentos = prepararTreinamentos(context.system);
+context.bonusTreinamentos = bonusTreinamentos;
+context.aptidoesEfetivas = calcularAptidoesEfetivas(context.system, bonusTreinamentos);
+const recursosEfetivos = calcularRecursosEfetivos(context.system, bonusTreinamentos);
+context.recursosEfetivos = {
+  pvMax: recursosEfetivos.pv.total,
+  peMax: recursosEfetivos.pe.total,
+  estaminaMax: recursosEfetivos.estamina.total
+};
+
 context.combateHabilidades = prepararListaCombate(
   context.system.combate?.habilidades,
   "habilidade"
@@ -101,7 +132,8 @@ context.cargaImpossivel = carga.impossivel;
 
 context.deslocamentoTotal =
   (Number(context.system.combate?.deslocamento) || 0) +
-  (Number(context.system.combate?.deslocamentoOutros) || 0);
+  (Number(context.system.combate?.deslocamentoOutros) || 0) +
+  (Number(bonusTreinamentos.combate?.deslocamento) || 0);
 
   return context;
 }
@@ -176,15 +208,35 @@ activateListeners(html) {
   registerAttributeListener(this, html);
   registerDeathSaveListener(this, html);
   registerCombatListener(this, html);
+  registerTrainingListener(this, html);
 
   const atualizarDeslocamentoTotal = () => {
     const base = Number(html.find('[name="system.combate.deslocamento"]').val()) || 0;
     const outros = Number(html.find('[name="system.combate.deslocamentoOutros"]').val()) || 0;
-    html.find('.jk-deslocamento-total').text(base + outros);
+    const treino = Number(calcularBonusTreinamentos(this.actor.system).combate?.deslocamento) || 0;
+    html.find('.jk-deslocamento-total').text(base + outros + treino);
   };
 
   html.find('[name="system.combate.deslocamento"], [name="system.combate.deslocamentoOutros"]')
     .on('input', atualizarDeslocamentoTotal);
+
+  const returnTab = this._jkDerivedReturnTab ?? this._jkTrainingReturnTab;
+  if (returnTab) {
+    const scrollTop = this._jkDerivedReturnTab
+      ? (this._jkDerivedScrollTop ?? 0)
+      : (this._jkTrainingScrollTop ?? 0);
+
+    this._jkDerivedReturnTab = null;
+    this._jkDerivedScrollTop = null;
+    this._jkTrainingReturnTab = null;
+    this._jkTrainingScrollTop = null;
+
+    requestAnimationFrame(() => {
+      this._tabs?.[0]?.activate(returnTab);
+      const body = this.element.find(".sheet-body")[0];
+      if (body) body.scrollTop = scrollTop;
+    });
+  }
 }
 
 }
@@ -480,6 +532,8 @@ function criarLinhaVaziaCombate(prefixo) {
     notas: ""
   };
 }
+
+
 
 
 

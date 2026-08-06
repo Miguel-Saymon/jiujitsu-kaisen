@@ -1,3 +1,4 @@
+import { obterMaximoRecursoEfetivo } from "../trainings/training-calculations.js";
 export function registerDamageApplicationHooks() {
   Hooks.on("renderChatMessage", (message, html) => {
     const root = html instanceof HTMLElement ? html : html?.[0];
@@ -183,7 +184,7 @@ function calculateDamageApplication(actor, damage) {
 
 function calculateHealingApplication(actor, healing) {
   const pvAtual = getNumber(actor.system?.recursos?.pv?.atual);
-  const pvMax = getNumber(actor.system?.recursos?.pv?.max);
+  const pvMax = obterMaximoRecursoEfetivo(actor.system, "pv");
   const cura = Math.max(0, Math.floor(Number(healing) || 0));
   const pvFinal = pvMax > 0
     ? Math.min(pvMax, pvAtual + cura)
@@ -203,4 +204,5 @@ function getNumber(value) {
   const number = Number(value);
   return Number.isFinite(number) ? number : 0;
 }
+
 

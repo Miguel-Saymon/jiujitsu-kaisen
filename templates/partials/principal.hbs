@@ -12,37 +12,43 @@
             <div class="jk-attributes-grid">
               <div class="jk-attribute-box">
                 <div class="jk-attribute-label">FOR</div>
-                <input name="system.atributos.forca.valor" type="number" value="{{system.atributos.forca.valor}}" />
+                <input type="hidden" name="system.atributos.forca.valor" value="{{system.atributos.forca.valor}}" />
+                <input class="jk-training-derived-attribute" data-attribute="forca" data-path="system.atributos.forca.valor" type="number" value="{{system.atributos.forca.valorEfetivo}}" />
                 <div class="jk-attribute-mod">{{system.atributos.forca.modFormatado}}</div>
               </div>
 
               <div class="jk-attribute-box">
                 <div class="jk-attribute-label">DES</div>
-                <input name="system.atributos.destreza.valor" type="number" value="{{system.atributos.destreza.valor}}" />
+                <input type="hidden" name="system.atributos.destreza.valor" value="{{system.atributos.destreza.valor}}" />
+                <input class="jk-training-derived-attribute" data-attribute="destreza" data-path="system.atributos.destreza.valor" type="number" value="{{system.atributos.destreza.valorEfetivo}}" />
                 <div class="jk-attribute-mod">{{system.atributos.destreza.modFormatado}}</div>
               </div>
 
               <div class="jk-attribute-box">
                 <div class="jk-attribute-label">CON</div>
-                <input name="system.atributos.constituicao.valor" type="number" value="{{system.atributos.constituicao.valor}}" />
+                <input type="hidden" name="system.atributos.constituicao.valor" value="{{system.atributos.constituicao.valor}}" />
+                <input class="jk-training-derived-attribute" data-attribute="constituicao" data-path="system.atributos.constituicao.valor" type="number" value="{{system.atributos.constituicao.valorEfetivo}}" />
                 <div class="jk-attribute-mod">{{system.atributos.constituicao.modFormatado}}</div>
               </div>
 
               <div class="jk-attribute-box">
                 <div class="jk-attribute-label">INT</div>
-                <input name="system.atributos.inteligencia.valor" type="number" value="{{system.atributos.inteligencia.valor}}" />
+                <input type="hidden" name="system.atributos.inteligencia.valor" value="{{system.atributos.inteligencia.valor}}" />
+                <input class="jk-training-derived-attribute" data-attribute="inteligencia" data-path="system.atributos.inteligencia.valor" type="number" value="{{system.atributos.inteligencia.valorEfetivo}}" />
                 <div class="jk-attribute-mod">{{system.atributos.inteligencia.modFormatado}}</div>
               </div>
 
               <div class="jk-attribute-box">
                 <div class="jk-attribute-label">SAB</div>
-                <input name="system.atributos.sabedoria.valor" type="number" value="{{system.atributos.sabedoria.valor}}" />
+                <input type="hidden" name="system.atributos.sabedoria.valor" value="{{system.atributos.sabedoria.valor}}" />
+                <input class="jk-training-derived-attribute" data-attribute="sabedoria" data-path="system.atributos.sabedoria.valor" type="number" value="{{system.atributos.sabedoria.valorEfetivo}}" />
                 <div class="jk-attribute-mod">{{system.atributos.sabedoria.modFormatado}}</div>
               </div>
 
               <div class="jk-attribute-box">
                 <div class="jk-attribute-label">PRE</div>
-                <input name="system.atributos.presenca.valor" type="number" value="{{system.atributos.presenca.valor}}" />
+                <input type="hidden" name="system.atributos.presenca.valor" value="{{system.atributos.presenca.valor}}" />
+                <input class="jk-training-derived-attribute" data-attribute="presenca" data-path="system.atributos.presenca.valor" type="number" value="{{system.atributos.presenca.valorEfetivo}}" />
                 <div class="jk-attribute-mod">{{system.atributos.presenca.modFormatado}}</div>
               </div>
             </div>
@@ -60,7 +66,7 @@
             </div>
 
             {{#each system.combate.testesResistencia as |teste key|}}
-              <div class="jk-resistencia-row">
+              <div class="jk-resistencia-row" data-resistance-key="{{key}}">
 <span
   class="jk-rollable-resistance"
   data-resistance-key="{{key}}"
@@ -176,7 +182,7 @@
 		</span>
             </h3>
 
-            <div class="jk-combat-total">
+            <div class="jk-combat-total jk-defense-total">
               {{system.combate.defesa.total}}
             </div>
 
@@ -197,7 +203,7 @@
 
           <div class="jk-combat-box">
             <h3>Atenção</h3>
-            <div class="jk-combat-total">{{system.combate.atencao.total}}</div>
+            <div class="jk-combat-total jk-attention-total">{{system.combate.atencao.total}}</div>
 
             <div class="jk-combat-fields">
               <label>Base
@@ -212,7 +218,7 @@
 
           <div class="jk-combat-box">
 	    <h3 class="jk-rollable-initiative" title="Rolar Iniciativa">Iniciativa</h3>
-            <div class="jk-combat-total">{{system.combate.iniciativa.total}}</div>
+            <div class="jk-combat-total jk-initiative-total">{{system.combate.iniciativa.total}}</div>
 
             <div class="jk-combat-fields">
               <label>Outros
@@ -258,7 +264,7 @@
               </label>
 
               <label>Máximo
-                <input name="system.recursos.pv.max" type="number" value="{{system.recursos.pv.max}}" />
+                <input class="jk-training-derived-resource-max" data-resource="pv" data-path="system.recursos.pv.max" type="number" min="0" value="{{recursosEfetivos.pvMax}}" />
               </label>
             </div>
 
@@ -277,8 +283,8 @@
                 </label>
 
                 <label>Máximo
-                  <input name="system.recursos.estamina.max" type="number" value="{{system.recursos.estamina.max}}" />
-                </label>
+                  <input class="jk-training-derived-resource-max" data-resource="estamina" data-path="system.recursos.estamina.max" type="number" min="0" value="{{recursosEfetivos.estaminaMax}}" />
+                  </label>
               </div>
 
               <label class="jk-resource-temp">Temporário
@@ -291,8 +297,8 @@
                 </label>
 
                 <label>Máximo
-                  <input name="system.recursos.pe.max" type="number" value="{{system.recursos.pe.max}}" />
-                </label>
+                  <input class="jk-training-derived-resource-max" data-resource="pe" data-path="system.recursos.pe.max" type="number" min="0" value="{{recursosEfetivos.peMax}}" />
+                  </label>
               </div>
 
               <label class="jk-resource-temp">Temporário
@@ -360,7 +366,7 @@
         </div>
 
         {{#each periciasOrdenadas as |pericia|}}
-          <div class="jk-skill-row">
+          <div class="jk-skill-row" data-skill-key="{{pericia.key}}">
 	  <span
   class="jk-skill-name jk-rollable-skill"
   data-skill-key="{{pericia.key}}"
@@ -386,9 +392,9 @@
               {{selectOptions ../atributosPericia selected=pericia.atributo}}
             </select>
 
-            <input name="system.pericias.{{pericia.key}}.treinado" type="checkbox" {{checked pericia.treinado}} />
-            <input name="system.pericias.{{pericia.key}}.maestria" type="checkbox" {{checked pericia.maestria}} />
-            <input name="system.pericias.{{pericia.key}}.outros" type="number" value="{{pericia.outros}}" />
+            <input class="jk-skill-trained" name="system.pericias.{{pericia.key}}.treinado" type="checkbox" {{checked pericia.treinado}} />
+            <input class="jk-skill-mastery" name="system.pericias.{{pericia.key}}.maestria" type="checkbox" {{checked pericia.maestria}} />
+            <input class="jk-skill-others" name="system.pericias.{{pericia.key}}.outros" type="number" value="{{pericia.outros}}" />
             <span class="jk-skill-total">{{pericia.totalFormatado}}</span>
           </div>
         {{/each}}
@@ -398,4 +404,6 @@
 
   </div>
 </div>
+
+
 

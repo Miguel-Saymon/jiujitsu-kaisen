@@ -402,6 +402,144 @@
         "ligacoes": "",
         "complicacoes": "",
         "anotacoes": ""
+      },
+      "treinamentos": {
+        "agilidade": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          }
+        },
+        "barreiras": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          }
+        },
+        "compreensao": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          },
+          "aptidaoEscolhida": ""
+        },
+        "controleEnergia": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          }
+        },
+        "dominios": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          }
+        },
+        "energiaReversa": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          }
+        },
+        "luta": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          }
+        },
+        "manejoArma": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          },
+          "armaEscolhida": ""
+        },
+        "pericia": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          }
+        },
+        "potencialFisico": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          },
+          "atributoPonto1": "",
+          "atributoPonto2": ""
+        },
+        "resistencia": {
+          "etapas": {
+            "e1": false,
+            "e2": false,
+            "e3": false,
+            "e4": false
+          },
+          "progresso": {
+            "atual": 0,
+            "meta": 0
+          }
+        }
       }
     }
   },
@@ -653,5 +791,4 @@
     }
   }
 }
-
 

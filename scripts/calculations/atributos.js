@@ -1,10 +1,17 @@
+import { calcularBonusTreinamentos } from "../trainings/training-calculations.js";
+
 export function calcularAtributos(system) {
   const atributos = system.atributos ?? {};
+  const bonusTreinos = calcularBonusTreinamentos(system);
 
-  for (const atributo of Object.values(atributos)) {
+  for (const [key, atributo] of Object.entries(atributos)) {
     const valor = Number(atributo.valor) || 0;
+    const bonusTreinamento = Number(bonusTreinos.atributos?.[key]) || 0;
+    const valorEfetivo = valor + bonusTreinamento;
 
-    atributo.mod = Math.floor((valor - 10) / 2);
+    atributo.bonusTreinamento = bonusTreinamento;
+    atributo.valorEfetivo = valorEfetivo;
+    atributo.mod = Math.floor((valorEfetivo - 10) / 2);
 
     atributo.modFormatado =
       atributo.mod >= 0
@@ -14,4 +21,5 @@ export function calcularAtributos(system) {
 
   return atributos;
 }
+
 

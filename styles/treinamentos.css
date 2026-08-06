@@ -1,0 +1,459 @@
+.jk-training-tab {
+  padding: 10px 12px 16px;
+}
+
+.jk-training-shell {
+  min-height: 100%;
+}
+
+.jk-training-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2px 12px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--jk-border-soft);
+  text-align: center;
+}
+
+.jk-training-page-header > div {
+  width: 100%;
+}
+
+.jk-training-page-header h2 {
+  margin: 0 auto;
+  padding: 0;
+  border: 0 !important;
+  color: var(--jk-text-primary);
+  font-family: var(--jk-font-title);
+  font-size: 20px;
+  text-decoration: none !important;
+}
+
+.jk-training-page-header p {
+  margin: 4px auto 0;
+  max-width: 760px;
+  color: var(--jk-text-muted);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.jk-training-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 11px;
+  align-items: start;
+}
+
+.jk-training-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: visible;
+  border: 1px solid color-mix(in srgb, var(--jk-border-soft) 78%, transparent);
+  border-radius: var(--jk-radius-md);
+  background: color-mix(in srgb, var(--jk-bg-section) 94%, transparent);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 3%) inset;
+}
+
+.jk-training-card.is-complete {
+  border-color: color-mix(in srgb, var(--jk-accent-purple) 58%, var(--jk-border-soft));
+}
+
+.jk-training-card-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 39px;
+  padding: 8px 48px 8px;
+  border-bottom: 1px solid var(--jk-border-soft);
+}
+
+.jk-training-card-header h3 {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0 !important;
+  color: var(--jk-text-primary);
+  font-family: var(--jk-font-title);
+  font-size: 13.5px;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none !important;
+}
+
+.jk-training-focus {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--jk-text-muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.jk-training-stages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+  padding: 8px 8px 6px;
+}
+
+.jk-training-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "index check" "label check";
+  align-items: center;
+  min-width: 0;
+  min-height: 46px;
+  padding: 6px 6px 6px 8px;
+  border: 1px solid color-mix(in srgb, var(--jk-border-soft) 80%, transparent);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--jk-bg-section-soft) 80%, transparent);
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+
+.jk-training-stage:hover {
+  z-index: 20;
+  border-color: color-mix(in srgb, var(--jk-accent-purple) 62%, var(--jk-border-soft));
+  background: color-mix(in srgb, var(--jk-accent-purple) 13%, var(--jk-bg-section-soft));
+  transform: translateY(-1px);
+}
+
+.jk-training-stage.is-active {
+  border-color: color-mix(in srgb, var(--jk-accent-purple) 68%, var(--jk-border-soft));
+  background: color-mix(in srgb, var(--jk-accent-purple) 18%, var(--jk-bg-section-soft));
+}
+
+.jk-training-stage input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.jk-training-stage-index {
+  grid-area: index;
+  color: var(--jk-text-primary);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.jk-training-stage-label {
+  grid-area: label;
+  margin-top: 3px;
+  color: var(--jk-text-muted);
+  font-size: 9.5px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.jk-training-stage-check {
+  grid-area: check;
+  justify-self: end;
+  color: color-mix(in srgb, var(--jk-text-muted) 60%, transparent);
+  font-size: 10px;
+  opacity: .22;
+}
+
+.jk-training-stage.is-active .jk-training-stage-check {
+  color: var(--jk-accent-purple);
+  opacity: 1;
+}
+
+.jk-training-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 7px);
+  z-index: 100;
+  display: none;
+  width: 245px;
+  max-width: min(78vw, 245px);
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--jk-accent-purple) 70%, var(--jk-border-soft));
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--jk-bg-section) 96%, #000 4%);
+  box-shadow: 0 6px 17px rgb(0 0 0 / 38%);
+  color: var(--jk-text-primary);
+  font-size: 11.5px;
+  line-height: 1.42;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Mantém os tooltips das bordas dentro da ficha. */
+.jk-training-stage:first-child > .jk-training-tooltip {
+  left: 0;
+  transform: none;
+}
+
+.jk-training-stage:last-child > .jk-training-tooltip {
+  right: 0;
+  left: auto;
+  transform: none;
+}
+
+.jk-training-stage:hover > .jk-training-tooltip,
+.jk-training-complete:hover > .jk-training-tooltip {
+  display: grid;
+  gap: 4px;
+}
+
+.jk-training-tooltip strong {
+  color: var(--jk-text-primary);
+  font-size: 12px;
+}
+
+.jk-training-tooltip b {
+  color: var(--jk-text-secondary);
+}
+
+.jk-training-tooltip em {
+  margin-top: 4px;
+  color: var(--jk-text-primary);
+  font-style: normal;
+}
+
+.jk-training-complete {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: auto 8px 7px;
+  padding: 6px 7px;
+  border-top: 1px solid var(--jk-border-soft);
+  color: var(--jk-text-muted);
+  font-size: 10.5px;
+  cursor: help;
+}
+
+.jk-training-complete.is-active {
+  color: var(--jk-accent-purple);
+  font-weight: 700;
+}
+
+.jk-training-complete-tooltip {
+  left: 0;
+  transform: none;
+}
+
+.jk-training-progress {
+  padding: 0 9px 9px;
+}
+
+.jk-training-progress-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  margin-bottom: 5px;
+  color: var(--jk-text-muted);
+  font-size: 10.5px;
+}
+
+.jk-training-progress-inputs {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.jk-training-progress-input {
+  width: 39px !important;
+  height: 21px !important;
+  padding: 0 2px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--jk-border-soft) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--jk-text-primary) !important;
+  font-size: 10.5px !important;
+  text-align: center;
+  box-shadow: none !important;
+}
+
+.jk-training-progress-input:focus {
+  border-bottom-color: var(--jk-accent-purple) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.jk-training-progress-track {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--jk-accent-purple) 14%, transparent);
+}
+
+.jk-training-progress-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #5f4b82, #9277c5);
+  transition: width 140ms ease;
+}
+
+.jk-training-bonus-note {
+  display: block;
+  margin-top: 2px;
+  color: var(--jk-accent-purple);
+  font-size: 10.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.jk-training-effective-value {
+  margin-top: 2px;
+  color: var(--jk-text-muted);
+  font-size: 10.5px;
+  text-align: center;
+}
+
+.jk-training-dialog-form p {
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+
+.jk-training-dialog-form .form-group {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 860px) {
+  .jk-training-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .jk-training-grid { grid-template-columns: 1fr; }
+}
+
+/* Indicadores discretos de automação */
+.jk-training-card-auto {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: color-mix(in srgb, var(--jk-accent-purple) 72%, var(--jk-text-muted));
+  font-size: 8px;
+  opacity: .72;
+}
+
+.jk-training-card-auto i,
+.jk-training-stage-auto i {
+  pointer-events: none;
+}
+
+.jk-training-stage-auto {
+  position: absolute;
+  right: 5px;
+  bottom: 4px;
+  color: color-mix(in srgb, var(--jk-accent-purple) 74%, var(--jk-text-muted));
+  font-size: 7px;
+  line-height: 1;
+  opacity: .68;
+}
+
+.jk-training-stage.is-active .jk-training-stage-auto {
+  opacity: .95;
+}
+
+.jk-training-stage:hover .jk-training-stage-auto,
+.jk-training-card:hover .jk-training-card-auto {
+  color: var(--jk-accent-purple);
+  opacity: 1;
+}
+
+.jk-training-automation-legend {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 7px;
+  color: var(--jk-text-muted);
+  font-size: 10px;
+  line-height: 1;
+  opacity: .82;
+}
+
+.jk-training-automation-legend i {
+  color: color-mix(in srgb, var(--jk-accent-purple) 76%, var(--jk-text-muted));
+  font-size: 8px;
+}
+
+.jk-training-automation-legend:hover {
+  opacity: 1;
+}
+
+/* Camada 3 — requisitos e sequência */
+.jk-training-stage.is-requirement-unmet:not(.is-active) {
+  border-color: color-mix(in srgb, #c58a62 48%, var(--jk-border-soft));
+}
+
+.jk-training-stage.is-requirement-manual:not(.is-active) {
+  border-style: dashed;
+}
+
+.jk-training-stage.has-sequence-gap:not(.is-active) {
+  opacity: .82;
+}
+
+.jk-training-stage-requirement {
+  position: absolute;
+  left: 5px;
+  bottom: 4px;
+  font-size: 7px;
+  line-height: 1;
+  opacity: .72;
+}
+
+.jk-training-stage-requirement.is-unmet {
+  left: auto;
+  right: 5px;
+  top: 4px;
+  bottom: auto;
+  color: #c58a62;
+}
+
+.jk-training-stage-requirement.is-manual {
+  color: var(--jk-text-muted);
+}
+
+.jk-training-requirement-status,
+.jk-training-sequence-warning,
+.jk-training-requirement-detail {
+  display: block;
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+
+.jk-training-requirement-status.is-met {
+  color: color-mix(in srgb, #81b29a 82%, var(--jk-text-primary));
+}
+
+.jk-training-requirement-status.is-unmet {
+  color: #d09a73;
+}
+
+.jk-training-requirement-status.is-manual,
+.jk-training-requirement-detail {
+  color: var(--jk-text-muted);
+}
+
+.jk-training-sequence-warning {
+  color: #d09a73;
+}
+
+.jk-training-confirmation {
+  line-height: 1.45;
+}
+
+.jk-training-confirmation p:last-child {
+  margin-bottom: 0;
+}
+
+
