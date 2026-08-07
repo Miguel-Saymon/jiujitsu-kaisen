@@ -85,6 +85,10 @@ export function registerTrainingListener(sheet, html) {
 
     input.value = String(valorBase + bonus);
     html.find(`input[type="hidden"][name="${path}"]`).val(valorBase);
+
+    // Aptidões alimentam requisitos de Treinamentos. Um novo render garante
+    // que o alerta apareça/desapareça imediatamente quando o requisito mudar.
+    rerenderPreservandoAba(sheet, html);
   });
 
   // Os máximos de PV/PE/Estamina exibem o total efetivo (base + treino),
@@ -341,4 +345,5 @@ function rerenderPreservandoAba(sheet, html) {
   sheet._jkTrainingScrollTop = body?.scrollTop ?? 0;
   sheet.render(false);
 }
+
 

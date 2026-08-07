@@ -1,0 +1,64 @@
+/* ============================= */
+/* Notas                         */
+/* ============================= */
+
+.jiujitsu-kaisen .jk-notas-tab {
+  padding: 12px;
+  background: var(--jk-bg-main);
+}
+
+.jiujitsu-kaisen .jk-notas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.jiujitsu-kaisen .jk-notas-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 10px;
+}
+
+
+.jiujitsu-kaisen .jk-notas-card h2 {
+  margin-bottom: 8px;
+}
+
+.jiujitsu-kaisen .jk-notas-card textarea {
+  flex: 1;
+  min-height: 96px;
+  padding: 7px 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom-color: var(--jk-border-input);
+  line-height: 1.45;
+  overflow: auto;
+  resize: vertical;
+}
+
+
+.jiujitsu-kaisen .jk-notas-card textarea:hover {
+  background: var(--jk-bg-input-hover);
+  border-color: #3A3548;
+}
+
+.jiujitsu-kaisen .jk-notas-card textarea:focus {
+  background: var(--jk-bg-input);
+  border-color: #3A3548;
+  border-bottom-color: var(--jk-focus);
+}
+
+.jiujitsu-kaisen .jk-notas-card textarea::placeholder {
+  color: var(--jk-text-muted);
+  opacity: 0.65;
+}
+
+@media (max-width: 720px) {
+  .jiujitsu-kaisen .jk-notas-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+

@@ -233,7 +233,7 @@ export function avaliarRequisitoTreinamento(system, treinoKey, numeroEtapa) {
 
   if (/^Expansão de Domínio (Incompleta|Completa)$/i.test(requisito)) {
     const esperado = requisito.toLowerCase().includes("incompleta") ? "incompleta" : "completa";
-    const tipo = String(system.tecnicas?.expansao?.tipo ?? "").trim().toLowerCase();
+    const tipo = String(system.tecnicas?.especiais?.expansao?.tipo ?? "").trim().toLowerCase();
     const incompleta = tipo.includes("incompleta");
     const completa = !incompleta && tipo.includes("completa");
     const cumprido = esperado === "incompleta" ? incompleta : completa;
@@ -242,7 +242,7 @@ export function avaliarRequisitoTreinamento(system, treinoKey, numeroEtapa) {
       cumprido,
       manual: false,
       texto: requisito,
-      detalhe: tipo ? `Tipo atual da Expansão: ${system.tecnicas?.expansao?.tipo}.` : "O Tipo da Expansão de Domínio está vazio."
+      detalhe: tipo ? `Tipo atual da Expansão: ${system.tecnicas?.especiais?.expansao?.tipo}.` : "O Tipo da Expansão de Domínio está vazio."
     };
   }
 
@@ -340,4 +340,5 @@ export function prepararTreinamentos(system) {
     };
   });
 }
+
 

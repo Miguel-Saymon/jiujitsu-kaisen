@@ -1,199 +1,160 @@
 <div class="tab" data-group="primary" data-tab="tecnicas">
+  <div class="jk-tecnicas-layout">
 
-    <div class="jk-combate-layout jk-tecnicas-layout">
+      <section class="jk-card jk-tecnicas-card jk-tecnicas-perfil">
+        <h2>Perfil Amaldiçoado</h2>
+        <div class="jk-tecnicas-perfil-grid">
+          <label class="jk-tecnicas-atributo-control">
+            <span>Atributo Principal</span>
+            <select class="jk-tecnicas-atributo-select">
+              <option value="" {{#unless tecnicasAtributoOverride}}selected{{/unless}}>Padrão da Classe ({{tecnicasAtributoPadraoLabel}})</option>
+              <option value="forca" {{#if (eq tecnicasAtributoOverride "forca")}}selected{{/if}}>Força</option>
+              <option value="destreza" {{#if (eq tecnicasAtributoOverride "destreza")}}selected{{/if}}>Destreza</option>
+              <option value="constituicao" {{#if (eq tecnicasAtributoOverride "constituicao")}}selected{{/if}}>Constituição</option>
+              <option value="inteligencia" {{#if (eq tecnicasAtributoOverride "inteligencia")}}selected{{/if}}>Inteligência</option>
+              <option value="sabedoria" {{#if (eq tecnicasAtributoOverride "sabedoria")}}selected{{/if}}>Sabedoria</option>
+              <option value="presenca" {{#if (eq tecnicasAtributoOverride "presenca")}}selected{{/if}}>Presença</option>
+            </select>
+          </label>
 
-        <div class="jk-combate-main-grid">
+          <label class="jk-tecnicas-feiticos-conhecidos">
+            <span>Feitiços Conhecidos</span>
+            <input type="number" value="{{tecnicasFeiticosConhecidos}}" readonly aria-readonly="true" />
+          </label>
 
-            {{!-- COLUNA 1 --}}
-            <div class="jk-combate-col">
+          <div class="jk-tecnicas-cd-display">
+            <span>CD Técnica</span>
+            <strong>{{tecnicasCdTecnica}}</strong>
+          </div>
 
-                <section class="jk-card jk-combate-card">
-                    <h2>Perfil Amaldiçoado</h2>
+          <label class="jk-tecnicas-cd-outros-control">
+            <span>Outros</span>
+            <input class="jk-tecnicas-cd-outros" name="system.tecnicas.perfil.cdTecnicaOutros" type="number" value="{{tecnicasCdTecnicaOutros}}" />
+          </label>
 
-                    <label>
-                        Atributo Principal
-                        <input
-                            name="system.tecnicas.perfil.atributoPrincipal"
-                            type="text"
-                            value="{{system.tecnicas.perfil.atributoPrincipal}}"
-                        />
-                    </label>
+          <div class="jk-tecnicas-cd-display">
+            <span>CD Amaldiçoada</span>
+            <strong>{{tecnicasCdAmaldicoada}}</strong>
+          </div>
 
-                    <label>
-                        Feitiços Conhecidos
-                        <input
-                            name="system.tecnicas.perfil.feiticosConhecidos"
-                            type="number"
-                            value="{{system.tecnicas.perfil.feiticosConhecidos}}"
-                        />
-                    </label>
-
-                    <label>
-                        CD Técnica
-                        <input
-                            name="system.tecnicas.perfil.cdTecnica"
-                            type="number"
-                            value="{{system.tecnicas.perfil.cdTecnica}}"
-                        />
-                    </label>
-
-                    <label>
-                        CD Amaldiçoada
-                        <input
-                            name="system.tecnicas.perfil.cdAmaldicoada"
-                            type="number"
-                            value="{{system.tecnicas.perfil.cdAmaldicoada}}"
-                        />
-                    </label>
-                </section>
-
-                <section class="jk-card jk-combate-card">
-                    <h2>Aptidões</h2>
-
-                    <label>
-                        Aura
-                        <input type="hidden" name="system.tecnicas.aptidoesEstruturadas.aura" value="{{system.tecnicas.aptidoesEstruturadas.aura}}" />
-                        <input class="jk-training-derived-aptitude" data-aptitude="aura" data-path="system.tecnicas.aptidoesEstruturadas.aura" type="number" value="{{aptidoesEfetivas.aura.total}}" />
-                    </label>
-
-                    <label>
-                        Controle
-                        <input type="hidden" name="system.tecnicas.aptidoesEstruturadas.controle" value="{{system.tecnicas.aptidoesEstruturadas.controle}}" />
-                        <input class="jk-training-derived-aptitude" data-aptitude="controle" data-path="system.tecnicas.aptidoesEstruturadas.controle" type="number" value="{{aptidoesEfetivas.controle.total}}" />
-                    </label>
-
-                    <label>
-                        Barreira
-                        <input type="hidden" name="system.tecnicas.aptidoesEstruturadas.barreira" value="{{system.tecnicas.aptidoesEstruturadas.barreira}}" />
-                        <input class="jk-training-derived-aptitude" data-aptitude="barreira" data-path="system.tecnicas.aptidoesEstruturadas.barreira" type="number" value="{{aptidoesEfetivas.barreira.total}}" />
-                    </label>
-
-                    <label>
-                        Domínio
-                        <input type="hidden" name="system.tecnicas.aptidoesEstruturadas.dominio" value="{{system.tecnicas.aptidoesEstruturadas.dominio}}" />
-                        <input class="jk-training-derived-aptitude" data-aptitude="dominio" data-path="system.tecnicas.aptidoesEstruturadas.dominio" type="number" value="{{aptidoesEfetivas.dominio.total}}" />
-                    </label>
-
-                    <label>
-                        Energia Reversa
-                        <input type="hidden" name="system.tecnicas.aptidoesEstruturadas.reversa" value="{{system.tecnicas.aptidoesEstruturadas.reversa}}" />
-                        <input class="jk-training-derived-aptitude" data-aptitude="reversa" data-path="system.tecnicas.aptidoesEstruturadas.reversa" type="number" value="{{aptidoesEfetivas.reversa.total}}" />
-                    </label>
-                </section>
-
-            </div>
-
-            {{!-- COLUNA 2 --}}
-            <div class="jk-combate-col">
-
-                <section class="jk-card jk-combate-card">
-                    <h2>Feitiços</h2>
-
-                    <details open>
-                        <summary>Nível 0</summary>
-                        <textarea name="system.tecnicas.feiticos.nivel0">{{system.tecnicas.feiticos.nivel0}}</textarea>
-                    </details>
-
-                    <details>
-                        <summary>Nível 1</summary>
-                        <textarea name="system.tecnicas.feiticos.nivel1">{{system.tecnicas.feiticos.nivel1}}</textarea>
-                    </details>
-
-                    <details>
-                        <summary>Nível 2</summary>
-                        <textarea name="system.tecnicas.feiticos.nivel2">{{system.tecnicas.feiticos.nivel2}}</textarea>
-                    </details>
-
-                    <details>
-                        <summary>Nível 3</summary>
-                        <textarea name="system.tecnicas.feiticos.nivel3">{{system.tecnicas.feiticos.nivel3}}</textarea>
-                    </details>
-
-                    <details>
-                        <summary>Nível 4</summary>
-                        <textarea name="system.tecnicas.feiticos.nivel4">{{system.tecnicas.feiticos.nivel4}}</textarea>
-                    </details>
-
-                    <details>
-                        <summary>Nível 5</summary>
-                        <textarea name="system.tecnicas.feiticos.nivel5">{{system.tecnicas.feiticos.nivel5}}</textarea>
-                    </details>
-                </section>
-
-            </div>
-
-            {{!-- COLUNA 3 --}}
-            <div class="jk-combate-col">
-
-                <section class="jk-card jk-combate-card">
-                    <h2>Técnica Amaldiçoada</h2>
-
-                    <label>
-                        Nome
-                        <input
-                            name="system.tecnicas.tecnicaAmaldicoada.nome"
-                            type="text"
-                            value="{{system.tecnicas.tecnicaAmaldicoada.nome}}"
-                        />
-                    </label>
-
-                    <label>
-                        Descrição
-                        <textarea name="system.tecnicas.tecnicaAmaldicoada.descricao">{{system.tecnicas.tecnicaAmaldicoada.descricao}}</textarea>
-                    </label>
-                </section>
-
-                <section class="jk-card jk-combate-card">
-                    <h2>Expansão de Domínio</h2>
-
-                    <label>
-                        Nome
-                        <input
-                            name="system.tecnicas.expansao.nome"
-                            type="text"
-                            value="{{system.tecnicas.expansao.nome}}"
-                        />
-                    </label>
-
-                    <label>
-                        Tipo
-                        <input
-                            name="system.tecnicas.expansao.tipo"
-                            type="text"
-                            value="{{system.tecnicas.expansao.tipo}}"
-                        />
-                    </label>
-
-                    <label>
-                        Descrição
-                        <textarea name="system.tecnicas.expansao.descricao">{{system.tecnicas.expansao.descricao}}</textarea>
-                    </label>
-                </section>
-
-                <section class="jk-card jk-combate-card">
-                    <h2>Técnica Máxima</h2>
-
-                    <label>
-                        Nome
-                        <input
-                            name="system.tecnicas.tecnicaMaxima.nome"
-                            type="text"
-                            value="{{system.tecnicas.tecnicaMaxima.nome}}"
-                        />
-                    </label>
-
-                    <label>
-                        Descrição
-                        <textarea name="system.tecnicas.tecnicaMaxima.descricao">{{system.tecnicas.tecnicaMaxima.descricao}}</textarea>
-                    </label>
-                </section>
-
-            </div>
-
+          <label class="jk-tecnicas-cd-outros-control">
+            <span>Outros</span>
+            <input class="jk-tecnicas-cd-outros" name="system.tecnicas.perfil.cdAmaldicoadaOutros" type="number" value="{{tecnicasCdAmaldicoadaOutros}}" />
+          </label>
         </div>
+      </section>
+
+    <div class="jk-tecnicas-workspace">
+      <div class="jk-tecnicas-main-column">
+      <section class="jk-card jk-tecnicas-card">
+        <h2>Técnica Amaldiçoada</h2>
+        <label class="jk-tecnicas-field">
+          <span>Nome</span>
+          <input name="system.tecnicas.especiais.tecnicaAmaldicoada.nome" type="text" value="{{system.tecnicas.especiais.tecnicaAmaldicoada.nome}}" />
+        </label>
+        <label class="jk-tecnicas-field">
+          <span>Descrição</span>
+          <textarea name="system.tecnicas.especiais.tecnicaAmaldicoada.descricao">{{system.tecnicas.especiais.tecnicaAmaldicoada.descricao}}</textarea>
+        </label>
+      </section>
+
+      <section class="jk-card jk-tecnicas-card jk-niveis-card">
+        <h2>Níveis de Aptidão</h2>
+        <div class="jk-niveis-aptidao">
+          <label><span>Aura</span><input type="hidden" name="system.tecnicas.aptidoesEstruturadas.aura" value="{{system.tecnicas.aptidoesEstruturadas.aura}}" /><input class="jk-training-derived-aptitude" data-aptitude="aura" data-path="system.tecnicas.aptidoesEstruturadas.aura" type="number" value="{{aptidoesEfetivas.aura.total}}" /></label>
+          <label><span>Controle</span><input type="hidden" name="system.tecnicas.aptidoesEstruturadas.controle" value="{{system.tecnicas.aptidoesEstruturadas.controle}}" /><input class="jk-training-derived-aptitude" data-aptitude="controle" data-path="system.tecnicas.aptidoesEstruturadas.controle" type="number" value="{{aptidoesEfetivas.controle.total}}" /></label>
+          <label><span>Barreira</span><input type="hidden" name="system.tecnicas.aptidoesEstruturadas.barreira" value="{{system.tecnicas.aptidoesEstruturadas.barreira}}" /><input class="jk-training-derived-aptitude" data-aptitude="barreira" data-path="system.tecnicas.aptidoesEstruturadas.barreira" type="number" value="{{aptidoesEfetivas.barreira.total}}" /></label>
+          <label><span>Domínio</span><input type="hidden" name="system.tecnicas.aptidoesEstruturadas.dominio" value="{{system.tecnicas.aptidoesEstruturadas.dominio}}" /><input class="jk-training-derived-aptitude" data-aptitude="dominio" data-path="system.tecnicas.aptidoesEstruturadas.dominio" type="number" value="{{aptidoesEfetivas.dominio.total}}" /></label>
+          <label><span>Energia Reversa</span><input type="hidden" name="system.tecnicas.aptidoesEstruturadas.reversa" value="{{system.tecnicas.aptidoesEstruturadas.reversa}}" /><input class="jk-training-derived-aptitude" data-aptitude="reversa" data-path="system.tecnicas.aptidoesEstruturadas.reversa" type="number" value="{{aptidoesEfetivas.reversa.total}}" /></label>
+        </div>
+      </section>
+
+        <div class="jk-tecnicas-specials-grid">
+      <section class="jk-card jk-tecnicas-card">
+        <h2>Expansão de Domínio</h2>
+        <div class="jk-tecnicas-expansao-fields">
+          <label class="jk-tecnicas-field"><span>Nome</span><input name="system.tecnicas.especiais.expansao.nome" type="text" value="{{system.tecnicas.especiais.expansao.nome}}" /></label>
+          <label class="jk-tecnicas-field"><span>Tipo</span><input name="system.tecnicas.especiais.expansao.tipo" type="text" value="{{system.tecnicas.especiais.expansao.tipo}}" /></label>
+        </div>
+        <label class="jk-tecnicas-field"><span>Descrição</span><textarea name="system.tecnicas.especiais.expansao.descricao">{{system.tecnicas.especiais.expansao.descricao}}</textarea></label>
+      </section>
+
+      <section class="jk-card jk-tecnicas-card jk-tecnica-maxima-card">
+        <h2>Técnica Máxima</h2>
+        <label class="jk-tecnicas-field"><span>Nome</span><input name="system.tecnicas.especiais.tecnicaMaxima.nome" type="text" value="{{system.tecnicas.especiais.tecnicaMaxima.nome}}" /></label>
+        <label class="jk-tecnicas-field"><span>Descrição</span><textarea name="system.tecnicas.especiais.tecnicaMaxima.descricao">{{system.tecnicas.especiais.tecnicaMaxima.descricao}}</textarea></label>
+      </section>
+        </div>
+      </div>
+
+    <aside class="jk-tecnicas-lists-column">
+      <section class="jk-card jk-tecnicas-card jk-tecnicas-list-card">
+        <div class="jk-tecnicas-card-header">
+          <h2>Aptidões Amaldiçoadas</h2>
+          <button type="button" class="jk-icon-button jk-add-aptidao" title="Adicionar Aptidão"><i class="fas fa-plus"></i></button>
+        </div>
+
+        <div class="jk-tecnicas-table jk-aptidoes-table">
+          <div class="jk-tecnicas-table-head">
+            <span></span><span>Nome</span><span>Atual</span><span>Máx.</span><span>Custo</span><span>Ações</span>
+          </div>
+          {{#each tecnicasAptidoes}}
+            <div class="jk-tecnicas-table-row jk-reorder-row" data-id="{{id}}" data-reorder-type="aptidao">
+              <span class="jk-reorder-handle" draggable="true" data-id="{{id}}" data-reorder-type="aptidao" title="Reorganizar"><i class="fas fa-grip-vertical"></i></span>
+              <span class="jk-tecnica-entry-name">{{nome}}</span>
+              <span>{{atual}}</span>
+              <span>{{max}}</span>
+              <span>{{custo}}</span>
+              <div class="jk-tecnica-actions">
+                <button type="button" class="jk-row-action jk-edit-aptidao" data-id="{{id}}" title="Editar Aptidão"><i class="fas fa-pencil-alt"></i></button>
+                <button type="button" class="jk-row-action jk-chat-aptidao" data-id="{{id}}" title="Enviar ao Chat"><i class="fas fa-comment"></i></button>
+                <button type="button" class="jk-row-action jk-remove-aptidao" data-id="{{id}}" title="Remover Aptidão"><i class="fas fa-times"></i></button>
+              </div>
+            </div>
+          {{else}}
+            <div class="jk-tecnicas-empty">Nenhuma aptidão adicionada.</div>
+          {{/each}}
+        </div>
+      </section>
+
+      <section class="jk-card jk-tecnicas-card jk-tecnicas-list-card">
+        <div class="jk-tecnicas-card-header">
+          <h2>Feitiços</h2>
+          <button type="button" class="jk-icon-button jk-add-feitico" title="Adicionar Feitiço"><i class="fas fa-plus"></i></button>
+        </div>
+
+        <div class="jk-feiticos-lista">
+          {{#each tecnicasFeiticosGrupos}}
+            <div class="jk-feitico-grupo">
+              <div class="jk-feitico-nivel">
+                <span>Nível {{nivel}}</span>
+                <span class="jk-feitico-pe">{{custoPe}} PE</span>
+              </div>
+              <div class="jk-feitico-table-head">
+                <span></span><span>Nome</span><span>Conjuração</span><span>Ações</span>
+              </div>
+              {{#each feiticos}}
+                <div class="jk-feitico-row jk-reorder-row" data-id="{{id}}" data-reorder-type="feitico" data-nivel="{{nivel}}">
+                  <span class="jk-reorder-handle" draggable="true" data-id="{{id}}" data-reorder-type="feitico" title="Reorganizar"><i class="fas fa-grip-vertical"></i></span>
+                  <span class="jk-tecnica-entry-name">{{nome}}</span>
+                  <span class="jk-feitico-conjuracao">{{conjuracao}}</span>
+                  <div class="jk-tecnica-actions">
+                    <button type="button" class="jk-row-action jk-edit-feitico" data-id="{{id}}" title="Editar Feitiço"><i class="fas fa-pencil-alt"></i></button>
+                    <button type="button" class="jk-row-action jk-chat-feitico" data-id="{{id}}" title="Enviar ao Chat"><i class="fas fa-comment"></i></button>
+                    <button type="button" class="jk-row-action jk-remove-feitico" data-id="{{id}}" title="Remover Feitiço"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          {{else}}
+            <div class="jk-tecnicas-empty">Nenhum feitiço adicionado. Os níveis aparecem conforme os feitiços forem cadastrados.</div>
+          {{/each}}
+        </div>
+      </section>
+    </aside>
 
     </div>
 
+  </div>
 </div>
-
 

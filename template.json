@@ -347,7 +347,9 @@
           "atributoPrincipal": "",
           "feiticosConhecidos": 0,
           "cdTecnica": 10,
-          "cdAmaldicoada": 10
+          "cdAmaldicoada": 10,
+          "cdTecnicaOutros": 0,
+          "cdAmaldicoadaOutros": 0
         },
         "aptidoesEstruturadas": {
           "aura": 0,
@@ -378,7 +380,9 @@
             "nome": "",
             "descricao": ""
           }
-        }
+        },
+        "aptidoesLista": [],
+        "feiticosLista": []
       },
       "inventario": {
         "armas": "",
@@ -401,7 +405,8 @@
         "ideais": "",
         "ligacoes": "",
         "complicacoes": "",
-        "anotacoes": ""
+        "anotacoes": "",
+        "informacoesExtras": ""
       },
       "treinamentos": {
         "agilidade": {

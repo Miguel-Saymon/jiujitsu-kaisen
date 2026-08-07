@@ -2,64 +2,753 @@
    ABA TÉCNICAS
    ========================================================== */
 
-.jk-tecnicas-layout .jk-combate-main-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 10px;
-    align-items: start;
+.jk-tecnicas-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.jk-tecnicas-layout .jk-combate-col {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-width: 0;
+.jk-tecnicas-workspace {
+  display: grid;
+  grid-template-columns: minmax(560px, 1.45fr) minmax(360px, .85fr);
+  gap: 12px;
+  align-items: start;
 }
 
-.jk-tecnicas-layout .jk-combate-card label {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 12px;
-    color: var(--jk-text-secondary);
-    font-weight: 600;
+.jk-tecnicas-main-column,
+.jk-tecnicas-lists-column {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.jk-tecnicas-layout .jk-combate-card label:last-child {
-    margin-bottom: 0;
+.jk-tecnicas-card {
+  min-width: 0;
 }
 
-.jk-tecnicas-layout .jk-combate-card details {
-    overflow: hidden;
-    margin-bottom: 8px;
-    background: var(--jk-bg-section-soft);
-    border: 1px solid var(--jk-border-soft);
-    border-radius: 4px;
+.jk-tecnicas-card > h2,
+.jk-tecnicas-card-header h2 {
+  margin: 0;
 }
 
-.jk-tecnicas-layout .jk-combate-card details:last-child {
-    margin-bottom: 0;
+.jk-tecnicas-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-.jk-tecnicas-layout .jk-combate-card summary {
-    padding: 8px;
-    background: var(--jk-bg-input-hover);
-    color: var(--jk-text-secondary);
-    cursor: pointer;
-    font-size: 11px;
-    font-weight: 700;
+.jk-tecnicas-card-header h2 {
+  flex: 1;
 }
 
-.jk-tecnicas-layout .jk-combate-card details textarea,
+.jk-icon-button,
+.jk-row-action {
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--jk-text-secondary);
+  box-shadow: none;
+}
+
+.jk-icon-button:hover,
+.jk-row-action:hover {
+  background: var(--jk-bg-input-hover);
+  color: var(--jk-text-primary);
+}
+
+/* Perfil ocupa toda a largura, como faixa superior da aba. */
+.jk-tecnicas-perfil {
+  width: 100%;
+}
+
+.jiujitsu-kaisen .jk-tecnicas-perfil > h2 {
+  font-size: 15px;
+}
+
+.jk-tecnicas-feiticos-conhecidos,
+.jk-tecnicas-feiticos-conhecidos span {
+  text-align: center;
+}
+
+.jk-tecnicas-cd-row {
+  display: grid;
+  grid-template-columns: minmax(108px, 128px) 52px;
+  gap: 6px;
+  align-items: end;
+  justify-content: center;
+}
+
+.jk-tecnicas-cd-outros-control {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 10px;
+  text-align: center;
+}
+
+.jk-tecnicas-cd-outros-control input {
+  height: 34px;
+  text-align: center;
+}
+
+.jk-tecnicas-perfil-grid {
+  display: grid;
+  grid-template-columns: minmax(210px, 1.15fr) minmax(160px, .85fr) minmax(170px, 1fr) minmax(170px, 1fr);
+  gap: 10px;
+  align-items: stretch;
+}
+
+.jk-tecnicas-perfil-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--jk-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.jk-tecnicas-perfil-grid input,
+.jk-tecnicas-perfil-grid select {
+  height: 34px;
+  font-size: 12px;
+}
+
+.jk-tecnicas-atributo-control,
+.jk-tecnicas-atributo-control span {
+  text-align: center;
+}
+
+.jk-tecnicas-atributo-select {
+  text-align: center;
+  text-align-last: center;
+}
+
+.jk-tecnicas-atributo-select option {
+  text-align: center;
+}
+
+.jk-tecnicas-cd-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  color: var(--jk-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.jk-tecnicas-cd-display strong {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  border: 1px solid var(--jk-border-input);
+  border-radius: 4px;
+  background: var(--jk-bg-input);
+  color: var(--jk-text-value);
+  font-size: 17px;
+}
+
+.jk-tecnicas-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--jk-text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.jk-tecnicas-layout input,
+.jk-tecnicas-layout select,
 .jk-tecnicas-layout textarea {
-    min-height: 96px;
-    padding: 8px;
-    border: none;
+  min-width: 0;
 }
 
-@media (max-width: 1100px) {
-    .jk-tecnicas-layout .jk-combate-main-grid {
-        grid-template-columns: 1fr;
-    }
+.jk-tecnicas-layout textarea {
+  min-height: 82px;
+  resize: vertical;
+}
+
+/* Níveis ficam compactos na coluna esquerda, sem sobras verticais artificiais. */
+.jk-niveis-card {
+  align-self: stretch;
+}
+
+.jk-niveis-aptidao {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+  justify-content: center;
+}
+
+.jk-niveis-aptidao label {
+  display: grid;
+  min-width: 0;
+  grid-template-rows: 24px 32px;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid var(--jk-border-soft);
+  border-radius: 4px;
+  background: var(--jk-bg-input);
+  text-align: center;
+}
+
+
+.jk-niveis-aptidao label span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 3px;
+  background: var(--jk-bg-section-soft);
+  color: var(--jk-text-secondary);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.jk-niveis-aptidao input[type="number"] {
+  width: 100%;
+  height: 32px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Expansão e Técnica Máxima fecham a coluna esquerda lado a lado. */
+.jk-tecnicas-specials-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.jk-tecnicas-specials-grid > .jk-tecnicas-card {
+  height: 100%;
+}
+
+.jk-tecnicas-specials-grid textarea {
+  min-height: 78px;
+}
+
+/* Coluna direita é exclusivamente reservada para as duas listas. */
+.jk-tecnicas-lists-column {
+  gap: 12px;
+}
+
+.jk-tecnicas-list-card {
+  width: 100%;
+}
+
+.jk-tecnicas-table {
+  overflow: hidden;
+  border: 1px solid var(--jk-border-soft);
+  border-radius: 4px;
+}
+
+.jk-tecnicas-table-head,
+.jk-tecnicas-table-row {
+  display: grid;
+  grid-template-columns: 20px minmax(86px, 1fr) 34px 34px 46px 58px;
+  align-items: center;
+}
+
+.jk-tecnicas-table-head {
+  min-height: 25px;
+  background: var(--jk-bg-section-soft);
+  color: var(--jk-text-secondary);
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.jk-tecnicas-table-head span:nth-child(2) {
+  padding-left: 6px;
+  text-align: left;
+}
+
+.jk-tecnicas-table-row {
+  min-height: 29px;
+  border-top: 1px solid var(--jk-border-soft);
+  color: var(--jk-text-secondary);
+  font-size: 10px;
+  text-align: center;
+}
+
+.jk-aptidoes-table .jk-tecnica-entry-name {
+  font-size: 10px;
+}
+
+.jk-tecnica-entry-name {
+  overflow: hidden;
+  padding: 0 8px;
+  color: var(--jk-text-primary);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jk-tecnica-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
+  padding-right: 1px;
+}
+
+.jk-tecnica-actions .jk-row-action {
+  width: 18px;
+  min-width: 18px;
+  height: 22px;
+  font-size: 9px;
+}
+
+.jk-feiticos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jk-feitico-grupo {
+  overflow: hidden;
+  border: 1px solid var(--jk-border-soft);
+  border-radius: 4px;
+}
+
+.jk-feitico-nivel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  background: var(--jk-bg-section-soft);
+  color: var(--jk-text-secondary);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.jk-feitico-pe {
+  color: var(--jk-text-muted);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.jk-feitico-table-head,
+.jk-feitico-row {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) 82px 58px;
+  align-items: center;
+}
+
+.jk-feitico-table-head {
+  min-height: 23px;
+  background: var(--jk-bg-input);
+  color: var(--jk-text-muted);
+  font-size: 8px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.jk-feitico-table-head span:nth-child(2) {
+  padding-left: 6px;
+  text-align: left;
+}
+
+.jk-feitico-row {
+  min-height: 30px;
+  border-top: 1px solid var(--jk-border-soft);
+}
+
+.jk-feitico-conjuracao {
+  overflow: hidden;
+  padding: 0 4px;
+  color: var(--jk-text-secondary);
+  font-size: 9px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jk-reorder-handle {
+  display: flex;
+  width: 20px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: var(--jk-text-muted);
+  cursor: grab;
+  font-size: 9px;
+}
+
+.jk-reorder-handle:active {
+  cursor: grabbing;
+}
+
+.jk-reorder-row.is-dragging {
+  opacity: .45;
+}
+
+.jk-reorder-row.is-drop-target {
+  background: var(--jk-bg-input-hover);
+}
+
+.jk-tecnicas-empty {
+  padding: 14px 10px;
+  color: var(--jk-text-muted);
+  font-size: 11px;
+  font-style: italic;
+  text-align: center;
+}
+
+.jk-tecnicas-inline-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.jk-tecnicas-expansao-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.jk-tecnicas-expansao-fields .jk-tecnicas-field + .jk-tecnicas-field {
+  margin-top: 0;
+}
+
+.jk-tecnicas-expansao-fields input {
+  text-align: center;
+}
+
+.jk-tecnica-maxima-card textarea {
+  min-height: 126px;
+}
+
+.jk-tecnicas-field + .jk-tecnicas-field {
+  margin-top: 8px;
+}
+
+.jk-tecnicas-inline-fields .jk-tecnicas-field + .jk-tecnicas-field {
+  margin-top: 0;
+}
+
+.jk-tecnica-dialog-form .form-group {
+  margin-bottom: 10px;
+}
+
+.jk-tecnica-dialog-form .form-group label {
+  font-weight: 700;
+}
+
+.jk-tecnica-dialog-form textarea {
+  width: 100%;
+  min-height: 130px;
+  resize: vertical;
+}
+
+.jk-tecnica-dialog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.jk-feitico-dialog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.jk-tecnica-chat-card h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.jk-tecnica-chat-card p {
+  margin: 6px 0 0;
+}
+
+.jk-tecnica-chat-meta {
+  color: var(--jk-text-muted);
+  font-size: 11px;
+}
+
+@media (max-width: 1180px) {
+  .jk-tecnicas-workspace {
+    grid-template-columns: minmax(500px, 1.35fr) minmax(340px, .8fr);
+  }
+
+  .jk-tecnicas-perfil-grid {
+    grid-template-columns: 1.15fr .85fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .jk-tecnicas-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .jk-tecnicas-lists-column {
+    order: 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .jk-tecnicas-perfil-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .jk-tecnicas-perfil-grid,
+  .jk-tecnicas-inline-fields,
+  .jk-tecnicas-specials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .jk-niveis-aptidao {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+/* ==========================================================
+   PERFIL AMALDIÇOADO — alinhamento e compactação dos controles
+   ========================================================== */
+.jk-tecnicas-perfil-grid {
+  grid-template-columns: minmax(190px, 1.15fr) minmax(150px, .9fr) minmax(160px, .82fr) minmax(160px, .82fr);
+  gap: 14px;
+  align-items: end;
+}
+
+.jk-tecnicas-perfil-grid > label,
+.jk-tecnicas-perfil-grid > .jk-tecnicas-cd-display {
+  min-width: 0;
+}
+
+.jk-tecnicas-perfil-grid > label {
+  justify-content: flex-end;
+}
+
+.jk-tecnicas-perfil-grid input,
+.jk-tecnicas-perfil-grid select {
+  height: 30px;
+}
+
+.jk-tecnicas-cd-display {
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.jk-tecnicas-cd-row {
+  display: grid;
+  grid-template-columns: 86px 44px;
+  gap: 6px;
+  align-items: end;
+  justify-content: center;
+}
+
+.jk-tecnicas-cd-display strong {
+  width: 86px;
+  min-height: 30px;
+  height: 30px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.jk-tecnicas-cd-outros-control {
+  width: 44px;
+  gap: 4px;
+  font-size: 9px;
+  line-height: 1;
+}
+
+.jk-tecnicas-cd-outros-control span {
+  min-height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jk-tecnicas-cd-outros-control input {
+  width: 44px;
+  height: 30px;
+  padding: 0 3px;
+  font-size: 10px;
+  text-align: center;
+}
+
+.jk-tecnicas-feiticos-conhecidos input {
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .jk-tecnicas-perfil-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ==========================================================
+   PERFIL AMALDIÇOADO — ALINHAMENTO DOS CONTROLES
+   ========================================================== */
+
+.jk-tecnicas-perfil-grid {
+  grid-template-columns:
+    minmax(210px, 1.45fr)
+    minmax(155px, 1fr)
+    minmax(82px, .55fr)
+    52px
+    minmax(96px, .65fr)
+    52px;
+  gap: 10px;
+  align-items: end;
+}
+
+.jk-tecnicas-perfil-grid > label,
+.jk-tecnicas-perfil-grid > .jk-tecnicas-cd-display {
+  min-width: 0;
+  justify-content: flex-end;
+}
+
+.jk-tecnicas-perfil-grid > label > span,
+.jk-tecnicas-perfil-grid > .jk-tecnicas-cd-display > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 16px;
+  margin: 0;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.jk-tecnicas-perfil-grid > label > input,
+.jk-tecnicas-perfil-grid > label > select,
+.jk-tecnicas-perfil-grid > .jk-tecnicas-cd-display > strong {
+  height: 30px;
+  min-height: 30px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.jk-tecnicas-cd-display {
+  gap: 5px;
+}
+
+.jk-tecnicas-cd-display strong {
+  width: 100%;
+  font-size: 14px;
+}
+
+.jk-tecnicas-cd-outros-control {
+  gap: 5px;
+  font-size: 10px;
+}
+
+.jk-tecnicas-cd-outros-control input {
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  font-size: 10px;
+}
+
+@media (max-width: 900px) {
+  .jk-tecnicas-perfil-grid {
+    grid-template-columns: minmax(180px, 1.3fr) minmax(140px, 1fr) minmax(76px, .55fr) 48px minmax(90px, .65fr) 48px;
+    gap: 7px;
+  }
+}
+
+
+/* ==========================================================
+   PERFIL AMALDIÇOADO — PROPORÇÕES FINAIS
+   ========================================================== */
+
+.jk-tecnicas-perfil-grid {
+  grid-template-columns:
+    minmax(230px, 1.65fr)
+    minmax(105px, .72fr)
+    minmax(88px, .72fr)
+    minmax(66px, .48fr)
+    minmax(100px, .78fr)
+    minmax(66px, .48fr);
+  column-gap: 12px;
+}
+
+.jk-tecnicas-feiticos-conhecidos {
+  max-width: 150px;
+  width: 100%;
+  justify-self: center;
+}
+
+.jk-tecnicas-cd-display,
+.jk-tecnicas-cd-outros-control {
+  width: 100%;
+}
+
+.jk-tecnicas-cd-display strong,
+.jk-tecnicas-cd-outros-control input {
+  width: 100%;
+  height: 30px;
+  min-height: 30px;
+  box-sizing: border-box;
+}
+
+.jk-tecnicas-cd-outros-control input {
+  padding-inline: 6px;
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .jk-tecnicas-perfil-grid {
+    grid-template-columns:
+      minmax(200px, 1.55fr)
+      minmax(96px, .7fr)
+      minmax(82px, .7fr)
+      minmax(60px, .46fr)
+      minmax(92px, .76fr)
+      minmax(60px, .46fr);
+    column-gap: 8px;
+  }
+}
+
+
+/* ==========================================================
+   ABA TÉCNICAS — REFINO DE CAMPOS ESPECIAIS
+   ========================================================== */
+
+/* Nomes digitados nas técnicas ficam centralizados. */
+.jk-tecnicas-layout input[name="system.tecnicas.especiais.tecnicaAmaldicoada.nome"],
+.jk-tecnicas-layout input[name="system.tecnicas.especiais.tecnicaMaxima.nome"] {
+  text-align: center;
+}
+
+/* Texto digitado nas descrições: 2px menor que o padrão atual da aba. */
+.jk-tecnicas-layout textarea[name="system.tecnicas.especiais.tecnicaAmaldicoada.descricao"],
+.jk-tecnicas-layout textarea[name="system.tecnicas.especiais.expansao.descricao"],
+.jk-tecnicas-layout textarea[name="system.tecnicas.especiais.tecnicaMaxima.descricao"] {
+  font-size: 11px;
+}
+
+/* Inputs Nome/Tipo dos blocos especiais: +1px. */
+.jk-tecnicas-layout input[name="system.tecnicas.especiais.tecnicaAmaldicoada.nome"],
+.jk-tecnicas-layout input[name="system.tecnicas.especiais.expansao.nome"],
+.jk-tecnicas-layout input[name="system.tecnicas.especiais.expansao.tipo"],
+.jk-tecnicas-layout input[name="system.tecnicas.especiais.tecnicaMaxima.nome"] {
+  font-size: 12px;
 }
 

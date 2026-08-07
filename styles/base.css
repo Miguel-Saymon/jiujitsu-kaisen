@@ -44,7 +44,7 @@
   --jk-accent-ice: #3f7f9e;
   --jk-accent-purple: #6c4bb0;
 
-  --jk-border-section: #5c1f2e;
+  --jk-border-section: #5f2947;
   --jk-border-soft: #b8aec4;
   --jk-border-input: #7b6f86;
   --jk-separator: #b8aec4;
@@ -81,7 +81,7 @@
     --jk-accent-ice: #7eb8d4;
     --jk-accent-purple: #9b7fd4;
 
-    --jk-border-section: #5c1f2e;
+    --jk-border-section: #5f2947;
     --jk-border-soft: #2e2a3a;
     --jk-border-input: #5c5369;
     --jk-separator: #2e2a3a;
@@ -116,7 +116,7 @@ body.fmc-theme-dark .jiujitsu-kaisen.sheet.actor {
   --jk-accent-ice: #7eb8d4;
   --jk-accent-purple: #9b7fd4;
 
-  --jk-border-section: #5c1f2e;
+  --jk-border-section: #5f2947;
   --jk-border-soft: #2e2a3a;
   --jk-border-input: #5c5369;
   --jk-separator: #2e2a3a;
@@ -149,7 +149,7 @@ body.fmc-theme-light .jiujitsu-kaisen.sheet.actor {
   --jk-accent-ice: #3f7f9e;
   --jk-accent-purple: #6c4bb0;
 
-  --jk-border-section: #5c1f2e;
+  --jk-border-section: #5f2947;
   --jk-border-soft: #b8aec4;
   --jk-border-input: #7b6f86;
   --jk-separator: #b8aec4;
@@ -329,6 +329,7 @@ body.fmc-theme-light .jiujitsu-kaisen.sheet.actor {
 .jk-dialog-summary p {
   margin: 4px 0;
 }
+
 
 
 

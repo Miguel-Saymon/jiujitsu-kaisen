@@ -1,6 +1,7 @@
 import { calcularAtributos } from "../calculations/atributos.js";
 import { calcularPericias } from "../calculations/pericias.js";
 import { calcularCombate } from "../calculations/combate.js";
+import { calcularPerfilTecnicas } from "../calculations/tecnicas.js";
 import { obterOpcoesEspecializacao, personagemEhRestringido } from "../helpers/especializacoes.js";
 import { registerLevelListener } from "../listeners/level-listener.js";
 import { ATRIBUTOS_LABELS } from "../constants/atributos.js";
@@ -17,6 +18,7 @@ import { obterBonusTreino } from "../helpers/proficiencia.js";
 import { prepararTreinamentos } from "../trainings/training-config.js";
 import { calcularBonusTreinamentos, calcularAptidoesEfetivas, calcularRecursosEfetivos } from "../trainings/training-calculations.js";
 import { registerTrainingListener } from "../trainings/training-listener.js";
+import { registerTecnicasListener } from "../listeners/tecnicas-listener.js";
 
 export class JKCharacterSheet extends ActorSheet {
   static get defaultOptions() {
@@ -47,6 +49,7 @@ recalcularDadosDerivados() {
     penalidadeDefesa: carga.sobrecarregado ? -5 : 0
   });
   calcularDadosVida(system);
+  calcularPerfilTecnicas(system);
 
   return { carga };
 }
@@ -122,6 +125,58 @@ context.combateAtaques = itensCombate.ataques;
 context.combateEquipamentos = itensCombate.equipamentos;
 context.combateConsumiveis = itensCombate.consumiveis;
 context.combateTesouros = itensCombate.tesouros;
+
+const aptidoesLista = Array.isArray(context.system.tecnicas?.aptidoesLista)
+  ? context.system.tecnicas.aptidoesLista
+  : [];
+context.tecnicasAptidoes = aptidoesLista;
+
+const feiticosLista = Array.isArray(context.system.tecnicas?.feiticosLista)
+  ? context.system.tecnicas.feiticosLista
+  : [];
+
+const custoPePorNivelFeitico = {
+  0: 0,
+  1: 2,
+  2: 5,
+  3: 8,
+  4: 12,
+  5: 20
+};
+
+context.tecnicasFeiticosGrupos = [0, 1, 2, 3, 4, 5]
+  .map(nivel => ({
+    nivel,
+    custoPe: custoPePorNivelFeitico[nivel] ?? 0,
+    feiticos: feiticosLista.filter(feitico => Number(feitico.nivel) === nivel)
+  }))
+  .filter(grupo => grupo.feiticos.length > 0);
+
+context.tecnicasTemFeiticos = context.tecnicasFeiticosGrupos.length > 0;
+
+const perfilTecnicas = calcularPerfilTecnicas(context.system);
+const atributoPadraoTecnicas = perfilTecnicas?.atributoPadrao ?? "presenca";
+const atributoOverrideTecnicas = perfilTecnicas?.atributoOverride ?? "";
+const atributoEfetivoTecnicas = perfilTecnicas?.atributoEfetivo ?? atributoPadraoTecnicas;
+
+const atributosNomesCompletos = {
+  forca: "Força",
+  destreza: "Destreza",
+  constituicao: "Constituição",
+  inteligencia: "Inteligência",
+  sabedoria: "Sabedoria",
+  presenca: "Presença"
+};
+
+context.tecnicasAtributoPadrao = atributoPadraoTecnicas;
+context.tecnicasAtributoPadraoLabel = atributosNomesCompletos[atributoPadraoTecnicas] ?? "Presença";
+context.tecnicasAtributoOverride = atributoOverrideTecnicas;
+context.tecnicasAtributoEfetivo = atributoEfetivoTecnicas;
+context.tecnicasCdTecnica = perfilTecnicas?.cdTecnica ?? 10;
+context.tecnicasCdAmaldicoada = perfilTecnicas?.cdAmaldicoada ?? 10;
+context.tecnicasCdTecnicaOutros = perfilTecnicas?.outrosCdTecnica ?? 0;
+context.tecnicasCdAmaldicoadaOutros = perfilTecnicas?.outrosCdAmaldicoada ?? 0;
+context.tecnicasFeiticosConhecidos = perfilTecnicas?.feiticosConhecidos ?? 0;
 
 context.cargaAtual = carga.atual;
 context.cargaLimite = carga.limite;
@@ -209,6 +264,7 @@ activateListeners(html) {
   registerDeathSaveListener(this, html);
   registerCombatListener(this, html);
   registerTrainingListener(this, html);
+  registerTecnicasListener(this, html);
 
   const atualizarDeslocamentoTotal = () => {
     const base = Number(html.find('[name="system.combate.deslocamento"]').val()) || 0;
@@ -220,16 +276,20 @@ activateListeners(html) {
   html.find('[name="system.combate.deslocamento"], [name="system.combate.deslocamentoOutros"]')
     .on('input', atualizarDeslocamentoTotal);
 
-  const returnTab = this._jkDerivedReturnTab ?? this._jkTrainingReturnTab;
+  const returnTab = this._jkDerivedReturnTab ?? this._jkTrainingReturnTab ?? this._jkTecnicasReturnTab;
   if (returnTab) {
     const scrollTop = this._jkDerivedReturnTab
       ? (this._jkDerivedScrollTop ?? 0)
-      : (this._jkTrainingScrollTop ?? 0);
+      : this._jkTrainingReturnTab
+        ? (this._jkTrainingScrollTop ?? 0)
+        : (this._jkTecnicasScrollTop ?? 0);
 
     this._jkDerivedReturnTab = null;
     this._jkDerivedScrollTop = null;
     this._jkTrainingReturnTab = null;
     this._jkTrainingScrollTop = null;
+    this._jkTecnicasReturnTab = null;
+    this._jkTecnicasScrollTop = null;
 
     requestAnimationFrame(() => {
       this._tabs?.[0]?.activate(returnTab);
@@ -532,6 +592,11 @@ function criarLinhaVaziaCombate(prefixo) {
     notas: ""
   };
 }
+
+
+
+
+
 
 
 

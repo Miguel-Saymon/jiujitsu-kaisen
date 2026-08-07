@@ -9,7 +9,7 @@
   margin-bottom: 12px;
   padding: 16px 20px;
   background: #1E1228;
-  border-bottom: 2px solid #4A1020;
+  border-bottom: 2px solid var(--jk-border-section);
 }
 
 .jk-profile-img {
@@ -43,7 +43,7 @@
   color: #f0e0ff;
 
   border: none;
-  border-bottom: 2px solid #4A1020;
+  border-bottom: 2px solid var(--jk-border-section);
   border-radius: 3px;
 
   font-family: "Cinzel", serif;
@@ -61,7 +61,7 @@
   background: #1E1228;
   color: #f0e0ff;
   border-color: #3A3548;
-  border-bottom-color: #4A1020;
+  border-bottom-color: var(--jk-border-section);
   outline: none;
   box-shadow: none;
 }
@@ -370,4 +370,5 @@
     grid-template-columns: 1fr;
   }
 }
+
 
