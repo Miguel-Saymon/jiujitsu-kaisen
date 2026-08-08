@@ -1,4 +1,5 @@
 import { JKCharacterSheet } from "./sheets/character-sheet.js";
+import { JKInvocacaoSheet } from "./sheets/invocacao-sheet.js";
 import { JKItemSheet } from "./sheets/item-sheet.js";
 import { registerDamageApplicationHooks } from "./rolls/damage-application.js";
 
@@ -35,6 +36,11 @@ Hooks.once("init", async function () {
     makeDefault: true
   });
 
+  Actors.registerSheet("jiujitsu-kaisen", JKInvocacaoSheet, {
+    types: ["invocacao"],
+    makeDefault: true
+  });
+
   Items.unregisterSheet("core", ItemSheet);
 
   Items.registerSheet("jiujitsu-kaisen", JKItemSheet, {
@@ -44,4 +50,5 @@ Hooks.once("init", async function () {
 
   registerDamageApplicationHooks();
 });
+
 

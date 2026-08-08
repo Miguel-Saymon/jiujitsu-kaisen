@@ -1,0 +1,271 @@
+<form class="{{cssClass}} jk-invocacao" autocomplete="off">
+  <header class="jk-invocacao-header">
+    <div class="jk-invocacao-imagem-wrap">
+      <img
+        class="jk-invocacao-imagem"
+        src="{{actor.img}}"
+        data-edit="img"
+        title="Clique para alterar a imagem"
+        alt="{{actor.name}}"
+      />
+    </div>
+
+    <div class="jk-invocacao-header-info">
+      <input
+        class="jk-invocacao-nome"
+        name="name"
+        type="text"
+        value="{{actor.name}}"
+        placeholder="Nome da Invocação"
+      />
+
+      <label class="jk-invocacao-grau">
+        <span>Grau da Invocação</span>
+        <select name="system.grau">
+          <option value="" {{#unless system.grau}}selected{{/unless}}>—</option>
+          <option value="4" {{#if (eq system.grau "4")}}selected{{/if}}>Quarto Grau</option>
+          <option value="3" {{#if (eq system.grau "3")}}selected{{/if}}>Terceiro Grau</option>
+          <option value="2" {{#if (eq system.grau "2")}}selected{{/if}}>Segundo Grau</option>
+          <option value="1" {{#if (eq system.grau "1")}}selected{{/if}}>Primeiro Grau</option>
+          <option value="especial" {{#if (eq system.grau "especial")}}selected{{/if}}>Grau Especial</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <nav class="jk-invocacao-tabs sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="principal">Principal</a>
+    <a class="item" data-tab="pericias">Perícias</a>
+  </nav>
+
+  <section class="jk-invocacao-sheet-body">
+    <div class="tab" data-group="primary" data-tab="principal">
+
+      <section class="jk-invocacao-card jk-invocacao-informacoes">
+        <h2>Informações</h2>
+
+        <div class="jk-invocacao-info-grid">
+          <div class="jk-invocacao-info-card jk-invocacao-pv-card">
+            <span class="jk-invocacao-info-label">Pontos de Vida</span>
+            <div class="jk-invocacao-pv-values">
+              <label>
+                <small>Atual</small>
+                <input name="system.recursos.pv.atual" type="number" value="{{system.recursos.pv.atual}}" />
+              </label>
+              <b>/</b>
+              <label>
+                <small>Máx.</small>
+                <input name="system.recursos.pv.max" type="number" value="{{system.recursos.pv.max}}" />
+              </label>
+            </div>
+          </div>
+
+          <label class="jk-invocacao-info-card">
+            <span class="jk-invocacao-info-label">Defesa</span>
+            <input name="system.defesa" type="number" value="{{system.defesa}}" />
+          </label>
+
+          <label class="jk-invocacao-info-card">
+            <span class="jk-invocacao-info-label">Deslocamento</span>
+            <input name="system.deslocamento" type="number" value="{{system.deslocamento}}" />
+          </label>
+        </div>
+      </section>
+
+      <div class="jk-invocacao-principal-grid">
+        <div class="jk-invocacao-left-column">
+          <section class="jk-invocacao-card jk-invocacao-atributos">
+            <h2>Atributos</h2>
+
+            <div class="jk-invocacao-table-head">
+              <span>Atributo</span><span>Valor</span><span>Modificador</span>
+            </div>
+
+            {{#each atributosInvocacao}}
+              <div class="jk-invocacao-atributo-row">
+                <span>{{nome}}</span>
+                <input name="system.atributos.{{key}}.valor" type="number" value="{{valor}}" />
+                <strong>{{modificador}}</strong>
+              </div>
+            {{/each}}
+          </section>
+
+          <section class="jk-invocacao-card jk-invocacao-caracteristicas">
+            <h2>Características</h2>
+            <textarea
+              name="system.caracteristicas"
+              placeholder="Características da invocação..."
+            >{{system.caracteristicas}}</textarea>
+          </section>
+        </div>
+
+        <section class="jk-invocacao-card jk-invocacao-acoes-card">
+          <div class="jk-invocacao-card-header">
+            <h2>Ações</h2>
+            <button type="button" class="jk-invocacao-add-acao" title="Criar nova ação">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+
+          <div class="jk-invocacao-action-group jk-invocacao-action-group--attack">
+            <div class="jk-invocacao-action-group-title">
+              <span>Ataques</span>
+            </div>
+
+            <div class="jk-invocacao-attack-head">
+              <span></span><span>Nome</span><span>Dano</span><span>Crítico</span><span>Ações</span>
+            </div>
+
+            <div class="jk-invocacao-action-list">
+              {{#each invocacaoAtaques}}
+                <div class="jk-invocacao-attack-row" data-item-id="{{id}}">
+                  <span class="jk-invocacao-drag-handle jk-invocacao-drag-ataque" draggable="true" title="Reorganizar">
+                    <i class="fas fa-grip-vertical"></i>
+                  </span>
+
+                  <button
+                    type="button"
+                    class="jk-invocacao-name-button jk-invocacao-attack-name"
+                    data-item-id="{{id}}"
+                    title="Editar Ataque"
+                  >{{nome}}</button>
+
+                  <span>{{dano}}</span>
+                  <span>{{critico}}</span>
+
+                  <div class="jk-invocacao-action-controls">
+                    <button
+                      type="button"
+                      class="jk-invocacao-row-action jk-invocacao-edit-ataque"
+                      data-item-id="{{id}}"
+                      title="Editar Ataque"
+                    ><i class="fas fa-pencil-alt"></i></button>
+
+                    <button
+                      type="button"
+                      class="jk-invocacao-row-action jk-invocacao-remove-ataque"
+                      data-item-id="{{id}}"
+                      title="Remover Ataque"
+                    ><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+              {{else}}
+                <div class="jk-invocacao-action-empty">Nenhum ataque.</div>
+              {{/each}}
+            </div>
+          </div>
+
+          <div class="jk-invocacao-action-group jk-invocacao-action-group--hability">
+            <div class="jk-invocacao-action-group-title">
+              <span>Habilidades</span>
+            </div>
+
+            <div class="jk-invocacao-hability-head">
+              <span></span><span>Nome</span><span>Execução</span><span>Ações</span>
+            </div>
+
+            <div class="jk-invocacao-action-list">
+              {{#each invocacaoHabilidades}}
+                <div class="jk-invocacao-hability-row" data-id="{{id}}">
+                  <span class="jk-invocacao-drag-handle jk-invocacao-drag-habilidade" draggable="true" data-id="{{id}}" title="Reorganizar">
+                    <i class="fas fa-grip-vertical"></i>
+                  </span>
+
+                  <button
+                    type="button"
+                    class="jk-invocacao-name-button jk-invocacao-hability-name"
+                    data-id="{{id}}"
+                    title="Editar Habilidade"
+                  >{{nome}}</button>
+
+                  <span class="jk-invocacao-execucao">{{execucao}}</span>
+
+                  <div class="jk-invocacao-action-controls">
+                    <button
+                      type="button"
+                      class="jk-invocacao-row-action jk-invocacao-edit-habilidade"
+                      data-id="{{id}}"
+                      title="Editar Habilidade"
+                    ><i class="fas fa-pencil-alt"></i></button>
+
+                    <button
+                      type="button"
+                      class="jk-invocacao-row-action jk-invocacao-remove-habilidade"
+                      data-id="{{id}}"
+                      title="Remover Habilidade"
+                    ><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+              {{else}}
+                <div class="jk-invocacao-action-empty">Nenhuma habilidade.</div>
+              {{/each}}
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="tab" data-group="primary" data-tab="pericias">
+      <section class="jk-invocacao-card jk-invocacao-resistencias">
+        <h2>Testes de Resistência</h2>
+
+        <div class="jk-invocacao-resistencia-head">
+          <span>Teste</span><span>Atr.</span><span>Mod.</span><span>Outros</span><span>Total</span>
+        </div>
+
+        {{#each resistenciasInvocacao}}
+          <div class="jk-invocacao-resistencia-row">
+            <span class="jk-invocacao-resistencia-nome">{{nome}}</span>
+            <span class="jk-invocacao-resistencia-atributo">{{atributoLabel}}</span>
+            <span class="jk-invocacao-resistencia-modificador">{{numberFormat modificador sign=true}}</span>
+            <input
+              name="system.testesResistencia.{{key}}.outros"
+              type="number"
+              value="{{outros}}"
+            />
+            <strong class="jk-invocacao-resistencia-total">{{numberFormat total sign=true}}</strong>
+          </div>
+        {{/each}}
+      </section>
+
+      <section class="jk-invocacao-card jk-invocacao-pericias">
+        <h2>Perícias</h2>
+
+        <div class="jk-invocacao-pericia-head">
+          <span>Nome</span><span>Atributo</span><span>Outros</span><span>Bônus</span>
+        </div>
+
+        {{#each periciasInvocacao}}
+          <div class="jk-invocacao-pericia-row" data-skill-key="{{key}}">
+            <span class="jk-invocacao-pericia-nome">
+              {{nome}}
+              {{#if customizavel}}
+                <input
+                  class="jk-invocacao-pericia-custom"
+                  name="system.pericias.{{dataPath}}.customNome"
+                  type="text"
+                  value="{{customNome}}"
+                  placeholder="..."
+                />
+              {{/if}}
+            </span>
+
+            <select name="system.pericias.{{dataPath}}.atributo">
+              <option value="forca" {{#if (eq atributo "forca")}}selected{{/if}}>FOR</option>
+              <option value="destreza" {{#if (eq atributo "destreza")}}selected{{/if}}>DES</option>
+              <option value="constituicao" {{#if (eq atributo "constituicao")}}selected{{/if}}>CON</option>
+              <option value="inteligencia" {{#if (eq atributo "inteligencia")}}selected{{/if}}>INT</option>
+              <option value="sabedoria" {{#if (eq atributo "sabedoria")}}selected{{/if}}>SAB</option>
+              <option value="presenca" {{#if (eq atributo "presenca")}}selected{{/if}}>PRE</option>
+            </select>
+
+            <input name="system.pericias.{{dataPath}}.outros" type="number" value="{{outros}}" />
+            <strong>{{numberFormat bonus sign=true}}</strong>
+          </div>
+        {{/each}}
+      </section>
+    </div>
+  </section>
+</form>
+
+

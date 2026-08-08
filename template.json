@@ -1,7 +1,8 @@
 {
   "Actor": {
     "types": [
-      "character"
+      "character",
+      "invocacao"
     ],
     "character": {
       "info": {
@@ -544,6 +545,169 @@
             "atual": 0,
             "meta": 0
           }
+        }
+      }
+    },
+    "invocacao": {
+      "grau": "",
+      "recursos": {
+        "pv": {
+          "atual": 0,
+          "max": 0
+        }
+      },
+      "defesa": 10,
+      "deslocamento": 9,
+      "atributos": {
+        "forca": {
+          "valor": 10
+        },
+        "destreza": {
+          "valor": 10
+        },
+        "constituicao": {
+          "valor": 10
+        },
+        "inteligencia": {
+          "valor": 10
+        },
+        "sabedoria": {
+          "valor": 10
+        },
+        "presenca": {
+          "valor": 10
+        }
+      },
+      "acoes": "",
+      "caracteristicas": "",
+      "pericias": {
+        "atletismo": {
+          "nome": "Atletismo",
+          "atributo": "forca",
+          "outros": 0
+        },
+        "acrobacia": {
+          "nome": "Acrobacia",
+          "atributo": "destreza",
+          "outros": 0
+        },
+        "furtividade": {
+          "nome": "Furtividade",
+          "atributo": "destreza",
+          "outros": 0
+        },
+        "prestidigitacao": {
+          "nome": "Prestidigitação",
+          "atributo": "destreza",
+          "outros": 0
+        },
+        "feiticaria": {
+          "nome": "Feitiçaria",
+          "atributo": "inteligencia",
+          "outros": 0
+        },
+        "historia": {
+          "nome": "História",
+          "atributo": "inteligencia",
+          "outros": 0
+        },
+        "investigacao": {
+          "nome": "Investigação",
+          "atributo": "inteligencia",
+          "outros": 0
+        },
+        "oficio1": {
+          "nome": "Ofício",
+          "atributo": "inteligencia",
+          "outros": 0,
+          "customizavel": true,
+          "customNome": ""
+        },
+        "oficio2": {
+          "nome": "Ofício",
+          "atributo": "inteligencia",
+          "outros": 0,
+          "customizavel": true,
+          "customNome": ""
+        },
+        "tecnologia": {
+          "nome": "Tecnologia",
+          "atributo": "inteligencia",
+          "outros": 0
+        },
+        "teologia": {
+          "nome": "Teologia",
+          "atributo": "inteligencia",
+          "outros": 0
+        },
+        "direcao": {
+          "nome": "Direção",
+          "atributo": "sabedoria",
+          "outros": 0
+        },
+        "intuicao": {
+          "nome": "Intuição",
+          "atributo": "sabedoria",
+          "outros": 0
+        },
+        "medicina": {
+          "nome": "Medicina",
+          "atributo": "sabedoria",
+          "outros": 0
+        },
+        "ocultismo": {
+          "nome": "Ocultismo",
+          "atributo": "sabedoria",
+          "outros": 0
+        },
+        "percepcao": {
+          "nome": "Percepção",
+          "atributo": "sabedoria",
+          "outros": 0
+        },
+        "sobrevivencia": {
+          "nome": "Sobrevivência",
+          "atributo": "sabedoria",
+          "outros": 0
+        },
+        "enganacao": {
+          "nome": "Enganação",
+          "atributo": "presenca",
+          "outros": 0
+        },
+        "intimidacao": {
+          "nome": "Intimidação",
+          "atributo": "presenca",
+          "outros": 0
+        },
+        "performance": {
+          "nome": "Performance",
+          "atributo": "presenca",
+          "outros": 0
+        },
+        "persuasao": {
+          "nome": "Persuasão",
+          "atributo": "presenca",
+          "outros": 0
+        }
+      },
+      "acoesLista": [],
+      "habilidadesLista": [],
+      "testesResistencia": {
+        "astucia": {
+          "outros": 0
+        },
+        "fortitude": {
+          "outros": 0
+        },
+        "integridade": {
+          "outros": 0
+        },
+        "reflexos": {
+          "outros": 0
+        },
+        "vontade": {
+          "outros": 0
         }
       }
     }

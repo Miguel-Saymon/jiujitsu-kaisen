@@ -131,6 +131,29 @@ export class JKItemSheet extends ItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
+    // Espaços (peso) e quantidade alteram a carga do Actor.
+    // Salva e renderiza a ficha do Actor imediatamente para atualizar a barra.
+    html.find('input[name="system.espacos"], input[name="system.quantidade"]').on("change", async event => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      const input = event.currentTarget;
+      const path = input.name;
+      const raw = input.value;
+      const value = raw === "" ? null : Number(raw);
+
+      await this.item.update({
+        [path]: Number.isFinite(value) ? value : null
+      }, { render: false });
+
+      this._syncParentActorInventoryRow();
+
+      const actor = this.item.parent;
+      if (actor?.documentName === "Actor" && actor.sheet?.rendered) {
+        actor.sheet.render(false);
+      }
+    });
+
     // Troca de tipo de Equipamento sem rerender completo.
     // Atualiza apenas a área de Encantos para Escudo/Uniforme.
     html.find('select[name="system.equipamento.tipo"]').on("change", async event => {
@@ -421,5 +444,6 @@ function criarDanoPadrao() {
 function criarAtaqueConsumivelPadrao() {
   return { atributo: "", bonus: "" };
 }
+
 
 
