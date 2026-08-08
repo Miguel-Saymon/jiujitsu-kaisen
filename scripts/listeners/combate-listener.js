@@ -32,6 +32,7 @@ function filtrarColecao(obj, prefixo) {
 
 export function registerCombatListener(sheet, html) {
   registrarAutoResizeCaracteristicas(html);
+  registrarTooltipsDescricaoHabilidades(html);
   html.find(".jk-create-actor-item").on("click", async event => {
     event.preventDefault();
     event.stopPropagation();
@@ -256,6 +257,77 @@ function registrarOrdenacaoInventario(sheet, html) {
     if (updates.length) await sheet.actor.updateEmbeddedDocuments("Item", updates);
     sheet.render(false);
   });
+}
+
+
+function registrarTooltipsDescricaoHabilidades(html) {
+  const root = html?.[0];
+  if (!root) return;
+
+  const obterLimitesFicha = () => {
+    const app = root.closest?.(".application, .window-app") ?? root;
+    return app.getBoundingClientRect();
+  };
+
+  const removerTooltip = () => {
+    document.querySelectorAll(".jk-floating-description-tooltip").forEach(el => el.remove());
+  };
+
+  html.find(".jk-description-button").on("mouseenter", event => {
+    removerTooltip();
+
+    const button = event.currentTarget;
+    const description = String(button.dataset.description ?? "").trim() || "Sem descrição.";
+    const bounds = obterLimitesFicha();
+    const buttonRect = button.getBoundingClientRect();
+    const margin = 10;
+
+    const tooltip = document.createElement("div");
+    tooltip.className = "jk-floating-description-tooltip";
+    tooltip.textContent = description;
+
+    // O tooltip precisa ficar no <body> para não ser recortado pela janela,
+    // mas os tokens visuais (--jk-*) existem apenas dentro da ficha.
+    // Copiamos os tokens resolvidos para preservar exatamente as mesmas
+    // cores/tipografia do tooltip original.
+    const tokenSource = root.closest?.(".jiujitsu-kaisen.sheet.actor") ?? root;
+    const tokenStyles = getComputedStyle(tokenSource);
+    for (const token of [
+      "--jk-bg-section",
+      "--jk-border-soft",
+      "--jk-text-secondary",
+      "--jk-text-muted",
+      "--jk-radius-md",
+      "--jk-font-body"
+    ]) {
+      const value = tokenStyles.getPropertyValue(token).trim();
+      if (value) tooltip.style.setProperty(token, value);
+    }
+
+    document.body.appendChild(tooltip);
+
+    const maxWidth = Math.max(220, Math.min(420, bounds.width - margin * 2));
+    const maxHeight = Math.max(120, bounds.height - margin * 2);
+    tooltip.style.maxWidth = `${maxWidth}px`;
+    tooltip.style.maxHeight = `${maxHeight}px`;
+
+    const tipRect = tooltip.getBoundingClientRect();
+
+    let left = buttonRect.right - tipRect.width;
+    left = Math.max(bounds.left + margin, Math.min(left, bounds.right - tipRect.width - margin));
+
+    let top = buttonRect.top - tipRect.height - 8;
+    if (top < bounds.top + margin) {
+      top = buttonRect.bottom + 8;
+    }
+    top = Math.max(bounds.top + margin, Math.min(top, bounds.bottom - tipRect.height - margin));
+
+    tooltip.style.left = `${Math.round(left)}px`;
+    tooltip.style.top = `${Math.round(top)}px`;
+  });
+
+  html.find(".jk-description-button").on("mouseleave", removerTooltip);
+  html.find(".jk-description-button").on("click", removerTooltip);
 }
 
 function registrarOrdenacaoHabilidades(sheet, html) {
@@ -531,5 +603,6 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+
 
 

@@ -278,16 +278,16 @@
 }
 
 .jk-description-button::after {
-    content: attr(data-description);
+    content: none !important;
+    display: none !important;
+}
 
-    position: absolute;
-    right: 0;
-    bottom: calc(100% + 8px);
+.jk-floating-description-tooltip {
+    position: fixed;
+    z-index: 100000;
 
-    display: none;
-
-    min-width: 260px;
-    max-width: 420px;
+    min-width: 240px;
+    width: max-content;
 
     padding: 10px 12px;
 
@@ -303,19 +303,11 @@
 
     text-align: left;
     white-space: pre-wrap;
+    overflow: hidden auto;
+    box-sizing: border-box;
 
     pointer-events: none;
-
-    z-index: 9999; /* alto o suficiente para sobrepor o Foundry */
-}
-
-.jk-description-button:hover::after {
-    display: block;
-}
-
-.jk-description-button[data-description=""]::after {
-    content: "Sem descrição.";
-    color: var(--jk-text-muted);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .28);
 }
 
 
@@ -385,3 +377,4 @@
     color: #9b70c0;
     font-family: var(--jk-font-number, monospace);
 }
+
