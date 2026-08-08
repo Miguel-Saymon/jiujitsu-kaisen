@@ -1,3 +1,5 @@
+import { rollWeaponAttack } from "../rolls/attack-rolls.js";
+
 export function registerInvocacaoListener(sheet, html) {
   const actor = sheet.actor;
 
@@ -60,6 +62,19 @@ export function registerInvocacaoListener(sheet, html) {
     actor.items.get(itemId)?.sheet?.render(true);
   });
 
+  html.find(".jk-invocacao-roll-ataque").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const itemId = String(event.currentTarget.dataset.itemId ?? "");
+    if (!itemId) return;
+
+    await rollWeaponAttack(actor, itemId, {
+      includeProgression: false,
+      useDefaultAttribute: false
+    });
+  });
+
   html.find(".jk-invocacao-remove-ataque").on("click", async event => {
     event.preventDefault();
     event.stopPropagation();
@@ -96,6 +111,35 @@ export function registerInvocacaoListener(sheet, html) {
       .filter(habilidade => habilidade.id !== id);
 
     await atualizarHabilidades(lista);
+  });
+
+  html.find(".jk-invocacao-chat-habilidade").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const id = String(event.currentTarget.dataset.id ?? "");
+    const habilidade = normalizarColecao(actor.system.habilidadesLista)
+      .find(item => item.id === id);
+    if (!habilidade) return;
+
+    await enviarHabilidadeInvocacaoParaChat(actor, habilidade);
+  });
+
+  html.find(".jk-invocacao-roll-resistencia").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const button = event.currentTarget;
+    await rolarTesteInvocacao(actor, button.dataset.resistanceName || "Resistência", button.dataset.bonus);
+  });
+
+  html.find(".jk-invocacao-roll-pericia").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const button = event.currentTarget;
+    const row = button.closest(".jk-invocacao-pericia-row");
+    const custom = row?.querySelector(".jk-invocacao-pericia-custom")?.value?.trim();
+    const nome = custom ? `${button.dataset.skillName} (${custom})` : (button.dataset.skillName || "Perícia");
+    await rolarTesteInvocacao(actor, nome, button.dataset.bonus);
   });
 
   registrarOrdenacaoAtaques(sheet, html);
@@ -330,5 +374,34 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+
+async function enviarHabilidadeInvocacaoParaChat(actor, habilidade) {
+  const nome = String(habilidade?.nome ?? "").trim() || "Habilidade";
+  const execucao = String(habilidade?.execucao ?? "").trim();
+  const descricao = String(habilidade?.descricao ?? "").trim() || "Sem descrição.";
+
+  await ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    flavor: "Habilidade da Invocação",
+    content: `
+      <details class="jk-ability-chat-details" open>
+        <summary>${escapeHtml(nome)}</summary>
+        ${execucao ? `<div class="jk-invocacao-chat-execucao"><strong>Execução:</strong> ${escapeHtml(execucao)}</div>` : ""}
+        <div>${escapeHtml(descricao).replace(/\n/g, "<br>")}</div>
+      </details>
+    `
+  });
+}
+
+async function rolarTesteInvocacao(actor, nome, bonusBruto) {
+  const bonus = Number(bonusBruto) || 0;
+  const formula = `1d20 ${bonus >= 0 ? "+" : "-"} ${Math.abs(bonus)}`;
+  const roll = await new Roll(formula).evaluate();
+  await roll.toMessage({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    flavor: `Teste de ${nome}`
+  });
 }
 

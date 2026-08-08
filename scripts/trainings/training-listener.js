@@ -7,6 +7,28 @@ import {
 import { calcularBonusTreinamentos, calcularRecursosEfetivos } from "./training-calculations.js";
 
 export function registerTrainingListener(sheet, html) {
+  sheet._jkCollapsedTrainings ??= new Set();
+
+  html.find(".jk-training-card").each((_, card) => {
+    const key = card.dataset.trainingKey;
+    if (key && sheet._jkCollapsedTrainings.has(key)) aplicarEstadoRecolhido(card, true);
+  });
+
+  html.find(".jk-training-collapse-toggle").on("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const button = event.currentTarget;
+    const card = button.closest(".jk-training-card");
+    const key = button.dataset.training || card?.dataset.trainingKey;
+    if (!card || !key) return;
+
+    const recolhido = !card.classList.contains("is-collapsed");
+    aplicarEstadoRecolhido(card, recolhido);
+    if (recolhido) sheet._jkCollapsedTrainings.add(key);
+    else sheet._jkCollapsedTrainings.delete(key);
+  });
+  registrarReordenacaoTreinamentos(sheet, html);
+
   html.find(".jk-training-stage-input").on("change", async event => {
     event.preventDefault();
     event.stopImmediatePropagation();
@@ -346,4 +368,82 @@ function rerenderPreservandoAba(sheet, html) {
   sheet.render(false);
 }
 
+
+
+function registrarReordenacaoTreinamentos(sheet, html) {
+  const grid = html.find(".jk-training-grid")[0];
+  if (!grid) return;
+
+  let cardArrastado = null;
+
+  html.find(".jk-training-drag-handle").each((_, handle) => {
+    handle.addEventListener("dragstart", event => {
+      const card = handle.closest(".jk-training-card");
+      if (!card) return;
+
+      cardArrastado = card;
+      card.classList.add("is-dragging");
+
+      if (event.dataTransfer) {
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", card.dataset.trainingKey ?? "");
+      }
+    });
+
+    handle.addEventListener("dragend", () => {
+      cardArrastado?.classList.remove("is-dragging");
+      grid.querySelectorAll(".jk-training-card.is-drag-over").forEach(card => {
+        card.classList.remove("is-drag-over");
+      });
+      cardArrastado = null;
+    });
+  });
+
+  html.find(".jk-training-card").each((_, card) => {
+    card.addEventListener("dragover", event => {
+      if (!cardArrastado || card === cardArrastado) return;
+      event.preventDefault();
+      if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
+      card.classList.add("is-drag-over");
+    });
+
+    card.addEventListener("dragleave", event => {
+      if (!card.contains(event.relatedTarget)) card.classList.remove("is-drag-over");
+    });
+
+    card.addEventListener("drop", async event => {
+      if (!cardArrastado || card === cardArrastado) return;
+      event.preventDefault();
+      event.stopPropagation();
+      card.classList.remove("is-drag-over");
+
+      const rect = card.getBoundingClientRect();
+      const distanciaVertical = Math.abs(event.clientY - (rect.top + rect.height / 2));
+      const distanciaHorizontal = Math.abs(event.clientX - (rect.left + rect.width / 2));
+      const inserirAntes = distanciaVertical > distanciaHorizontal
+        ? event.clientY < rect.top + rect.height / 2
+        : event.clientX < rect.left + rect.width / 2;
+
+      grid.insertBefore(cardArrastado, inserirAntes ? card : card.nextSibling);
+
+      const ordem = Array.from(grid.querySelectorAll(".jk-training-card"))
+        .map(item => item.dataset.trainingKey)
+        .filter(Boolean);
+
+      await sheet.actor.update({ "system.treinamentos.ordem": ordem }, { render: false });
+    });
+  });
+}
+
+function aplicarEstadoRecolhido(card, recolhido) {
+  card.classList.toggle("is-collapsed", recolhido);
+  const button = card.querySelector(".jk-training-collapse-toggle");
+  if (!button) return;
+  button.setAttribute("aria-expanded", String(!recolhido));
+  button.setAttribute("title", recolhido ? "Expandir treinamento" : "Recolher treinamento");
+  button.setAttribute("aria-label", recolhido ? "Expandir treinamento" : "Recolher treinamento");
+  const icon = button.querySelector("i");
+  icon?.classList.toggle("fa-chevron-up", !recolhido);
+  icon?.classList.toggle("fa-chevron-down", recolhido);
+}
 

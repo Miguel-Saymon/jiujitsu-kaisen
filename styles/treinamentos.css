@@ -84,14 +84,91 @@
   text-decoration: none !important;
 }
 
-.jk-training-focus {
+.jk-training-drag-handle {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--jk-text-muted);
+  font-size: 11px;
+  cursor: grab;
+}
+
+.jk-training-drag-handle:hover {
+  color: var(--jk-accent-purple);
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  text-shadow: none !important;
+}
+
+.jk-training-drag-handle:active {
+  cursor: grabbing;
+}
+
+.jk-training-drag-handle:focus,
+.jk-training-drag-handle:focus-visible,
+.jk-training-drag-handle:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+.jk-training-card.is-dragging {
+  opacity: .52;
+}
+
+.jk-training-card.is-drag-over {
+  border-color: color-mix(in srgb, var(--jk-accent-purple) 72%, var(--jk-border-soft));
+  background: color-mix(in srgb, var(--jk-accent-purple) 10%, var(--jk-bg-section));
+}
+
+.jk-training-collapse-toggle {
   position: absolute;
   right: 9px;
   top: 50%;
   transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--jk-text-muted);
-  font-size: 10px;
-  white-space: nowrap;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.jk-training-collapse-toggle:hover {
+  color: var(--jk-accent-purple);
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  text-shadow: none !important;
+}
+
+.jk-training-collapse-toggle:focus,
+.jk-training-collapse-toggle:focus-visible,
+.jk-training-collapse-toggle:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+.jk-training-card.is-collapsed > :not(.jk-training-card-header) {
+  display: none;
+}
+
+.jk-training-card.is-collapsed .jk-training-card-header {
+  border-bottom: 0;
 }
 
 .jk-training-stages {
@@ -456,4 +533,10 @@
   margin-bottom: 0;
 }
 
+
+
+.jk-training-progress-target[readonly] {
+  cursor: default;
+  opacity: .9;
+}
 

@@ -136,6 +136,13 @@
                   <div class="jk-invocacao-action-controls">
                     <button
                       type="button"
+                      class="jk-invocacao-row-action jk-invocacao-roll-ataque"
+                      data-item-id="{{id}}"
+                      title="Rolar Ataque"
+                    ><i class="fas fa-dice-d20"></i></button>
+
+                    <button
+                      type="button"
                       class="jk-invocacao-row-action jk-invocacao-edit-ataque"
                       data-item-id="{{id}}"
                       title="Editar Ataque"
@@ -183,6 +190,13 @@
                   <div class="jk-invocacao-action-controls">
                     <button
                       type="button"
+                      class="jk-invocacao-row-action jk-invocacao-chat-habilidade"
+                      data-id="{{id}}"
+                      title="Enviar Habilidade ao chat"
+                    ><i class="fas fa-comment"></i></button>
+
+                    <button
+                      type="button"
                       class="jk-invocacao-row-action jk-invocacao-edit-habilidade"
                       data-id="{{id}}"
                       title="Editar Habilidade"
@@ -215,7 +229,7 @@
 
         {{#each resistenciasInvocacao}}
           <div class="jk-invocacao-resistencia-row">
-            <span class="jk-invocacao-resistencia-nome">{{nome}}</span>
+            <button type="button" class="jk-invocacao-resistencia-nome jk-invocacao-roll-resistencia" data-resistance-key="{{key}}" data-resistance-name="{{nome}}" data-bonus="{{total}}" title="Rolar 1d20 + {{numberFormat total sign=true}}">{{nome}}</button>
             <span class="jk-invocacao-resistencia-atributo">{{atributoLabel}}</span>
             <span class="jk-invocacao-resistencia-modificador">{{numberFormat modificador sign=true}}</span>
             <input
@@ -238,7 +252,7 @@
         {{#each periciasInvocacao}}
           <div class="jk-invocacao-pericia-row" data-skill-key="{{key}}">
             <span class="jk-invocacao-pericia-nome">
-              {{nome}}
+              <button type="button" class="jk-invocacao-roll-pericia" data-skill-key="{{key}}" data-skill-name="{{nome}}" data-bonus="{{bonus}}" title="Rolar 1d20 + {{numberFormat bonus sign=true}}">{{nome}}</button>
               {{#if customizavel}}
                 <input
                   class="jk-invocacao-pericia-custom"

@@ -407,7 +407,7 @@
 .jk-invocacao-attack-head,
 .jk-invocacao-attack-row {
   display: grid;
-  grid-template-columns: 22px minmax(95px, 1fr) 58px 58px 48px;
+  grid-template-columns: 22px minmax(95px, 1fr) 58px 58px 68px;
   min-height: 29px;
   align-items: center;
   text-align: center;
@@ -416,7 +416,7 @@
 .jk-invocacao-hability-head,
 .jk-invocacao-hability-row {
   display: grid;
-  grid-template-columns: 22px minmax(110px, 1fr) 90px 48px;
+  grid-template-columns: 22px minmax(110px, 1fr) 90px 68px;
   min-height: 29px;
   align-items: center;
   text-align: center;
@@ -699,4 +699,26 @@
   }
 }
 
+
+/* Nomes roláveis: Resistências e Perícias */
+.jk-invocacao .jk-invocacao-roll-resistencia,
+.jk-invocacao .jk-invocacao-roll-pericia {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.jk-invocacao .jk-invocacao-roll-resistencia:hover,
+.jk-invocacao .jk-invocacao-roll-pericia:hover {
+  color: var(--jk-accent-purple);
+  text-shadow: none;
+}
 

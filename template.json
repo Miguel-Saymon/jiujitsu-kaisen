@@ -410,6 +410,7 @@
         "informacoesExtras": ""
       },
       "treinamentos": {
+        "ordem": [],
         "agilidade": {
           "etapas": {
             "e1": false,

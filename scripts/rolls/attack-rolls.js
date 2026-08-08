@@ -9,7 +9,7 @@ const ROLL_MODE_OPTIONS = {
   selfroll: "Self Roll"
 };
 
-export async function rollWeaponAttack(actor, itemId) {
+export async function rollWeaponAttack(actor, itemId, options = {}) {
   const item = actor?.items?.get(itemId);
   const itemType = ["arma", "equipamento", "consumivel", "tesouro"].includes(item?.type) ? item.type : item?.system?.categoria;
 
@@ -22,7 +22,7 @@ export async function rollWeaponAttack(actor, itemId) {
   if (!config) return;
 
   const weaponName = item.name ?? "Ataque";
-  const attackFormula = buildAttackFormula(actor, item, config);
+  const attackFormula = buildAttackFormula(actor, item, config, options);
   const criticalConfig = getCriticalConfig(item);
 
   const attackRoll = await evaluateFormula(attackFormula, actor);
@@ -124,13 +124,18 @@ async function evaluateFormula(formula, actor) {
   return new Roll(formula, rollData).evaluate();
 }
 
-function buildAttackFormula(actor, item, config) {
+function buildAttackFormula(actor, item, config, options = {}) {
   const dice = getD20Formula(config.d20Mode);
   const attack = item.system?.arma?.ataque ?? {};
-  const attackAttribute = normalizeAttribute(attack.atributo) || getDefaultAttackAttribute(item);
-  const attributeBonus = obterModificadorAtributo(actor.system, attackAttribute);
-  const halfLevel = Math.floor(obterNivel(actor.system) / 2);
-  const trainingBonus = obterBonusTreino(actor.system);
+  const includeProgression = options.includeProgression !== false;
+  const useDefaultAttribute = options.useDefaultAttribute !== false;
+  const selectedAttribute = normalizeAttribute(attack.atributo);
+  const attackAttribute = selectedAttribute || (useDefaultAttribute ? getDefaultAttackAttribute(item) : "");
+  const attributeBonus = attackAttribute
+    ? obterModificadorAtributo(actor.system, attackAttribute)
+    : 0;
+  const halfLevel = includeProgression ? Math.floor(obterNivel(actor.system) / 2) : 0;
+  const trainingBonus = includeProgression ? obterBonusTreino(actor.system) : 0;
   const itemBonus = getNumericBonus(attack.bonus);
   const situationalBonus = normalizeFormulaBonus(config.attackBonus);
 
@@ -332,5 +337,6 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+
 
 

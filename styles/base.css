@@ -161,6 +161,33 @@ body.fmc-theme-light .jiujitsu-kaisen.sheet.actor {
 }
 
 /* ============================= */
+/* Estados interativos globais   */
+/* ============================= */
+
+/*
+ * O Foundry aplica por padrão um brilho vermelho em vários controles
+ * durante hover/focus. O sistema usa roxo como cor de interação; por isso
+ * neutralizamos apenas os efeitos herdados de interação, sem alterar
+ * cores mecânicas como crítico/falha.
+ */
+.jiujitsu-kaisen button:hover,
+.jiujitsu-kaisen button:focus,
+.jiujitsu-kaisen button:focus-visible,
+.jiujitsu-kaisen button:active,
+.jiujitsu-kaisen a:hover,
+.jiujitsu-kaisen a:focus,
+.jiujitsu-kaisen a:focus-visible,
+.jiujitsu-kaisen a:active,
+.jiujitsu-kaisen [role="button"]:hover,
+.jiujitsu-kaisen [role="button"]:focus,
+.jiujitsu-kaisen [role="button"]:focus-visible,
+.jiujitsu-kaisen [role="button"]:active {
+  outline: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* ============================= */
 /* Base da sheet                 */
 /* ============================= */
 
@@ -329,6 +356,7 @@ body.fmc-theme-light .jiujitsu-kaisen.sheet.actor {
 .jk-dialog-summary p {
   margin: 4px 0;
 }
+
 
 
 

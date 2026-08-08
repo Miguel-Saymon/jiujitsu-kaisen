@@ -15,13 +15,16 @@
       {{#each treinamentos as |treino|}}
         <article class="jk-training-card {{#if treino.completo}}is-complete{{/if}}" data-training-key="{{treino.key}}">
           <header class="jk-training-card-header">
+            <button class="jk-training-drag-handle" type="button" draggable="true" data-training="{{treino.key}}" title="Arrastar para reorganizar" aria-label="Arrastar {{treino.nome}} para reorganizar">
+              <i class="fas fa-grip-vertical"></i>
+            </button>
             {{#if treino.temAutomacao}}
               <span class="jk-training-card-auto" title="Este treinamento possui automações">
                 <i class="fas fa-bolt"></i>
               </span>
             {{/if}}
             <h3>{{treino.nome}}</h3>
-            <span class="jk-training-focus" title="Foco investido nas etapas marcadas">{{treino.focoGasto}}/5 Foco</span>
+            <button class="jk-training-collapse-toggle" type="button" data-training="{{treino.key}}" title="Recolher treinamento" aria-label="Recolher treinamento" aria-expanded="true"><i class="fas fa-chevron-up"></i></button>
           </header>
 
           <div class="jk-training-stages">
@@ -85,7 +88,7 @@
               <div class="jk-training-progress-inputs">
                 <input class="jk-training-progress-input" data-progress="current" name="system.treinamentos.{{treino.key}}.progresso.atual" type="number" min="0" value="{{treino.progressoAtual}}" title="Progresso atual" />
                 <span>/</span>
-                <input class="jk-training-progress-input" data-progress="target" name="system.treinamentos.{{treino.key}}.progresso.meta" type="number" min="0" value="{{treino.progressoMeta}}" title="Meta definida pelo mestre" />
+                <input class="jk-training-progress-input jk-training-progress-target" data-progress="target" type="number" min="0" value="{{treino.progressoMeta}}" title="Meta automática conforme as etapas marcadas" readonly tabindex="-1" />
               </div>
             </div>
             <div class="jk-training-progress-track">
@@ -97,4 +100,5 @@
     </div>
   </section>
 </div>
+
 

@@ -279,7 +279,7 @@ export function obterPendenciasSequencia(system, treinoKey, numeroEtapa) {
 
 export function prepararTreinamentos(system) {
   const estado = system.treinamentos ?? {};
-  return Object.entries(TRAINING_CONFIG).map(([key, config]) => {
+  const treinamentos = Object.entries(TRAINING_CONFIG).map(([key, config]) => {
     const salvo = estado[key] ?? {};
     const etapasSalvas = salvo.etapas ?? {};
     const automacao = TRAINING_AUTOMATION_MAP[key] ?? { etapas: [] };
@@ -303,7 +303,9 @@ export function prepararTreinamentos(system) {
     });
     const completo = etapas.every(e => e.ativa);
     const progressoAtual = Math.max(0, Number(salvo.progresso?.atual) || 0);
-    const progressoMeta = Math.max(0, Number(salvo.progresso?.meta) || 0);
+    const etapasAtivas = etapas.filter(etapa => etapa.ativa).length;
+    const metasPorEtapa = [4, 8, 16, 32, 32];
+    const progressoMeta = metasPorEtapa[Math.min(etapasAtivas, metasPorEtapa.length - 1)];
     const progressoPercentual = progressoMeta > 0
       ? Math.min(100, Math.max(0, (progressoAtual / progressoMeta) * 100))
       : 0;
@@ -339,6 +341,22 @@ export function prepararTreinamentos(system) {
       seletor
     };
   });
+
+  const ordemSalva = Array.isArray(estado.ordem) ? estado.ordem : [];
+  if (!ordemSalva.length) return treinamentos;
+
+  const posicao = new Map(ordemSalva.map((key, index) => [key, index]));
+  const posicaoPadrao = new Map(Object.keys(TRAINING_CONFIG).map((key, index) => [key, index]));
+
+  return treinamentos.sort((a, b) => {
+    const aSalvo = posicao.has(a.key);
+    const bSalvo = posicao.has(b.key);
+    if (aSalvo && bSalvo) return posicao.get(a.key) - posicao.get(b.key);
+    if (aSalvo) return -1;
+    if (bSalvo) return 1;
+    return (posicaoPadrao.get(a.key) ?? 0) - (posicaoPadrao.get(b.key) ?? 0);
+  });
 }
+
 
 
