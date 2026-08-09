@@ -61,6 +61,24 @@ export function registerTecnicasListener(sheet, html) {
     });
   });
 
+  html.find(".jk-create-aptidao-item").on("click", async event => {
+    event.preventDefault();
+    preservarTecnicas();
+    const [item] = await actor.createEmbeddedDocuments("Item", [{ name: "Nova Aptidão", type: "habilidade", system: { habilidade: { categoria: "aptidao" } } }]);
+    item?.sheet?.render(true);
+  });
+
+  html.find(".jk-create-feitico-item").on("click", async event => {
+    event.preventDefault();
+    preservarTecnicas();
+    const [item] = await actor.createEmbeddedDocuments("Item", [{ name: "Novo Feitiço", type: "feitico" }]);
+    item?.sheet?.render(true);
+  });
+
+  html.find(".jk-edit-tecnica-item").on("click", event => { event.preventDefault(); event.stopPropagation(); actor.items.get(String(event.currentTarget.dataset.itemId ?? ""))?.sheet?.render(true); });
+  html.find(".jk-remove-tecnica-item").on("click", async event => { event.preventDefault(); event.stopPropagation(); const id=String(event.currentTarget.dataset.itemId ?? ""); if(id){ preservarTecnicas(); await actor.deleteEmbeddedDocuments("Item", [id]); } });
+  html.find(".jk-chat-tecnica-item").on("click", async event => { event.preventDefault(); event.stopPropagation(); const item=actor.items.get(String(event.currentTarget.dataset.itemId ?? "")); if(item) await enviarItemTecnicaParaChat(actor,item); });
+
   html.find(".jk-add-aptidao").on("click", async event => {
     event.preventDefault();
     const lista = foundry.utils.deepClone(actor.system.tecnicas?.aptidoesLista ?? []);
@@ -160,9 +178,86 @@ export function registerTecnicasListener(sheet, html) {
       .filter(item => item.id !== id);
     await atualizarColecao("system.tecnicas.feiticosLista", lista);
   });
+  let structuredReorderData = null;
+
+  html.find(".jk-reorder-structured-handle").on("dragstart", event => {
+    const handle = event.currentTarget;
+    structuredReorderData = {
+      id: String(handle.dataset.itemId ?? ""),
+      type: String(handle.dataset.reorderType ?? ""),
+      nivel: Number(handle.dataset.nivel ?? handle.closest(".jk-structured-tecnica-row")?.dataset.nivel ?? 0)
+    };
+
+    const nativeEvent = event.originalEvent ?? event;
+    nativeEvent.dataTransfer?.setData("text/plain", JSON.stringify(structuredReorderData));
+    if (nativeEvent.dataTransfer) nativeEvent.dataTransfer.effectAllowed = "move";
+    handle.closest(".jk-structured-tecnica-row")?.classList.add("is-dragging");
+  });
+
+  html.find(".jk-reorder-structured-handle").on("dragend", event => {
+    event.currentTarget.closest(".jk-structured-tecnica-row")?.classList.remove("is-dragging");
+    html.find(".jk-structured-tecnica-row").removeClass("is-drop-target");
+    structuredReorderData = null;
+  });
+
+  html.find(".jk-structured-tecnica-row").on("dragover", event => {
+    if (!structuredReorderData) return;
+    const row = event.currentTarget;
+    const type = String(row.dataset.reorderType ?? "");
+    if (type !== structuredReorderData.type) return;
+    if (type === "feitico" && Number(row.dataset.nivel ?? 0) !== structuredReorderData.nivel) return;
+
+    event.preventDefault();
+    const nativeEvent = event.originalEvent ?? event;
+    if (nativeEvent.dataTransfer) nativeEvent.dataTransfer.dropEffect = "move";
+    row.classList.add("is-drop-target");
+  });
+
+  html.find(".jk-structured-tecnica-row").on("dragleave", event => {
+    event.currentTarget.classList.remove("is-drop-target");
+  });
+
+  html.find(".jk-structured-tecnica-row").on("drop", async event => {
+    event.preventDefault();
+    const targetRow = event.currentTarget;
+    targetRow.classList.remove("is-drop-target");
+    if (!structuredReorderData) return;
+
+    const type = String(targetRow.dataset.reorderType ?? "");
+    const targetId = String(targetRow.dataset.itemId ?? "");
+    if (!targetId || targetId === structuredReorderData.id || type !== structuredReorderData.type) return;
+    if (type === "feitico" && Number(targetRow.dataset.nivel ?? 0) !== structuredReorderData.nivel) return;
+
+    const sourceRow = html[0]?.querySelector(`.jk-structured-tecnica-row[data-item-id="${structuredReorderData.id}"]`);
+    if (!sourceRow) return;
+
+    const nativeEvent = event.originalEvent ?? event;
+    const rect = targetRow.getBoundingClientRect();
+    const inserirDepois = Number(nativeEvent.clientY) > rect.top + rect.height / 2;
+    targetRow.insertAdjacentElement(inserirDepois ? "afterend" : "beforebegin", sourceRow);
+
+    let rows = [];
+    if (type === "aptidao") {
+      rows = [...html[0].querySelectorAll('.jk-aptidoes-table .jk-structured-tecnica-row[data-reorder-type="aptidao"]')];
+    } else {
+      const grupo = targetRow.closest(".jk-feitico-grupo");
+      rows = [...(grupo?.querySelectorAll('.jk-structured-tecnica-row[data-reorder-type="feitico"]') ?? [])];
+    }
+
+    const updates = rows.map((row, index) => ({
+      _id: String(row.dataset.itemId),
+      sort: (index + 1) * 1000
+    }));
+
+    if (updates.length) {
+      preservarTecnicas();
+      await actor.updateEmbeddedDocuments("Item", updates);
+    }
+  });
+
   let reorderData = null;
 
-  html.find(".jk-reorder-handle").on("dragstart", event => {
+  html.find(".jk-reorder-row .jk-reorder-handle").on("dragstart", event => {
     const target = event.currentTarget;
     reorderData = {
       id: String(target.dataset.id ?? ""),
@@ -176,7 +271,7 @@ export function registerTecnicasListener(sheet, html) {
     target.closest(".jk-reorder-row")?.classList.add("is-dragging");
   });
 
-  html.find(".jk-reorder-handle").on("dragend", event => {
+  html.find(".jk-reorder-row .jk-reorder-handle").on("dragend", event => {
     event.currentTarget.closest(".jk-reorder-row")?.classList.remove("is-dragging");
     html.find(".jk-reorder-row").removeClass("is-drop-target");
     reorderData = null;
@@ -237,6 +332,14 @@ export function registerTecnicasListener(sheet, html) {
     }
   });
 
+}
+
+async function enviarItemTecnicaParaChat(actor, item) {
+  const descricao = String(item.system?.descricao ?? "").trim() || "Sem descrição.";
+  let meta = "";
+  if (item.type === "habilidade") { const h=item.system?.habilidade ?? {}; meta=[h.tipo, Number(h.nivel)?`Nível ${h.nivel}`:"", h.custo?`Custo: ${h.custo}`:""].filter(Boolean).join(" • "); }
+  if (item.type === "feitico") { const f=item.system?.feitico ?? {}; meta=[`Nível ${Number(f.nivel)||0}`, `${Number(f.custoPE)||0} PE`, f.conjuracao].filter(Boolean).join(" • "); }
+  await ChatMessage.create({ speaker: ChatMessage.getSpeaker({actor}), flavor: item.type === "feitico" ? "Feitiço" : "Aptidão Amaldiçoada", content: `<details class="jk-ability-chat-details" open><summary>${escapeHtml(item.name)}</summary>${meta?`<p><strong>${escapeHtml(meta)}</strong></p>`:""}<div>${escapeHtml(descricao).replace(/\n/g,"<br>")}</div></details>` });
 }
 
 async function editarAptidao(item) {
@@ -398,4 +501,5 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
 

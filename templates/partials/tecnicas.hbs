@@ -91,13 +91,21 @@
       <section class="jk-card jk-tecnicas-card jk-tecnicas-list-card">
         <div class="jk-tecnicas-card-header">
           <h2>Aptidões Amaldiçoadas</h2>
-          <button type="button" class="jk-icon-button jk-add-aptidao" title="Adicionar Aptidão"><i class="fas fa-plus"></i></button>
+          <button type="button" class="jk-icon-button jk-create-aptidao-item" title="Adicionar Aptidão"><i class="fas fa-plus"></i></button>
         </div>
 
         <div class="jk-tecnicas-table jk-aptidoes-table">
           <div class="jk-tecnicas-table-head">
             <span></span><span>Nome</span><span>Atual</span><span>Máx.</span><span>Custo</span><span>Ações</span>
           </div>
+          {{#each tecnicasAptidoesItems}}
+            <div class="jk-tecnicas-table-row jk-structured-tecnica-row" data-item-id="{{id}}" data-reorder-type="aptidao">
+              <span class="jk-reorder-handle jk-reorder-structured-handle" draggable="true" data-item-id="{{id}}" data-reorder-type="aptidao" title="Reorganizar"><i class="fas fa-grip-vertical"></i></span>
+              <span class="jk-tecnica-entry-name">{{nome}}</span>
+              <span>{{atual}}</span><span>{{max}}</span><span>{{custo}}</span>
+              <div class="jk-tecnica-actions"><button type="button" class="jk-row-action jk-edit-tecnica-item" data-item-id="{{id}}" title="Editar"><i class="fas fa-pencil-alt"></i></button><button type="button" class="jk-row-action jk-chat-tecnica-item" data-item-id="{{id}}" title="Enviar ao Chat"><i class="fas fa-comment"></i></button><button type="button" class="jk-row-action jk-remove-tecnica-item" data-item-id="{{id}}" title="Remover"><i class="fas fa-times"></i></button></div>
+            </div>
+          {{/each}}
           {{#each tecnicasAptidoes}}
             <div class="jk-tecnicas-table-row jk-reorder-row" data-id="{{id}}" data-reorder-type="aptidao">
               <span class="jk-reorder-handle" draggable="true" data-id="{{id}}" data-reorder-type="aptidao" title="Reorganizar"><i class="fas fa-grip-vertical"></i></span>
@@ -111,19 +119,27 @@
                 <button type="button" class="jk-row-action jk-remove-aptidao" data-id="{{id}}" title="Remover Aptidão"><i class="fas fa-times"></i></button>
               </div>
             </div>
-          {{else}}
-            <div class="jk-tecnicas-empty">Nenhuma aptidão adicionada.</div>
           {{/each}}
+          {{#unless tecnicasTemAptidoes}}<div class="jk-tecnicas-empty">Nenhuma aptidão adicionada.</div>{{/unless}}
         </div>
       </section>
 
       <section class="jk-card jk-tecnicas-card jk-tecnicas-list-card">
         <div class="jk-tecnicas-card-header">
           <h2>Feitiços</h2>
-          <button type="button" class="jk-icon-button jk-add-feitico" title="Adicionar Feitiço"><i class="fas fa-plus"></i></button>
+          <button type="button" class="jk-icon-button jk-create-feitico-item" title="Adicionar Feitiço"><i class="fas fa-plus"></i></button>
         </div>
 
         <div class="jk-feiticos-lista">
+          {{#each tecnicasFeiticosItemsGrupos}}
+            <div class="jk-feitico-grupo">
+              <div class="jk-feitico-nivel"><span>Nível {{nivel}}</span><span class="jk-feitico-pe">{{custoPe}} PE</span></div>
+              <div class="jk-feitico-table-head"><span></span><span>Nome</span><span>Conjuração</span><span>Ações</span></div>
+              {{#each feiticos}}
+                <div class="jk-feitico-row jk-structured-tecnica-row" data-item-id="{{id}}" data-reorder-type="feitico" data-nivel="{{nivel}}"><span class="jk-reorder-handle jk-reorder-structured-handle" draggable="true" data-item-id="{{id}}" data-reorder-type="feitico" data-nivel="{{nivel}}" title="Reorganizar"><i class="fas fa-grip-vertical"></i></span><span class="jk-tecnica-entry-name">{{nome}}</span><span class="jk-feitico-conjuracao">{{conjuracao}}</span><div class="jk-tecnica-actions"><button type="button" class="jk-row-action jk-edit-tecnica-item" data-item-id="{{id}}" title="Editar"><i class="fas fa-pencil-alt"></i></button><button type="button" class="jk-row-action jk-chat-tecnica-item" data-item-id="{{id}}" title="Enviar ao Chat"><i class="fas fa-comment"></i></button><button type="button" class="jk-row-action jk-remove-tecnica-item" data-item-id="{{id}}" title="Remover"><i class="fas fa-times"></i></button></div></div>
+              {{/each}}
+            </div>
+          {{/each}}
           {{#each tecnicasFeiticosGrupos}}
             <div class="jk-feitico-grupo">
               <div class="jk-feitico-nivel">
@@ -146,9 +162,8 @@
                 </div>
               {{/each}}
             </div>
-          {{else}}
-            <div class="jk-tecnicas-empty">Nenhum feitiço adicionado. Os níveis aparecem conforme os feitiços forem cadastrados.</div>
           {{/each}}
+          {{#unless tecnicasTemFeiticos}}<div class="jk-tecnicas-empty">Nenhum feitiço adicionado. Os níveis aparecem conforme os feitiços forem cadastrados.</div>{{/unless}}
         </div>
       </section>
     </aside>
@@ -157,4 +172,5 @@
 
   </div>
 </div>
+
 

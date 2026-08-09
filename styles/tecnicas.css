@@ -396,11 +396,13 @@
   cursor: grabbing;
 }
 
-.jk-reorder-row.is-dragging {
+.jk-reorder-row.is-dragging,
+.jk-structured-tecnica-row.is-dragging {
   opacity: .45;
 }
 
-.jk-reorder-row.is-drop-target {
+.jk-reorder-row.is-drop-target,
+.jk-structured-tecnica-row.is-drop-target {
   background: var(--jk-bg-input-hover);
 }
 
@@ -751,4 +753,5 @@
 .jk-tecnicas-layout input[name="system.tecnicas.especiais.tecnicaMaxima.nome"] {
   font-size: 12px;
 }
+
 

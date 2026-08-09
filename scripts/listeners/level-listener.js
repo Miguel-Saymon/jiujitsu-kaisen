@@ -1,5 +1,6 @@
 import { obterEspecializacao, obterOpcoesEspecializacaoValidas } from "../helpers/especializacoes.js";
 import { calcularRecursosAoSubirNivel } from "../calculations/progressao.js";
+import { obterGanhoPVAtualDoNivel } from "../calculations/recursos.js";
 import { obterModificadorAtributo } from "../helpers/atributos.js";
 
 export function registerLevelListener(sheet, html) {
@@ -216,11 +217,10 @@ content: `
           const metodo =
             html.find("[name='metodoPV']").val();
 
-          let pvGanho = 0;
+          let pvBase = 0;
 
           if (metodo === "fixo") {
-            pvGanho =
-              especializacao.pvFixoPorNivel + modCon;
+            pvBase = especializacao.pvFixoPorNivel;
           }
 
           if (metodo === "rolagem") {
@@ -228,8 +228,7 @@ content: `
               `1d${especializacao.dadoPV}`
             ).evaluate();
 
-            pvGanho =
-              roll.total + modCon;
+            pvBase = roll.total;
 
             roll.toMessage({
               flavor: "Ganho de PV"
@@ -241,18 +240,19 @@ content: `
               `2d${especializacao.dadoPV}kh`
             ).evaluate();
 
-            pvGanho =
-              roll.total + modCon;
+            pvBase = roll.total;
 
             roll.toMessage({
               flavor: "Ganho de PV (Vantagem)"
             });
           }
 
-          pvGanho = Math.max(1, pvGanho);
+          const pvGanho = Math.max(1, pvBase + modCon);
 
           await adicionarNivel(actor, {
             ...novoNivel,
+            pvBase,
+            pvModConAplicado: modCon,
             pvGanho
           });
         }
@@ -281,28 +281,42 @@ async function adicionarNivel(actor, novoNivel) {
 
   const updateData = {};
 
+  let nivelPersistido = { ...novoNivel };
+
+  if (Number(novoNivel.nivel) === 1) {
+    const modCon = Number(system.atributos?.constituicao?.mod) || 0;
+    const pvBase = Number(especializacao.pvInicial) || 0;
+
+    nivelPersistido = {
+      ...nivelPersistido,
+      pvBase,
+      pvModConAplicado: modCon,
+      pvGanho: Math.max(1, pvBase + modCon)
+    };
+  }
+
   const recursosAtualizados = calcularRecursosAoSubirNivel(
     system,
-    novoNivel,
+    nivelPersistido,
     especializacao
   );
 
-  niveisAtuais.push(novoNivel);
+  niveisAtuais.push(nivelPersistido);
 
-  updateData["system.info.nivel"] = novoNivel.nivel;
+  updateData["system.info.nivel"] = nivelPersistido.nivel;
   updateData["system.progressao.niveis"] = niveisAtuais;
 
-if (novoNivel.nivel === 1) {
+if (nivelPersistido.nivel === 1) {
   updateData["system.progressao.pvInicialAplicado"] = true;
 
-if (novoNivel.atributoInicial) {
+if (nivelPersistido.atributoInicial) {
   updateData["system.progressao.atributoInicial"] =
-    novoNivel.atributoInicial;
+    nivelPersistido.atributoInicial;
 
   updateData["system.progressao.bonusAtributoInicial"] =
     obterModificadorAtributo(
       system,
-      novoNivel.atributoInicial
+      nivelPersistido.atributoInicial
     );
 }
 }
@@ -311,7 +325,7 @@ if (novoNivel.atributoInicial) {
 
   await actor.update(updateData);
 
-  ui.notifications.info(`Nível ${novoNivel.nivel} adicionado.`);
+  ui.notifications.info(`Nível ${nivelPersistido.nivel} adicionado.`);
 }
 
 async function confirmarRemoverUltimoNivel(sheet) {
@@ -381,22 +395,16 @@ async function removerUltimoNivel(actor) {
     "system.progressao.niveis": niveisAtuais
   };
 
-  let pvRemover = 0;
+  const pvRemover = obterGanhoPVAtualDoNivel(
+    system,
+    ultimoNivel,
+    especializacao
+  );
 
   if (ultimoNivel.nivel === 1) {
-    const modCon =
-      Number(system.atributos?.constituicao?.mod) || 0;
-
-    pvRemover = Math.max(
-      1,
-      Number(especializacao.pvInicial) + modCon
-    );
-
     updateData["system.progressao.atributoInicial"] = "";
     updateData["system.progressao.bonusAtributoInicial"] = 0;
     updateData["system.progressao.pvInicialAplicado"] = false;
-  } else {
-    pvRemover = Number(ultimoNivel.pvGanho) || 0;
   }
 
   if (pvRemover > 0) {
@@ -528,4 +536,5 @@ async function confirmarResetProgressao(sheet) {
     default: "cancelar"
   }).render(true);
 }
+
 

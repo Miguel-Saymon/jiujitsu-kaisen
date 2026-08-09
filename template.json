@@ -391,6 +391,12 @@
         "caracteristicas": "",
         "itens": ""
       },
+      "votos": {
+        "proprios": "",
+        "contratuais": "",
+        "emergenciais": "",
+        "restricaoCeleste": ""
+      },
       "notas": {
         "aparencia": "",
         "idade": "",
@@ -719,7 +725,10 @@
       "arma",
       "consumivel",
       "equipamento",
-      "tesouro"
+      "tesouro",
+      "habilidade",
+      "feitico",
+      "acao"
     ],
     "arma": {
       "descricao": "",
@@ -958,6 +967,57 @@
       "quantidade": null,
       "espacos": null,
       "preco": null
+    },
+    "habilidade": {
+      "descricao": "",
+      "fonte": "",
+      "habilidade": {
+        "categoria": "talento",
+        "tipo": "",
+        "nivel": 0,
+        "custo": "",
+        "requisitos": "",
+        "execucao": "",
+        "atual": 0,
+        "max": 0
+      }
+    },
+    "feitico": {
+      "descricao": "",
+      "fonte": "",
+      "feitico": {
+        "nivel": 0,
+        "custoPE": 0,
+        "tipo": "",
+        "conjuracao": "",
+        "alcance": "",
+        "alvo": "",
+        "area": "",
+        "duracao": "",
+        "teste": "",
+        "resistencia": "",
+        "dados": "",
+        "bonusDano": ""
+      }
+    },
+    "acao": {
+      "descricao": "",
+      "fonte": "",
+      "acao": {
+        "categoria": "acao",
+        "tipo": "simples",
+        "uso": "",
+        "custo": "",
+        "rodada": "",
+        "execucao": "",
+        "alcance": "",
+        "area": "",
+        "alvo": "",
+        "ataque": "",
+        "dano": "",
+        "tipoDano": "",
+        "critico": ""
+      }
     }
   }
 }

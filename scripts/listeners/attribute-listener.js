@@ -1,5 +1,6 @@
 import { calcularBonusTreinamentos } from "../trainings/training-calculations.js";
 import { obterBonusTreino, obterBonusMaestria } from "../helpers/proficiencia.js";
+import { calcularAjustePVPorConstituicao } from "../calculations/recursos.js";
 
 const SAVE_DELAY = 140;
 
@@ -222,6 +223,52 @@ async function atualizarAtributoBase(actor, atributoAlterado, path, novoValor) {
     [path]: novoValor
   };
 
+  // Constituição participa do PV ganho em cada nível. Como atributos só são
+  // confirmados com Enter, este é o ponto único em que sincronizamos essa
+  // cadeia: histórico de níveis -> PV máximo -> Integridade máxima.
+  if (atributoAlterado === "constituicao") {
+    const bonusConTreinamento =
+      Number(calcularBonusTreinamentos(system).atributos?.constituicao) || 0;
+    const valorEfetivoNovo = novoValor + bonusConTreinamento;
+    const modConNovo = Math.floor((valorEfetivoNovo - 10) / 2);
+
+    const { diferencaPV, niveis } = calcularAjustePVPorConstituicao(
+      system,
+      modConNovo
+    );
+
+    if (niveis.length) {
+      updateData["system.progressao.niveis"] = niveis;
+    }
+
+    if (diferencaPV !== 0) {
+      const pvMaxAnterior = Number(system.recursos?.pv?.max) || 0;
+      const pvAtualAnterior = Number(system.recursos?.pv?.atual) || 0;
+      const pvMaxNovo = Math.max(0, pvMaxAnterior + diferencaPV);
+
+      updateData["system.recursos.pv.max"] = pvMaxNovo;
+      updateData["system.recursos.pv.atual"] = Math.min(
+        Math.max(0, pvAtualAnterior),
+        pvMaxNovo
+      );
+
+      const integridadeMaxAnterior =
+        Number(system.recursos?.integridade?.max) || 0;
+      const integridadeAtualAnterior =
+        Number(system.recursos?.integridade?.atual) || 0;
+      const integridadeMaxNova = Math.max(
+        0,
+        integridadeMaxAnterior + diferencaPV
+      );
+
+      updateData["system.recursos.integridade.max"] = integridadeMaxNova;
+      updateData["system.recursos.integridade.atual"] = Math.min(
+        Math.max(0, integridadeAtualAnterior),
+        integridadeMaxNova
+      );
+    }
+  }
+
   // Mantém compatibilidade com a regra existente de atributo inicial que
   // influencia PE. O cálculo continua usando o valor-base persistido.
   if (atributoInicial && atributoAlterado === atributoInicial) {
@@ -266,4 +313,5 @@ function formatSigned(value) {
   const numero = Number(value) || 0;
   return numero >= 0 ? `+${numero}` : `${numero}`;
 }
+
 

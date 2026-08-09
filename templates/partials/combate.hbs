@@ -20,10 +20,9 @@
                 <header class="jk-combat-section-header">
                     <h2>Habilidades &amp; Talentos</h2>
                     <button
-                        class="jk-add-combat-row"
+                        class="jk-add-combat-row jk-create-habilidade-item"
                         type="button"
-                        data-path="combate.habilidades"
-                        data-prefix="habilidade"
+                        data-category="talento"
                         title="Adicionar habilidade ou talento"
                     ><i class="fa-solid fa-plus"></i></button>
                 </header>
@@ -49,6 +48,16 @@
                     </thead>
 
                     <tbody>
+                        {{#each combateHabilidadesItems as |habilidade|}}
+                        <tr class="jk-ability-row jk-structured-ability-row" data-item-id="{{habilidade.id}}">
+                            <td><div class="jk-ability-identity"><button class="jk-drag-structured-item" type="button" draggable="true" data-item-id="{{habilidade.id}}" title="Arrastar para reorganizar" tabindex="-1"><i class="fas fa-grip-vertical"></i></button><button type="button" class="jk-structured-item-name jk-edit-structured-item" data-item-id="{{habilidade.id}}" title="Editar">{{habilidade.nome}}</button></div></td>
+                            <td class="is-val">{{habilidade.atual}}</td>
+                            <td class="is-val">{{habilidade.max}}</td>
+                            <td class="is-cost">{{habilidade.custo}}</td>
+                            <td class="jk-ability-actions"><button type="button" class="jk-chat-structured-item" data-item-id="{{habilidade.id}}" title="Enviar ao chat"><i class="fas fa-comment"></i></button><button type="button" class="jk-edit-structured-item" data-item-id="{{habilidade.id}}" title="Editar"><i class="fas fa-pen"></i></button></td>
+                            <td class="jk-delete-cell"><button type="button" class="jk-delete-structured-item jk-row-delete" data-item-id="{{habilidade.id}}" title="Remover"><i class="fas fa-xmark jk-delete-x-icon"></i></button></td>
+                        </tr>
+                        {{/each}}
                         {{#each combateHabilidades as |habilidade|}}
                         <tr class="jk-ability-row" data-ability-key="{{habilidade.key}}">
                             <td>

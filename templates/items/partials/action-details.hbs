@@ -1,0 +1,19 @@
+<section class="jk-item-section jk-structured-item-details">
+  <h2>Dados da Ação</h2>
+  <div class="jk-item-grid jk-item-grid--2">
+    <label><span>Categoria</span><select name="system.acao.categoria"><option value="acao" {{#if (eq system.acao.categoria "acao")}}selected{{/if}}>Ação</option><option value="caracteristica" {{#if (eq system.acao.categoria "caracteristica")}}selected{{/if}}>Característica</option><option value="dote" {{#if (eq system.acao.categoria "dote")}}selected{{/if}}>Dote</option></select></label>
+    <label><span>Tipo</span><select name="system.acao.tipo">{{#each tiposAcao}}<option value="{{value}}" {{#if (eq ../system.acao.tipo value)}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <label><span>Execução</span><input name="system.acao.execucao" type="text" value="{{system.acao.execucao}}" /></label>
+    <label><span>Uso</span><input name="system.acao.uso" type="text" value="{{system.acao.uso}}" /></label>
+    <label><span>Custo</span><input name="system.acao.custo" type="text" value="{{system.acao.custo}}" /></label>
+    <label><span>Rodada</span><input name="system.acao.rodada" type="text" value="{{system.acao.rodada}}" /></label>
+    <label><span>Alcance</span><input name="system.acao.alcance" type="text" value="{{system.acao.alcance}}" /></label>
+    <label><span>Área</span><input name="system.acao.area" type="text" value="{{system.acao.area}}" /></label>
+    <label><span>Alvo</span><input name="system.acao.alvo" type="text" value="{{system.acao.alvo}}" /></label>
+    <label><span>Ataque/Teste</span><input name="system.acao.ataque" type="text" value="{{system.acao.ataque}}" /></label>
+    <label><span>Dano</span><input name="system.acao.dano" type="text" value="{{system.acao.dano}}" /></label>
+    <label><span>Tipo de Dano</span><input name="system.acao.tipoDano" type="text" value="{{system.acao.tipoDano}}" /></label>
+    <label><span>Crítico</span><input name="system.acao.critico" type="text" value="{{system.acao.critico}}" /></label>
+  </div>
+</section>
+

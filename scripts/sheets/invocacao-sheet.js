@@ -1,3 +1,4 @@
+import { importarItemSoltoNoActor } from "../helpers/structured-item-drop.js";
 import { registerInvocacaoListener } from "../listeners/invocacao-listener.js";
 
 const ATRIBUTOS = {
@@ -34,6 +35,15 @@ const PERICIAS_INVOCACAO = [
 ];
 
 export class JKInvocacaoSheet extends ActorSheet {
+  async _onDropItem(event, data) {
+    const criado = await importarItemSoltoNoActor(this.actor, data);
+    if (criado) {
+      this.render(false);
+      return criado;
+    }
+    return super._onDropItem(event, data);
+  }
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["jiujitsu-kaisen", "sheet", "actor", "invocacao-sheet"],
@@ -125,8 +135,19 @@ export class JKInvocacaoSheet extends ActorSheet {
         critico: obterCritico(item)
       }));
 
+    context.invocacaoAcoes = [...(this.actor.items ?? [])]
+      .filter(item => item.type === "acao")
+      .sort((a,b) => Number(a.sort ?? 0) - Number(b.sort ?? 0))
+      .map(item => ({ id: item.id, nome: item.name, tipo: item.system?.acao?.tipo ?? "", execucao: item.system?.acao?.execucao ?? "", descricao: item.system?.descricao ?? "" }));
+
+    context.invocacaoHabilidadesItems = [...(this.actor.items ?? [])]
+      .filter(item => item.type === "habilidade")
+      .sort((a,b) => Number(a.sort ?? 0) - Number(b.sort ?? 0))
+      .map(item => ({ id: item.id, nome: item.name, execucao: item.system?.habilidade?.execucao ?? "", descricao: item.system?.descricao ?? "" }));
+
     context.invocacaoHabilidades = normalizarColecao(this.actor.system.habilidadesLista)
       .sort((a, b) => Number(a.ordem ?? 0) - Number(b.ordem ?? 0));
+    context.invocacaoTemHabilidades = context.invocacaoHabilidadesItems.length > 0 || context.invocacaoHabilidades.length > 0;
 
     context.opcoesAtributosInvocacao = ATRIBUTOS;
     return context;

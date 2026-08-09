@@ -1,6 +1,7 @@
 import {
   ALCANCES,
   ATRIBUTOS,
+  CATEGORIAS_HABILIDADE,
   CONSUMIVEIS_ARMA,
   DURACOES,
   EMPUNHADURAS_ARMA,
@@ -12,6 +13,7 @@ import {
   PROPOSITOS_ARMA,
   TIPOS_CONSUMIVEL,
   TIPOS_DANO,
+  TIPOS_ACAO,
   TIPOS_EQUIPAMENTO,
   TIPOS_USO_EQUIPAMENTO,
   prepararSlotsEncantos
@@ -22,6 +24,9 @@ const ITEM_TYPE_LABELS = {
   consumivel: "Consumível",
   equipamento: "Equipamento",
   tesouro: "Tesouro",
+  habilidade: "Habilidade",
+  feitico: "Feitiço",
+  acao: "Ação",
   item: "Item"
 };
 
@@ -60,8 +65,12 @@ export class JKItemSheet extends ItemSheet {
     context.isConsumivel = tipo === "consumivel";
     context.isEquipamento = tipo === "equipamento";
     context.isTesouro = tipo === "tesouro";
+    context.isHabilidade = tipo === "habilidade";
+    context.isFeitico = tipo === "feitico";
+    context.isAcao = tipo === "acao";
+    context.isStructured = ["habilidade", "feitico", "acao"].includes(tipo);
 
-    context.showDetalhes = ["arma", "consumivel", "equipamento"].includes(tipo);
+    context.showDetalhes = ["arma", "consumivel", "equipamento", "habilidade", "feitico", "acao"].includes(tipo);
     context.showAprimoramentos = ["arma", "equipamento"].includes(tipo);
 
     context.atributos = ATRIBUTOS;
@@ -77,6 +86,8 @@ export class JKItemSheet extends ItemSheet {
     context.duracoes = DURACOES;
     context.tiposEquipamento = TIPOS_EQUIPAMENTO;
     context.tiposUsoEquipamento = TIPOS_USO_EQUIPAMENTO;
+    context.categoriasHabilidade = CATEGORIAS_HABILIDADE;
+    context.tiposAcao = TIPOS_ACAO;
 
     context.weaponDamages = prepararColecaoComFallback(
       system?.arma?.danos,
@@ -121,15 +132,41 @@ export class JKItemSheet extends ItemSheet {
   }
 
   async _updateObject(_event, formData) {
-    // Salva sem rerender completo e sincroniza imediatamente a linha do item
-    // na ficha do Actor, evitando depender de outra ação para atualizar a tabela.
+    // Salva sem rerender completo e sincroniza imediatamente a linha do item.
     const result = await this.item.update(formData, { render: false });
     this._syncParentActorInventoryRow();
+
+    // Habilidade/Feitiço/Ação participam de listas agrupadas da ficha do Actor.
+    // Sempre que forem salvos, atualiza a ficha pai imediatamente para que,
+    // por exemplo, um Feitiço troque de grupo de nível sem depender de outra ação.
+    if (["habilidade", "feitico", "acao"].includes(this.item.type)) {
+      const actor = this.item.parent;
+      if (actor?.documentName === "Actor" && actor.sheet?.rendered) {
+        actor.sheet.render(false);
+      }
+    }
+
     return result;
   }
 
   activateListeners(html) {
     super.activateListeners(html);
+
+    // O nível define em qual grupo o Feitiço aparece na aba Técnicas.
+    // Persiste no próprio change e rerenderiza a ficha pai imediatamente.
+    html.find('input[name="system.feitico.nivel"]').on("change", async event => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      const nivel = Math.max(0, Math.min(5, Number(event.currentTarget.value) || 0));
+      event.currentTarget.value = String(nivel);
+      await this.item.update({ "system.feitico.nivel": nivel }, { render: false });
+
+      const actor = this.item.parent;
+      if (actor?.documentName === "Actor" && actor.sheet?.rendered) {
+        actor.sheet.render(false);
+      }
+    });
 
     // Espaços (peso) e quantidade alteram a carga do Actor.
     // Salva e renderiza a ficha do Actor imediatamente para atualizar a barra.
@@ -444,6 +481,7 @@ function criarDanoPadrao() {
 function criarAtaqueConsumivelPadrao() {
   return { atributo: "", bonus: "" };
 }
+
 
 
 

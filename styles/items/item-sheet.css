@@ -727,3 +727,18 @@
   }
 }
 
+
+
+/* Itens estruturados: Habilidade, Feitiço e Ação */
+.jk-structured-item-details { padding: 8px 2px; }
+.jk-structured-item-details h2 { margin: 0 0 12px; text-align: center; }
+.jk-item-grid--2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; }
+.jk-structured-item-details label, .jk-item-field-wide { display: flex; flex-direction: column; gap: 4px; }
+.jk-structured-item-details label > span, .jk-item-field-wide > span { font-size: 11px; font-weight: 700; }
+.jk-item-field-wide { margin-top: 12px; }
+.jk-item-field-wide textarea { min-height: 86px; resize: vertical; }
+@media (max-width: 520px) { .jk-item-grid--2 { grid-template-columns: 1fr; } }
+
+.jk-item-description-layout--structured { grid-template-columns: 1fr; }
+.jk-item-description-layout--structured .jk-item-description-editor { width: 100%; }
+

@@ -47,6 +47,18 @@
         {{#if isEquipamento}}
           {{> "systems/jiujitsu-kaisen/templates/items/partials/equipment-details.hbs"}}
         {{/if}}
+
+        {{#if isHabilidade}}
+          {{> "systems/jiujitsu-kaisen/templates/items/partials/ability-details.hbs"}}
+        {{/if}}
+
+        {{#if isFeitico}}
+          {{> "systems/jiujitsu-kaisen/templates/items/partials/spell-details.hbs"}}
+        {{/if}}
+
+        {{#if isAcao}}
+          {{> "systems/jiujitsu-kaisen/templates/items/partials/action-details.hbs"}}
+        {{/if}}
       </div>
     {{/if}}
 
@@ -63,4 +75,5 @@
     {{/if}}
   </section>
 </form>
+
 

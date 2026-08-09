@@ -1,3 +1,4 @@
+import { importarItemSoltoNoActor } from "../helpers/structured-item-drop.js";
 import { calcularAtributos } from "../calculations/atributos.js";
 import { calcularPericias } from "../calculations/pericias.js";
 import { calcularCombate } from "../calculations/combate.js";
@@ -21,6 +22,15 @@ import { registerTrainingListener } from "../trainings/training-listener.js";
 import { registerTecnicasListener } from "../listeners/tecnicas-listener.js";
 
 export class JKCharacterSheet extends ActorSheet {
+  async _onDropItem(event, data) {
+    const criado = await importarItemSoltoNoActor(this.actor, data);
+    if (criado) {
+      this.render(false);
+      return criado;
+    }
+    return super._onDropItem(event, data);
+  }
+
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["jiujitsu-kaisen", "sheet", "actor"],
@@ -126,10 +136,16 @@ context.combateEquipamentos = itensCombate.equipamentos;
 context.combateConsumiveis = itensCombate.consumiveis;
 context.combateTesouros = itensCombate.tesouros;
 
+const itensEstruturados = prepararItensEstruturados(this.actor.items);
+context.combateHabilidadesItems = itensEstruturados.habilidadesCombate;
+context.tecnicasAptidoesItems = itensEstruturados.aptidoes;
+context.tecnicasFeiticosItems = itensEstruturados.feiticos;
+
 const aptidoesLista = Array.isArray(context.system.tecnicas?.aptidoesLista)
   ? context.system.tecnicas.aptidoesLista
   : [];
 context.tecnicasAptidoes = aptidoesLista;
+context.tecnicasTemAptidoes = aptidoesLista.length > 0 || itensEstruturados.aptidoes.length > 0;
 
 const feiticosLista = Array.isArray(context.system.tecnicas?.feiticosLista)
   ? context.system.tecnicas.feiticosLista
@@ -152,7 +168,15 @@ context.tecnicasFeiticosGrupos = [0, 1, 2, 3, 4, 5]
   }))
   .filter(grupo => grupo.feiticos.length > 0);
 
-context.tecnicasTemFeiticos = context.tecnicasFeiticosGrupos.length > 0;
+context.tecnicasFeiticosItemsGrupos = [0, 1, 2, 3, 4, 5]
+  .map(nivel => ({
+    nivel,
+    custoPe: custoPePorNivelFeitico[nivel] ?? 0,
+    feiticos: itensEstruturados.feiticos.filter(feitico => Number(feitico.nivel) === nivel)
+  }))
+  .filter(grupo => grupo.feiticos.length > 0);
+
+context.tecnicasTemFeiticos = context.tecnicasFeiticosGrupos.length > 0 || context.tecnicasFeiticosItemsGrupos.length > 0;
 
 const perfilTecnicas = calcularPerfilTecnicas(context.system);
 const atributoPadraoTecnicas = perfilTecnicas?.atributoPadrao ?? "presenca";
@@ -176,7 +200,7 @@ context.tecnicasCdTecnica = perfilTecnicas?.cdTecnica ?? 10;
 context.tecnicasCdAmaldicoada = perfilTecnicas?.cdAmaldicoada ?? 10;
 context.tecnicasCdTecnicaOutros = perfilTecnicas?.outrosCdTecnica ?? 0;
 context.tecnicasCdAmaldicoadaOutros = perfilTecnicas?.outrosCdAmaldicoada ?? 0;
-context.tecnicasFeiticosConhecidos = perfilTecnicas?.feiticosConhecidos ?? 0;
+context.tecnicasFeiticosConhecidos = (perfilTecnicas?.feiticosConhecidos ?? 0) + itensEstruturados.feiticos.length;
 
 context.cargaAtual = carga.atual;
 context.cargaLimite = carga.limite;
@@ -430,6 +454,66 @@ function prepararItensCombate(items) {
   return listas;
 }
 
+function prepararItensEstruturados(items) {
+  const habilidadesCombate = [];
+  const aptidoes = [];
+  const feiticos = [];
+
+  for (const item of items ?? []) {
+    if (item.type === "habilidade") {
+      const categoria = String(item.system?.habilidade?.categoria ?? "outra");
+      const base = {
+        id: item.id,
+        sort: Number(item.sort ?? 0),
+        nome: item.name ?? "Habilidade",
+        categoria,
+        categoriaLabel: formatarCategoriaHabilidade(categoria),
+        tipo: item.system?.habilidade?.tipo ?? "",
+        nivel: Number(item.system?.habilidade?.nivel) || 0,
+        custo: item.system?.habilidade?.custo ?? "",
+        atual: Number(item.system?.habilidade?.atual) || 0,
+        max: Number(item.system?.habilidade?.max) || 0,
+        execucao: item.system?.habilidade?.execucao ?? "",
+        requisitos: item.system?.habilidade?.requisitos ?? "",
+        descricao: item.system?.descricao ?? ""
+      };
+      if (categoria === "aptidao") aptidoes.push(base);
+      else habilidadesCombate.push(base);
+    }
+
+    if (item.type === "feitico") {
+      feiticos.push({
+        id: item.id,
+        sort: Number(item.sort ?? 0),
+        nome: item.name ?? "Feitiço",
+        nivel: Number(item.system?.feitico?.nivel) || 0,
+        custoPe: Number(item.system?.feitico?.custoPE) || 0,
+        conjuracao: item.system?.feitico?.conjuracao ?? "",
+        alcance: item.system?.feitico?.alcance ?? "",
+        alvo: item.system?.feitico?.alvo ?? "",
+        duracao: item.system?.feitico?.duracao ?? "",
+        descricao: item.system?.descricao ?? ""
+      });
+    }
+  }
+
+  for (const lista of [habilidadesCombate, aptidoes, feiticos]) {
+    lista.sort((a, b) => (a.sort - b.sort) || a.nome.localeCompare(b.nome, "pt-BR"));
+  }
+  return { habilidadesCombate, aptidoes, feiticos };
+}
+
+function formatarCategoriaHabilidade(categoria) {
+  return ({
+    talento: "Talento",
+    aptidao: "Aptidão",
+    especializacao: "Especialização",
+    lendaria: "Lendária",
+    melhoria: "Melhoria",
+    outra: "Outra"
+  })[categoria] ?? "Outra";
+}
+
 function calcularCargaInventario(items, system) {
   let atual = 0;
 
@@ -592,6 +676,14 @@ function criarLinhaVaziaCombate(prefixo) {
     notas: ""
   };
 }
+
+
+
+
+
+
+
+
 
 
 

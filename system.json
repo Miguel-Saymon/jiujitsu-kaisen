@@ -2,9 +2,9 @@
   "id": "jiujitsu-kaisen",
   "title": "Jiujitsu Kaisen",
   "description": "Sistema privado para uso entre amigos.",
-  "version": "0.2.4.1",
+  "version": "0.2.5",
   "manifest": "https://raw.githubusercontent.com/Miguel-Saymon/jiujitsu-kaisen/main/system.json",
-  "download": "https://github.com/Miguel-Saymon/jiujitsu-kaisen/releases/download/v0.2.4.1/jiujitsu-kaisen.zip",
+  "download": "https://github.com/Miguel-Saymon/jiujitsu-kaisen/releases/download/v0.2.5/jiujitsu-kaisen.zip",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
@@ -44,8 +44,62 @@
       "arma": {},
       "consumivel": {},
       "equipamento": {},
-      "tesouro": {}
+      "tesouro": {},
+      "habilidade": {},
+      "feitico": {},
+      "acao": {}
     }
-  }
+  },
+  "packs": [
+    {
+      "name": "aptidoes-amaldicoadas",
+      "label": "Aptidões Amaldiçoadas",
+      "path": "packs/aptidoes-amaldicoadas",
+      "type": "Item",
+      "system": "jiujitsu-kaisen"
+    },
+    {
+      "name": "feiticos",
+      "label": "Feitiços",
+      "path": "packs/feiticos",
+      "type": "Item",
+      "system": "jiujitsu-kaisen"
+    },
+    {
+      "name": "equipamentos",
+      "label": "Equipamentos",
+      "path": "packs/equipamentos",
+      "type": "Item",
+      "system": "jiujitsu-kaisen"
+    },
+    {
+      "name": "habilidades-especializacao",
+      "label": "Habilidades de Especialização",
+      "path": "packs/habilidades-especializacao",
+      "type": "Item",
+      "system": "jiujitsu-kaisen"
+    },
+    {
+      "name": "talentos",
+      "label": "Talentos",
+      "path": "packs/talentos",
+      "type": "Item",
+      "system": "jiujitsu-kaisen"
+    },
+    {
+      "name": "habilidades-lendarias",
+      "label": "Habilidades Lendárias",
+      "path": "packs/habilidades-lendarias",
+      "type": "Item",
+      "system": "jiujitsu-kaisen"
+    },
+    {
+      "name": "melhorias-superiores",
+      "label": "Melhorias Superiores",
+      "path": "packs/melhorias-superiores",
+      "type": "Item",
+      "system": "jiujitsu-kaisen"
+    }
+  ]
 }
 

@@ -196,3 +196,27 @@ export function prepararSlotsEncantos(encantos, opcoes, quantidade) {
 
 
 
+
+
+export const CATEGORIAS_HABILIDADE = [
+  { value: "talento", label: "Talento" },
+  { value: "aptidao", label: "Aptidão Amaldiçoada" },
+  { value: "especializacao", label: "Habilidade de Especialização" },
+  { value: "lendaria", label: "Habilidade Lendária" },
+  { value: "melhoria", label: "Melhoria Superior" },
+  { value: "outra", label: "Outra" }
+];
+
+export const TIPOS_ACAO = [
+  { value: "simples", label: "Ação Simples" },
+  { value: "complexa", label: "Ação Complexa" },
+  { value: "rapida", label: "Ação Rápida" },
+  { value: "reacao", label: "Reação" },
+  { value: "passiva", label: "Passiva" },
+  { value: "ofensiva", label: "Ofensiva" },
+  { value: "controle", label: "Controle" },
+  { value: "caracteristica", label: "Característica" },
+  { value: "dote", label: "Dote" },
+  { value: "outra", label: "Outra" }
+];
+

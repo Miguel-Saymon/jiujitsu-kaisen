@@ -34,24 +34,15 @@ export function registerInvocacaoListener(sheet, html) {
       return;
     }
 
-    const habilidade = await editarHabilidade({
-      nome: "",
-      execucao: "",
-      descricao: ""
-    });
+    preservarAba();
+    if (tipo === "acao") {
+      const [item] = await actor.createEmbeddedDocuments("Item", [{ name: "Nova Ação", type: "acao" }]);
+      item?.sheet?.render(true);
+      return;
+    }
 
-    if (!habilidade) return;
-
-    const lista = normalizarColecao(actor.system.habilidadesLista);
-    const ordens = lista.map(item => Number(item?.ordem)).filter(Number.isFinite);
-
-    lista.push({
-      id: foundry.utils.randomID(),
-      ordem: ordens.length ? Math.max(...ordens) + 1000 : 1000,
-      ...habilidade
-    });
-
-    await atualizarHabilidades(lista);
+    const [item] = await actor.createEmbeddedDocuments("Item", [{ name: "Nova Habilidade", type: "habilidade", system: { habilidade: { categoria: "outra" } } }]);
+    item?.sheet?.render(true);
   });
 
   html.find(".jk-invocacao-edit-ataque, .jk-invocacao-attack-name").on("click", event => {
@@ -84,6 +75,21 @@ export function registerInvocacaoListener(sheet, html) {
 
     preservarAba();
     await actor.deleteEmbeddedDocuments("Item", [itemId]);
+  });
+
+  html.find(".jk-invocacao-edit-structured").on("click", event => {
+    event.preventDefault(); event.stopPropagation();
+    actor.items.get(String(event.currentTarget.dataset.itemId ?? ""))?.sheet?.render(true);
+  });
+
+  html.find(".jk-invocacao-remove-structured").on("click", async event => {
+    event.preventDefault(); event.stopPropagation();
+    const id=String(event.currentTarget.dataset.itemId ?? ""); if(id){ preservarAba(); await actor.deleteEmbeddedDocuments("Item", [id]); }
+  });
+
+  html.find(".jk-invocacao-chat-structured").on("click", async event => {
+    event.preventDefault(); event.stopPropagation();
+    const item=actor.items.get(String(event.currentTarget.dataset.itemId ?? "")); if(item) await enviarItemInvocacaoParaChat(actor,item);
   });
 
   html.find(".jk-invocacao-edit-habilidade, .jk-invocacao-hability-name").on("click", async event => {
@@ -156,6 +162,7 @@ async function escolherTipoAcao() {
           <select name="tipo">
             <option value="">Selecione...</option>
             <option value="ataque">Ataque</option>
+            <option value="acao">Ação</option>
             <option value="habilidade">Habilidade</option>
           </select>
         </div>
@@ -164,8 +171,8 @@ async function escolherTipoAcao() {
     label: "Continuar",
     callback: dialogHtml => {
       const tipo = String(dialogHtml.find('[name="tipo"]').val() ?? "");
-      if (!["ataque", "habilidade"].includes(tipo)) {
-        ui.notifications.warn("Escolha Ataque ou Habilidade.");
+      if (!["ataque", "acao", "habilidade"].includes(tipo)) {
+        ui.notifications.warn("Escolha Ataque, Ação ou Habilidade.");
         return false;
       }
 
@@ -376,6 +383,12 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+
+async function enviarItemInvocacaoParaChat(actor, item) {
+  const descricao=String(item.system?.descricao ?? "").trim() || "Sem descrição.";
+  const execucao=item.type === "acao" ? String(item.system?.acao?.execucao ?? item.system?.acao?.tipo ?? "") : String(item.system?.habilidade?.execucao ?? "");
+  await ChatMessage.create({ speaker: ChatMessage.getSpeaker({actor}), flavor: item.type === "acao" ? "Ação da Invocação" : "Habilidade da Invocação", content: `<details class="jk-ability-chat-details" open><summary>${escapeHtml(item.name)}</summary>${execucao?`<div class="jk-invocacao-chat-execucao"><strong>Execução:</strong> ${escapeHtml(execucao)}</div>`:""}<div>${escapeHtml(descricao).replace(/\n/g,"<br>")}</div></details>` });
+}
 
 async function enviarHabilidadeInvocacaoParaChat(actor, habilidade) {
   const nome = String(habilidade?.nome ?? "").trim() || "Habilidade";

@@ -1,4 +1,5 @@
-<div class="jk-item-description-layout">
+<div class="jk-item-description-layout {{#if isStructured}}jk-item-description-layout--structured{{/if}}">
+  {{#unless isStructured}}
   <aside class="jk-item-description-stats">
     <div class="form-group jk-item-stat-row jk-item-stat-row--pv">
       <label>PV</label>
@@ -44,11 +45,13 @@
       </div>
     {{/if}}
   </aside>
+  {{/unless}}
 
   <section class="jk-item-description-editor">
     <label>Descrição</label>
     {{editor system.descricao target="system.descricao" button=true owner=owner editable=editable}}
   </section>
 </div>
+
 
 

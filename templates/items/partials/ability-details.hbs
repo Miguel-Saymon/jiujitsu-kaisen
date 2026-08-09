@@ -1,0 +1,14 @@
+<section class="jk-item-section jk-structured-item-details">
+  <h2>Dados da Habilidade</h2>
+  <div class="jk-item-grid jk-item-grid--2">
+    <label><span>Categoria</span><select name="system.habilidade.categoria">{{#each categoriasHabilidade}}<option value="{{value}}" {{#if (eq ../system.habilidade.categoria value)}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <label><span>Tipo</span><input name="system.habilidade.tipo" type="text" value="{{system.habilidade.tipo}}" placeholder="Ex.: Ofensiva, Passiva..." /></label>
+    <label><span>Nível</span><input name="system.habilidade.nivel" type="number" min="0" value="{{system.habilidade.nivel}}" /></label>
+    <label><span>Custo</span><input name="system.habilidade.custo" type="text" value="{{system.habilidade.custo}}" placeholder="Ex.: 2 PE" /></label>
+    <label><span>Atual</span><input name="system.habilidade.atual" type="number" value="{{system.habilidade.atual}}" /></label>
+    <label><span>Máx.</span><input name="system.habilidade.max" type="number" value="{{system.habilidade.max}}" /></label>
+    <label><span>Execução</span><input name="system.habilidade.execucao" type="text" value="{{system.habilidade.execucao}}" placeholder="Ex.: Ação, Reação, Passiva" /></label>
+  </div>
+  <label class="jk-item-field-wide"><span>Requisitos</span><textarea name="system.habilidade.requisitos" rows="4" placeholder="Pré-requisitos, nível mínimo, especialização...">{{system.habilidade.requisitos}}</textarea></label>
+</section>
+

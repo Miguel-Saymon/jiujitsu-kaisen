@@ -378,3 +378,69 @@
     font-family: var(--jk-font-number, monospace);
 }
 
+.jk-structured-item-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    height: 22px;
+    margin: 0;
+    padding: 2px 4px;
+    overflow: hidden;
+    border: none !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--jk-border-soft) 75%, transparent 25%) !important;
+    border-radius: 0;
+    background: transparent !important;
+    color: var(--jk-text-secondary);
+    font: inherit;
+    font-size: 10px;
+    line-height: 1.2;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+.jk-structured-item-name:hover,
+.jk-structured-item-name:focus,
+.jk-structured-item-name:focus-visible,
+.jk-structured-item-name:active {
+    background: var(--jk-bg-input-hover) !important;
+    border-bottom-color: var(--jk-border-input) !important;
+    color: var(--jk-text-primary);
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+/* Item.habilidade usa o mesmo visual compacto do handle legado, sem acionar
+   o listener de ordenação do array antigo. */
+.jk-drag-structured-item {
+    display: inline-flex;
+    flex: 0 0 18px;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    min-width: 18px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    border: 0 !important;
+    border-radius: 4px;
+    background: transparent !important;
+    color: var(--jk-text-muted);
+    font-size: 10px;
+    line-height: 1;
+    cursor: grab;
+    box-shadow: none !important;
+}
+.jk-drag-structured-item:active { cursor: grabbing; }
+.jk-drag-structured-item:hover,
+.jk-drag-structured-item:focus,
+.jk-drag-structured-item:focus-visible {
+    background: color-mix(in srgb, var(--jk-accent-purple) 24%, transparent) !important;
+    color: var(--jk-text-primary);
+    outline: none !important;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--jk-accent-purple) 72%, transparent),
+                0 0 8px color-mix(in srgb, var(--jk-accent-purple) 42%, transparent) !important;
+}
+

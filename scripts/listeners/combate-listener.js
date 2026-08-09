@@ -33,6 +33,41 @@ function filtrarColecao(obj, prefixo) {
 export function registerCombatListener(sheet, html) {
   registrarAutoResizeCaracteristicas(html);
   registrarTooltipsDescricaoHabilidades(html);
+  html.find(".jk-create-habilidade-item").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const categoria = String(event.currentTarget.dataset.category ?? "talento");
+    const nomes = { talento: "Novo Talento", aptidao: "Nova Aptidão", especializacao: "Nova Habilidade", lendaria: "Nova Habilidade Lendária", melhoria: "Nova Melhoria", outra: "Nova Habilidade" };
+    const [item] = await sheet.actor.createEmbeddedDocuments("Item", [{
+      name: nomes[categoria] ?? "Nova Habilidade",
+      type: "habilidade",
+      system: { habilidade: { categoria } }
+    }]);
+    item?.sheet?.render(true);
+  });
+
+  html.find(".jk-edit-structured-item, .jk-structured-item-name").on("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const id = String(event.currentTarget.dataset.itemId ?? "");
+    sheet.actor.items.get(id)?.sheet?.render(true);
+  });
+
+  html.find(".jk-delete-structured-item").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const id = String(event.currentTarget.dataset.itemId ?? "");
+    if (id) await sheet.actor.deleteEmbeddedDocuments("Item", [id]);
+  });
+
+  html.find(".jk-chat-structured-item").on("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const id = String(event.currentTarget.dataset.itemId ?? "");
+    const item = sheet.actor.items.get(id);
+    if (item) await enviarItemEstruturadoParaChat(sheet.actor, item);
+  });
+
   html.find(".jk-create-actor-item").on("click", async event => {
     event.preventDefault();
     event.stopPropagation();
@@ -453,6 +488,26 @@ async function duplicarItemDoAtor(actor, item) {
   data.name = `${item.name} (Cópia)`;
   data.sort = Number(item.sort ?? 0) + 1;
   await actor.createEmbeddedDocuments("Item", [data]);
+}
+
+async function enviarItemEstruturadoParaChat(actor, item) {
+  const descricao = String(item.system?.descricao ?? "").trim() || "Sem descrição.";
+  let meta = "";
+  if (item.type === "habilidade") {
+    const h = item.system?.habilidade ?? {};
+    meta = [h.tipo, Number(h.nivel) ? `Nível ${h.nivel}` : "", h.custo ? `Custo: ${h.custo}` : "", h.execucao ? `Execução: ${h.execucao}` : ""].filter(Boolean).join(" • ");
+  } else if (item.type === "feitico") {
+    const f = item.system?.feitico ?? {};
+    meta = [`Nível ${Number(f.nivel) || 0}`, f.custoPE !== undefined ? `${Number(f.custoPE) || 0} PE` : "", f.conjuracao].filter(Boolean).join(" • ");
+  } else if (item.type === "acao") {
+    const a = item.system?.acao ?? {};
+    meta = [a.tipo, a.execucao, a.custo].filter(Boolean).join(" • ");
+  }
+  await ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    flavor: item.type,
+    content: `<div class="jk-item-chat-card"><h3>${escapeHtml(item.name)}</h3>${meta ? `<p><strong>${escapeHtml(meta)}</strong></p>` : ""}<p>${escapeHtml(descricao).replace(/\n/g, "<br>")}</p></div>`
+  });
 }
 
 async function enviarItemParaChat(actor, item) {
